@@ -21,10 +21,22 @@
 //#include <stdio.h>
 
 
+#include "../Lib/SWL_LED.h"
+#include "../Lib/SWL_LED.c"
+
+
+
 /********************************************************************/
 //Defines
 /********************************************************************/
-
+/*
+#define red_LED=      0b10000000
+#define yellow_LED=   0b01000000
+#define green_LED=    0b00100000
+#define left_Switch=  0b00001000
+#define right_Switch= 0b00000010
+#define center_Switch=0b00000001 
+*/
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
@@ -51,14 +63,28 @@ void main(void)
 /********************************************************************/
   // one-time initializations
 /********************************************************************/
-
+ SWL_Init ();
+  count = 0;
 
 /********************************************************************/
   // main program loop
 /********************************************************************/
 
   for (;;)
-  {
+  { if (SWL_Pushed(SWL_LEFT)>0){SWL_ON(SWL_RED);}
+    else if (SWL_Pushed( SWL_LEFT)==0){SWL_OFF(SWL_RED);}
+   
+    if (SWL_Pushed(SWL_RIGHT)>0){SWL(SWL_GREEN);}
+    else if (SWL_Pushed(SWL_RIGHT)==0){SWL_OFF(SWL_GREEN);}
+  
+    if (SWL_Pushed(SWL_CTR)>0){SWL(SWL_YELLOW);}
+    else if (SWL_Pushed(SWL_CTR)=0){SWL_OFF(SWL_YELLOW);}
+    
+    if (SWL_Pushed(SWL_LEFT)>0){SWL_ON(SWL_RED);}
+
+
+
+
 
   }                   
 }
