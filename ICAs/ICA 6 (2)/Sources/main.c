@@ -23,14 +23,6 @@
 /********************************************************************/
 // Defines
 /********************************************************************/
-/*
-#define red_LED=      0b10000000
-#define yellow_LED=   0b01000000
-#define green_LED=    0b00100000
-#define left_Switch=  0b00001000
-#define right_Switch= 0b00000010
-#define center_Switch=0b00000001
-*/
 
 /********************************************************************/
 // Local Prototypes
@@ -120,39 +112,42 @@ void main(void)
           SWL_OFF(SWL_ALL);
         }*/
 
-    if (SWL_Pushed(SWL_LEFT) > 0 & GetCount() <= 1)
+
+      unsigned char led_Register= PT1AD1 & 0b11100000;
+
+    if (SWL_Pushed(SWL_LEFT) > 0 && GetCount() <= 1)
     {
 
       SWL_TOG(SWL_RED);
     }
-    if (SWL_Pushed(SWL_LEFT) > 0 & GetCount() == 2)
+    if (SWL_Pushed(SWL_LEFT) > 0 && GetCount() == 2)
     {
-      if (PT1AD1 == 0b11000000 || PT1AD1 == 0b10100000)
+      if (led_Register == 0b11000000 || led_Register == 0b10100000)
       {
         SWL_TOG(SWL_RED);
       }
     }
 
-    if (SWL_Pushed(SWL_RIGHT) > 0 & GetCount() <= 2)
+    if (SWL_Pushed(SWL_RIGHT) > 0 && GetCount() <= 2)
     {
       SWL_TOG(SWL_GREEN);
     }
-    if (SWL_Pushed(SWL_RIGHT) > 0 & GetCount() == 2)
+    if (SWL_Pushed(SWL_RIGHT) > 0 && GetCount() == 2)
     {
-      if (PT1AD1 == 0b11000000 || PT1AD1 == 0b01100000)
+      if (led_Register == 0b11000000 || led_Register == 0b01100000)
       {
         SWL_TOG(SWL_GREEN);
       }
     }
-    if (SWL_Pushed(SWL_CTR) > 0 & GetCount() <= 1)
+    if (SWL_Pushed(SWL_CTR) > 0 && GetCount() <= 1)
     {
       SWL_TOG(SWL_YELLOW);
     }
-    if (SWL_Pushed(SWL_RIGHT) > 0 & GetCount() == 2)
+    if (SWL_Pushed(SWL_CTR) > 0 && GetCount() == 2)
     {
-      if (PT1AD1 == 0b01100000 || PT1AD1 == 0b10100000)
+      if (led_Register == 0b01100000 || led_Register== 0b10100000)
       {
-        SWL_TOG(SWL_GREEN);
+        SWL_TOG(SWL_YELLOW);
       }
     }
     if (SWL_Pushed(SWL_UP) > 0)
@@ -168,30 +163,32 @@ void main(void)
     /********************************************************************/
     // Functions
     /********************************************************************/
-    int GetCount(void)
-    {
-      int total_LEDS;
+int GetCount(void)
+{
+  unsigned char total_LEDS;
 
-      if (PT1AD1 == 0b0000000)
-      {
-        total_LEDS = 0;
-      }
 
-      if (PT1AD1 == 0b10000000 || PT1AD1 == 0b01000000 || PT1AD1 == 0b00100000)
-      {
-        total_LEDS = 1;
-      }
-      else if (PT1AD1 == 0b11000000 || PT1AD1 == 0b01100000 || PT1AD1 == 0b10100000)
-      {
-        total_LEDS = 2;
-      }
-      else if (PT1AD1 == 0b11100000)
-      {
-        total_LEDS = 3;
-      }
+ unsigned char led_check = PT1AD1 & 0b11100000;
 
-      return total_LEDS;
-    }
+  if (led_check == 0b00000000)
+  {
+    total_LEDS = 0;
+  }
+  else if (led_check == 0b10000000 || led_check == 0b01000000 || led_check == 0b00100000)
+  {
+    total_LEDS = 1;
+  }
+  else if (led_check == 0b11000000 || led_check == 0b01100000 || led_check == 0b10100000)
+  {
+    total_LEDS = 2;
+  }
+  else if (led_check == 0b11100000)
+  {
+    total_LEDS = 3;
+  }
+
+  return total_LEDS;
+}
     /********************************************************************/
     // Interrupt Service Routines
     /********************************************************************/
