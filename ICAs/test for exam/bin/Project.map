@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\mhannah4\source\repos\CMPE1250\MarcHannah\ICAs\ICA 6 (2)\bin\Project.abs"
+PROGRAM "C:\Users\mhannah4\source\repos\CMPE1250\MarcHannah\ICAs\test for exam\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -15,6 +15,7 @@ FILE SECTION
 mc9s12xdp512.c.o                        Model: BANKED,        Lang: ANSI-C
 main.c.o                                Model: BANKED,        Lang: ANSI-C
 Start12.c.o                             Model: BANKED,        Lang: ANSI-C
+rtshc12.c.o (ansixbi.lib)               Model: BANKED,        Lang: ANSI-C
 SWL_LED.c.o                             Model: BANKED,        Lang: ANSI-C
 
 *********************************************************************************************
@@ -24,7 +25,7 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     0
-  _Copy    *toCopyDownBeg 0xC031
+  _Copy    *toCopyDownBeg 0xC036
 } _startupData;
 
 *********************************************************************************************
@@ -33,8 +34,9 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             15     R     0xC000     0xC00E   ROM_C000
 .startData                        34     R     0xC00F     0xC030   ROM_C000
-.copy                              2     R     0xC031     0xC032   ROM_C000
-.text                            320     R   0xFE8000   0xFE813F   PAGE_FE
+NON_BANKED                         5     R     0xC031     0xC035   ROM_C000
+.copy                              2     R     0xC036     0xC037   ROM_C000
+.text                            123     R   0xFE8000   0xFE807A   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -686,7 +688,7 @@ Section Name                    Size  Type     From       To       Segment
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         175 (dec:      373)
+READ_ONLY (R):          B5 (dec:      181)
 READ_WRITE (R/W):      100 (dec:      256)
 NO_INIT (N/I):         300 (dec:      768)
 
@@ -1292,7 +1294,7 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _CAN2TXTSR                                 1FE       2       2       0   .abs_section_1fe
      _CAN3RXTSR                                 22E       2       2       0   .abs_section_22e
      _CAN3TXTSR                                 23E       2       2       0   .abs_section_23e
-     _PT01AD1                                   278       2       2       8   .abs_section_278
+     _PT01AD1                                   278       2       2       3   .abs_section_278
      _DDR01AD1                                  27A       2       2       1   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -1352,23 +1354,25 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    FE8000      BC     188       8   .text       
-     GetCount                                FE80BC      2E      46       4   .text       
+     main                                    FE8000      1A      26       2   .text       
 - VARIABLES:
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE80EA      29      41       2   .text       
+     Init                                    FE801A      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
 - LABELS:
      __SEG_END_SSTACK                          2100       0       0       1               
+MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
+- PROCEDURES:
+     _LINC                                     C031       5       5       1   NON_BANKED  
+- VARIABLES:
 MODULE:                 -- SWL_LED.c.o --
 - PROCEDURES:
-     SWL_Init                                FE8113       D      13       2   .text       
-     SWL_ON                                  FE8120       B      11       6   .text       
-     SWL_Pushed                              FE812B       9       9       8   .text       
-     SWL_OFF                                 FE8134       C      12       2   .text       
+     SWL_Init                                FE8043       D      13       2   .text       
+     SWL_TOG                                 FE8050       B      11       2   .text       
+     countUp                                 FE805B      20      32       2   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1376,18 +1380,21 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     0    234      0
+  main.c.o                                     0     26      0
   Start12.c.o                                  0     56      0
-  SWL_LED.c.o                                  0     45      0
+  rtshc12.c.o (ansixbi.lib)                    0      5      0
+  SWL_LED.c.o                                  0     56      0
   other                                      256     36      2
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  main GetCount Init SWL_Init SWL_ON SWL_Pushed SWL_OFF 
+  main Init SWL_Init SWL_TOG countUp 
 SECTION: ".init"
   _Startup 
+SECTION: "NON_BANKED"
+  _LINC 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -3191,7 +3198,7 @@ OBJECT LIST SORTED BY ADDRESS
      _DDR1AD0                                   273       1       1       0   .abs_section_273
      _RDR1AD0                                   275       1       1       0   .abs_section_275
      _PER1AD0                                   277       1       1       0   .abs_section_277
-     _PT01AD1                                   278       2       2       8   .abs_section_278
+     _PT01AD1                                   278       2       2       3   .abs_section_278
      _DDR01AD1                                  27A       2       2       1   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -3335,25 +3342,34 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
      _Startup                                  C000       F      15       0   .init       
-     main                                    FE8000      BC     188       8   .text       
-     GetCount                                FE80BC      2E      46       4   .text       
-     Init                                    FE80EA      29      41       2   .text       
-     SWL_Init                                FE8113       D      13       2   .text       
-     SWL_ON                                  FE8120       B      11       6   .text       
-     SWL_Pushed                              FE812B       9       9       8   .text       
-     SWL_OFF                                 FE8134       C      12       2   .text       
+     _LINC                                     C031       5       5       1   NON_BANKED  
+     main                                    FE8000      1A      26       2   .text       
+     Init                                    FE801A      29      41       2   .text       
+     SWL_Init                                FE8043       D      13       2   .text       
+     SWL_TOG                                 FE8050       B      11       2   .text       
+     countUp                                 FE805B      20      32       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
+rtshc12.c.o (ansixbi.lib):
+  _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
+  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LDEC 
+  _LMUL _LMULU16x32 _LMULS16x32 _lDivMod _LDIVU _NEG_P _LDIVS _LMODU _LMODS 
+  _ILSEXT _COPY _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE 
+  _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL 
+  _FPCMP _PADD _PSUB _PINC _PDEC 
 SWL_LED.c.o:
-  SWL_TOG 
+  SWL_ON SWL_Pushed SWL_OFF GetCount 
+NOT USED VARIABLES
+rtshc12.c.o (ansixbi.lib):
+  _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC031 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC036 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3361,14 +3377,11 @@ Filling bytes inserted
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
-main                      USES SWL_Init main _PT01AD1 SWL_ON GetCount SWL_OFF 
-                                SWL_Pushed 
-GetCount                  USES _PT01AD1 SWL_Pushed 
+main                      USES SWL_Init SWL_TOG countUp 
 Init                      USES _startupData 
 SWL_Init                  USES _PT01AD1 _DDR01AD1 _ATD1DIEN 
-SWL_ON                    USES _PT01AD1 
-SWL_Pushed                USES _PT01AD1 
-SWL_OFF                   USES _PT01AD1 
+SWL_TOG                   USES _PT01AD1 
+countUp                   USES _LINC 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -3379,16 +3392,12 @@ DEPENDENCY TREE
  |  | 
  |  +- SWL_Init            
  |  |    
- |  +- SWL_ON              
+ |  +- SWL_TOG             
  |  |    
- |  +- GetCount            
- |  |  | 
- |  |  +- SWL_Pushed          
- |  |       
- |  +- SWL_OFF             
- |  |    
- |  +- SWL_Pushed           (see above)
- |     
+ |  +- countUp             
+ |     | 
+ |     +- _LINC               
+ |          
  +- _Startup            
     | 
     +- Init                
@@ -3401,6 +3410,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 373
+Number of blocks to be downloaded: 6
+Total size of all blocks to be downloaded: 181
 

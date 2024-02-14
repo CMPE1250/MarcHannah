@@ -113,41 +113,41 @@ void main(void)
         }*/
 
 
-      unsigned char led_Register= PT1AD1 & 0b11100000;
+      
 
     if (SWL_Pushed(SWL_LEFT) > 0 && GetCount() <= 1)
     {
 
-      SWL_TOG(SWL_RED);
+      SWL_ON(SWL_RED);
     }
     if (SWL_Pushed(SWL_LEFT) > 0 && GetCount() == 2)
     {
-      if (led_Register == 0b11000000 || led_Register == 0b10100000)
+      if (SWL_Pushed(SWL_RED))
       {
-        SWL_TOG(SWL_RED);
+        SWL_OFF(SWL_RED);
       }
     }
 
-    if (SWL_Pushed(SWL_RIGHT) > 0 && GetCount() <= 2)
+    if (SWL_Pushed(SWL_RIGHT) > 0 && GetCount() <=1 )
     {
-      SWL_TOG(SWL_GREEN);
+      SWL_ON(SWL_GREEN);
     }
     if (SWL_Pushed(SWL_RIGHT) > 0 && GetCount() == 2)
     {
-      if (led_Register == 0b11000000 || led_Register == 0b01100000)
+      if (SWL_Pushed(SWL_GREEN))
       {
-        SWL_TOG(SWL_GREEN);
+        SWL_OFF(SWL_GREEN);
       }
     }
     if (SWL_Pushed(SWL_CTR) > 0 && GetCount() <= 1)
     {
-      SWL_TOG(SWL_YELLOW);
+      SWL_ON(SWL_YELLOW);
     }
     if (SWL_Pushed(SWL_CTR) > 0 && GetCount() == 2)
     {
-      if (led_Register == 0b01100000 || led_Register== 0b10100000)
+      if (SWL_Pushed(SWL_YELLOW))
       {
-        SWL_TOG(SWL_YELLOW);
+        SWL_OFF(SWL_YELLOW);
       }
     }
     if (SWL_Pushed(SWL_UP) > 0)
@@ -170,22 +170,9 @@ int GetCount(void)
 
  unsigned char led_check = PT1AD1 & 0b11100000;
 
-  if (led_check == 0b00000000)
-  {
-    total_LEDS = 0;
-  }
-  else if (led_check == 0b10000000 || led_check == 0b01000000 || led_check == 0b00100000)
-  {
-    total_LEDS = 1;
-  }
-  else if (led_check == 0b11000000 || led_check == 0b01100000 || led_check == 0b10100000)
-  {
-    total_LEDS = 2;
-  }
-  else if (led_check == 0b11100000)
-  {
-    total_LEDS = 3;
-  }
+  if (SWL_Pushed(SWL_RED)){total_LEDS++;}
+  if (SWL_Pushed(SWL_GREEN)){total_LEDS++;}
+  if (SWL_Pushed(SWL_YELLOW)){total_LEDS++;}
 
   return total_LEDS;
 }
