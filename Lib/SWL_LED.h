@@ -66,6 +66,7 @@ void SWL_Init (void);
 void SWL_ON (SWL_LEDColour led);
 void SWL_OFF (SWL_LEDColour led);
 void SWL_TOG (SWL_LEDColour led);
+int GetCount(void);
 ///////////////////////////////////////////////////////////////
 // special LED function
 //void SWL_AUX_ON (void);
@@ -80,6 +81,11 @@ int SWL_Pushed (SWL_SwitchPos pos);
 // is any switch being pushed (T/F)
 int SWL_Any (void);
 ///////////////////////////////////////////////////////////////
+//timer
+void countUp(long countAmount);
+
+
+
 
 ///////////////////////////////////////////////////////////////
 
