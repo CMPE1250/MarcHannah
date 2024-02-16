@@ -53,9 +53,9 @@ int GetCount(void)
 
 
 
-  if (SWL_Pushed(SWL_RED)){total_LEDS++;}
-  if (SWL_Pushed(SWL_GREEN)){total_LEDS++;}
-  if (SWL_Pushed(SWL_YELLOW)){total_LEDS++;}
+  if (SWL_Pushed(SWL_RED)>0){total_LEDS++;}
+  if (SWL_Pushed(SWL_GREEN)>0){total_LEDS++;}
+  if (SWL_Pushed(SWL_YELLOW)>0){total_LEDS++;}
 
   return total_LEDS;
 }
