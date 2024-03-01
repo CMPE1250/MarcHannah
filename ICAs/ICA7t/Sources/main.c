@@ -59,8 +59,19 @@ void main(void)
 /********************************************************************/
 
   for (;;)
-  {   SWL_TOG(SWL_RED);
-   countUp(1000000);
+  {  
+   countUp(5000);
+    SWL_ON(SWL_RED);
+   countUp(5000);
+   SWL_OFF(SWL_RED);
+
+
+   if SWL_Pushed{SWL_LEFT}{Clock_Set8MHZ();}
+   if SWL_Pushed(SWL_CTR){Clock_Set20MHZ();}
+   
+
+
+
     
     
     
