@@ -25,3 +25,6 @@ void RTI_InitCallback(void(*function)(void));
 /// @brief Blocking delay to be used  once the RTI MOdule is enabled
 /// @param timeout 
 void RTI_Delay_ms(unsigned int ms);
+
+
+void RTI_Delay(unsigned int Intervalms);
