@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\mhannah4\source\repos\CMPE1250\MarcHannah\ICAs\ICA7 RTI\bin\Project.abs"
+PROGRAM "C:\Users\mhannah4\Documents\GitHub\MarcHannah\ICAs\ICA7 RTI\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -15,6 +15,7 @@ FILE SECTION
 mc9s12xdp512.c.o                        Model: BANKED,        Lang: ANSI-C
 main.c.o                                Model: BANKED,        Lang: ANSI-C
 Start12.c.o                             Model: BANKED,        Lang: ANSI-C
+rtshc12.c.o (ansixbi.lib)               Model: BANKED,        Lang: ANSI-C
 SWL_LED.c.o                             Model: BANKED,        Lang: ANSI-C
 rti.c.o                                 Model: BANKED,        Lang: ANSI-C
 
@@ -24,8 +25,9 @@ STARTUP SECTION
 Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
-  unsigned nofZeroOut     0
-  _Copy    *toCopyDownBeg 0xC031
+  unsigned nofZeroOut     1
+  _Range   pZeroOut       0x2100     4
+  _Copy    *toCopyDownBeg 0xC036
 } _startupData;
 
 *********************************************************************************************
@@ -34,8 +36,9 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             15     R     0xC000     0xC00E   ROM_C000
 .startData                        34     R     0xC00F     0xC030   ROM_C000
-.copy                              2     R     0xC031     0xC032   ROM_C000
-.text                            304     R   0xFE8000   0xFE812F   PAGE_FE
+NON_BANKED                         5     R     0xC031     0xC035   ROM_C000
+.copy                              2     R     0xC036     0xC037   ROM_C000
+.text                            297     R   0xFE8000   0xFE8128   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -684,11 +687,12 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_3aa                   2   N/I      0x3AA      0x3AB   .absSeg644
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
+.bss                               4   R/W     0x2100     0x2103   RAM
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         165 (dec:      357)
-READ_WRITE (R/W):      100 (dec:      256)
+READ_ONLY (R):         163 (dec:      355)
+READ_WRITE (R/W):      104 (dec:      260)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -738,11 +742,11 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _DDRK                                       33       1       1       0   .abs_section_33
      _SYNR                                       34       1       1       0   .abs_section_34
      _REFDV                                      35       1       1       0   .abs_section_35
-     _CRGFLG                                     37       1       1       4   .abs_section_37
+     _CRGFLG                                     37       1       1       2   .abs_section_37
      _CRGINT                                     38       1       1       0   .abs_section_38
      _CLKSEL                                     39       1       1       0   .abs_section_39
      _PLLCTL                                     3A       1       1       0   .abs_section_3a
-     _RTICTL                                     3B       1       1       6   .abs_section_3b
+     _RTICTL                                     3B       1       1       1   .abs_section_3b
      _COPCTL                                     3C       1       1       0   .abs_section_3c
      _ARMCOP                                     3F       1       1       0   .abs_section_3f
      _TIOS                                       40       1       1       0   .abs_section_40
@@ -1353,39 +1357,45 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    FE8000      94     148       2   .text       
+     main                                    FE8000      8E     142       2   .text       
 - VARIABLES:
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE8094      29      41       2   .text       
+     Init                                    FE808E      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
 - LABELS:
      __SEG_END_SSTACK                          2100       0       0       1               
+MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
+- PROCEDURES:
+     _LINC                                     C031       5       5       1   NON_BANKED  
+- VARIABLES:
 MODULE:                 -- SWL_LED.c.o --
 - PROCEDURES:
-     SWL_Init                                FE80BD       D      13       2   .text       
-     SWL_ON                                  FE80CA       B      11       2   .text       
-     SWL_Pushed                              FE80D5       9       9       6   .text       
-     SWL_OFF                                 FE80DE       C      12       2   .text       
-     SWL_TOG                                 FE80EA       B      11       2   .text       
+     SWL_Init                                FE80B7       D      13       2   .text       
+     SWL_ON                                  FE80C4       B      11       4   .text       
+     SWL_Pushed                              FE80CF       9       9       4   .text       
+     SWL_OFF                                 FE80D8       C      12       4   .text       
+     SWL_TOG                                 FE80E4       B      11       2   .text       
 - VARIABLES:
 MODULE:                 -- rti.c.o --
 - PROCEDURES:
-     RTI_Init                                FE80F5       5       5       2   .text       
-     RTI_Delay_ms                            FE80FA      36      54       2   .text       
+     RTI_Init                                FE80EF       5       5       4   .text       
+     RTI_Delay_ms                            FE80F4      35      53       6   .text       
 - VARIABLES:
+     rtiMasterCount                            2100       4       4       8   .bss        
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     0    148      0
+  main.c.o                                     0    142      0
   Start12.c.o                                  0     56      0
+  rtshc12.c.o (ansixbi.lib)                    0      5      0
   SWL_LED.c.o                                  0     56      0
-  rti.c.o                                      0     59      0
+  rti.c.o                                      4     58      0
   other                                      256     36      2
 
 *********************************************************************************************
@@ -1393,8 +1403,12 @@ SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
   main Init SWL_Init SWL_ON SWL_Pushed SWL_OFF SWL_TOG RTI_Init RTI_Delay_ms 
+SECTION: ".bss"
+  rtiMasterCount 
 SECTION: ".init"
   _Startup 
+SECTION: "NON_BANKED"
+  _LINC 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -2734,11 +2748,11 @@ OBJECT LIST SORTED BY ADDRESS
      _DDRK                                       33       1       1       0   .abs_section_33
      _SYNR                                       34       1       1       0   .abs_section_34
      _REFDV                                      35       1       1       0   .abs_section_35
-     _CRGFLG                                     37       1       1       4   .abs_section_37
+     _CRGFLG                                     37       1       1       2   .abs_section_37
      _CRGINT                                     38       1       1       0   .abs_section_38
      _CLKSEL                                     39       1       1       0   .abs_section_39
      _PLLCTL                                     3A       1       1       0   .abs_section_3a
-     _RTICTL                                     3B       1       1       6   .abs_section_3b
+     _RTICTL                                     3B       1       1       1   .abs_section_3b
      _COPCTL                                     3C       1       1       0   .abs_section_3c
      _ARMCOP                                     3F       1       1       0   .abs_section_3f
      _TIOS                                       40       1       1       0   .abs_section_40
@@ -3341,28 +3355,40 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR5                                      3AA       2       2       0   .abs_section_3aa
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
+     rtiMasterCount                            2100       4       4       8   .bss        
      _Startup                                  C000       F      15       0   .init       
-     main                                    FE8000      94     148       2   .text       
-     Init                                    FE8094      29      41       2   .text       
-     SWL_Init                                FE80BD       D      13       2   .text       
-     SWL_ON                                  FE80CA       B      11       2   .text       
-     SWL_Pushed                              FE80D5       9       9       6   .text       
-     SWL_OFF                                 FE80DE       C      12       2   .text       
-     SWL_TOG                                 FE80EA       B      11       2   .text       
-     RTI_Init                                FE80F5       5       5       2   .text       
-     RTI_Delay_ms                            FE80FA      36      54       2   .text       
+     _LINC                                     C031       5       5       1   NON_BANKED  
+     main                                    FE8000      8E     142       2   .text       
+     Init                                    FE808E      29      41       2   .text       
+     SWL_Init                                FE80B7       D      13       2   .text       
+     SWL_ON                                  FE80C4       B      11       4   .text       
+     SWL_Pushed                              FE80CF       9       9       4   .text       
+     SWL_OFF                                 FE80D8       C      12       4   .text       
+     SWL_TOG                                 FE80E4       B      11       2   .text       
+     RTI_Init                                FE80EF       5       5       4   .text       
+     RTI_Delay_ms                            FE80F4      35      53       6   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
+rtshc12.c.o (ansixbi.lib):
+  _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
+  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LDEC 
+  _LMUL _LMULU16x32 _LMULS16x32 _lDivMod _LDIVU _NEG_P _LDIVS _LMODU _LMODS 
+  _ILSEXT _COPY _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE 
+  _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL 
+  _FPCMP _PADD _PSUB _PINC _PDEC 
 SWL_LED.c.o:
   GetCount countUp 
+NOT USED VARIABLES
+rtshc12.c.o (ansixbi.lib):
+  _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC031 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC036 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3370,8 +3396,8 @@ Filling bytes inserted
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
-main                      USES SWL_Init RTI_Init SWL_Pushed _CRGFLG SWL_ON 
-                                SWL_OFF SWL_TOG RTI_Delay_ms 
+main                      USES SWL_Init RTI_Init SWL_Pushed SWL_ON 
+                                RTI_Delay_ms SWL_OFF SWL_TOG 
 Init                      USES _startupData 
 SWL_Init                  USES _PT01AD1 _DDR01AD1 _ATD1DIEN 
 SWL_ON                    USES _PT01AD1 
@@ -3379,7 +3405,7 @@ SWL_Pushed                USES _PT01AD1
 SWL_OFF                   USES _PT01AD1 
 SWL_TOG                   USES _PT01AD1 
 RTI_Init                  USES _RTICTL 
-RTI_Delay_ms              USES _RTICTL 
+RTI_Delay_ms              USES rtiMasterCount RTI_Init _CRGFLG _LINC 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -3396,11 +3422,15 @@ DEPENDENCY TREE
  |  |    
  |  +- SWL_ON              
  |  |    
+ |  +- RTI_Delay_ms        
+ |  |  | 
+ |  |  +- RTI_Init             (see above)
+ |  |  |  
+ |  |  +- _LINC               
+ |  |       
  |  +- SWL_OFF             
  |  |    
  |  +- SWL_TOG             
- |  |    
- |  +- RTI_Delay_ms        
  |       
  +- _Startup            
     | 
@@ -3414,6 +3444,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 357
+Number of blocks to be downloaded: 6
+Total size of all blocks to be downloaded: 355
 
