@@ -55,13 +55,23 @@ typedef SCI_Typedef* SCI_Base;
 // set baud, returns actual baud
 unsigned long sci0_Init(unsigned long ulBaudRate, int iRDRF_Interrupt);
 
+
+void sci0_Init2 (void);
+
+
+
+
+
+
+
+
 // blocking byte read
 // waits for a byte to arrive and returns it
-unsigned char sci0_bread(void);
+unsigned char sci0_bread(unsigned char * pData);
 
 // read a byte, non-blocking
 // returns 1 if byte read, 0 if not
-unsigned char sci0_rxByte(unsigned char * pData);
+unsigned int sci0_rxByte(unsigned char * pData);
 
 // send a byte over SCI
 void sci0_txByte (unsigned char data);
@@ -83,9 +93,9 @@ SCI5 - Shared with SPI2 and LCD -      RDX5-> PH6 (PIN 33), TDX5-> PH7 (PIN 32)
 */
 
 //ADVANCED FUNCTIONS  - To Work with any sci*************************************
-int sci_Init(SCI_Base sci, unsigned long ulBaudRate, int iRDRF_Interrupt);
-unsigned char sci0_rxByte(unsigned char * pData);
-void sci_txByte (SCI_Base sci, unsigned char data);
-void sci_txStr (SCI_Base sci, char const *straddr);
-unsigned char sci_rxByte(SCI_Base sci, unsigned char * pData);
+//int sci_Init(SCI_Base sci, unsigned long ulBaudRate, int iRDRF_Interrupt);
+//unsigned char sci0_rxByte(unsigned char * pData);
+//void sci_txByte (SCI_Base sci, unsigned char data);
+//void sci_txStr (SCI_Base sci, char const *straddr);
+//unsigned char sci_rxByte(SCI_Base sci, unsigned char * pData);
 /* ADVANCED FUNCTIONS END*******************************************************/
