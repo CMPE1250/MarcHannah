@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\mhannah4\source\repos\CMPE1250\MarcHannah\ICAs\ICA8 SCI\bin\Project.abs"
+PROGRAM "C:\Users\mhannah4\Documents\GitHub\MarcHannah\ICAs\ICA8 SCI\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -15,8 +15,13 @@ FILE SECTION
 mc9s12xdp512.c.o                        Model: BANKED,        Lang: ANSI-C
 main.c.o                                Model: BANKED,        Lang: ANSI-C
 Start12.c.o                             Model: BANKED,        Lang: ANSI-C
+STDLIB.C.o (ansixbi.lib)                Model: BANKED,        Lang: ANSI-C
+rtshc12.c.o (ansixbi.lib)               Model: BANKED,        Lang: ANSI-C
 SWL_LED.c.o                             Model: BANKED,        Lang: ANSI-C
 clock.c.o                               Model: BANKED,        Lang: ANSI-C
+misc.c.o                                Model: BANKED,        Lang: ANSI-C
+sci.c.o                                 Model: BANKED,        Lang: ANSI-C
+rti.c.o                                 Model: BANKED,        Lang: ANSI-C
 
 *********************************************************************************************
 STARTUP SECTION
@@ -24,8 +29,9 @@ STARTUP SECTION
 Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
-  unsigned nofZeroOut     0
-  _Copy    *toCopyDownBeg 0xC031
+  unsigned nofZeroOut     1
+  _Range   pZeroOut       0x2100     9
+  _Copy    *toCopyDownBeg 0xC17F
 } _startupData;
 
 *********************************************************************************************
@@ -34,9 +40,11 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             15     R     0xC000     0xC00E   ROM_C000
 .startData                        34     R     0xC00F     0xC030   ROM_C000
-.copy                              2     R     0xC031     0xC032   ROM_C000
-.text                            109     R   0xFE8000   0xFE806C   PAGE_FE
+NON_BANKED                       334     R     0xC031     0xC17E   ROM_C000
+.copy                              7     R     0xC17F     0xC185   ROM_C000
+.text                            355     R   0xFE8000   0xFE8162   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
+.data                              4   R/W     0x2100     0x2103   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
 .abs_section_a                     1   N/I        0xA        0xA   .absSeg2
@@ -684,11 +692,13 @@ Section Name                    Size  Type     From       To       Segment
 .abs_section_3aa                   2   N/I      0x3AA      0x3AB   .absSeg644
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
+.bss                               4   R/W     0x2104     0x2107   RAM
+.common                            1   R/W     0x2108     0x2108   RAM
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):          A2 (dec:      162)
-READ_WRITE (R/W):      100 (dec:      256)
+READ_ONLY (R):         2EB (dec:      747)
+READ_WRITE (R/W):      109 (dec:      265)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -738,11 +748,11 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _DDRK                                       33       1       1       0   .abs_section_33
      _SYNR                                       34       1       1       1   .abs_section_34
      _REFDV                                      35       1       1       1   .abs_section_35
-     _CRGFLG                                     37       1       1       1   .abs_section_37
+     _CRGFLG                                     37       1       1       4   .abs_section_37
      _CRGINT                                     38       1       1       0   .abs_section_38
      _CLKSEL                                     39       1       1       2   .abs_section_39
      _PLLCTL                                     3A       1       1       1   .abs_section_3a
-     _RTICTL                                     3B       1       1       0   .abs_section_3b
+     _RTICTL                                     3B       1       1       3   .abs_section_3b
      _COPCTL                                     3C       1       1       0   .abs_section_3c
      _ARMCOP                                     3F       1       1       0   .abs_section_3f
      _TIOS                                       40       1       1       0   .abs_section_40
@@ -1293,7 +1303,7 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _CAN2TXTSR                                 1FE       2       2       0   .abs_section_1fe
      _CAN3RXTSR                                 22E       2       2       0   .abs_section_22e
      _CAN3TXTSR                                 23E       2       2       0   .abs_section_23e
-     _PT01AD1                                   278       2       2       1   .abs_section_278
+     _PT01AD1                                   278       2       2       3   .abs_section_278
      _DDR01AD1                                  27A       2       2       1   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -1353,43 +1363,87 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    FE8000      22      34       2   .text       
+     main                                    FE8000      34      52       2   .text       
 - VARIABLES:
+     data                                      2108       1       1       2   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE8022      29      41       2   .text       
+     Init                                    FE8034      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
 - LABELS:
      __SEG_END_SSTACK                          2100       0       0       1               
+MODULE:                 -- STDLIB.C.o (ansixbi.lib) --
+- PROCEDURES:
+     rand                                    FE805D      73     115       2   .text       
+- VARIABLES:
+     seed                                      2100       4       4      13   .data       
+MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
+- PROCEDURES:
+     _LNEG                                     C031       9       9       1   NON_BANKED  
+     _LINC                                     C03A       5       5       1   NON_BANKED  
+     _LMULS16x32                               C03F      1C      28       2   NON_BANKED  
+     _lDivMod                                  C05B      B9     185       4   NON_BANKED  
+     _NEG_P                                    C114       C      12       7   NON_BANKED  
+     _LDIVS                                    C120      35      53       1   NON_BANKED  
+     _LMODS                                    C155      2A      42       1   NON_BANKED  
+- VARIABLES:
 MODULE:                 -- SWL_LED.c.o --
 - PROCEDURES:
-     SWL_Init                                FE804B       D      13       2   .text       
+     SWL_Init                                FE80D0       D      13       2   .text       
+     SWL_TOG                                 FE80DD       B      11       2   .text       
 - VARIABLES:
 MODULE:                 -- clock.c.o --
 - PROCEDURES:
-     Clock_Set20MHZ                          FE8058      15      21       2   .text       
+     Clock_Set20MHZ                          FE80E8      15      21       2   .text       
 - VARIABLES:
+MODULE:                 -- misc.c.o --
+- PROCEDURES:
+     GetRandom                               FE80FD       A      10       2   .text       
+- VARIABLES:
+MODULE:                 -- sci.c.o --
+- PROCEDURES:
+     sci0_Init2                              FE8107       C      12       2   .text       
+     sci0_txByte                             FE8113       D      13       2   .text       
+- VARIABLES:
+MODULE:                 -- rti.c.o --
+- PROCEDURES:
+     RTI_Init                                FE8120       5       5       4   .text       
+     RTI_Delay_ms                            FE8125      3E      62       2   .text       
+- VARIABLES:
+     rtiMasterCount                            2104       4       4       8   .bss        
 
 *********************************************************************************************
 MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     0     34      0
+  main.c.o                                     1     52      0
   Start12.c.o                                  0     56      0
-  SWL_LED.c.o                                  0     13      0
+  STDLIB.C.o (ansixbi.lib)                     4    115      0
+  rtshc12.c.o (ansixbi.lib)                    0    334      0
+  SWL_LED.c.o                                  0     24      0
   clock.c.o                                    0     21      0
-  other                                      256     36      2
+  misc.c.o                                     0     10      0
+  sci.c.o                                      0     25      0
+  rti.c.o                                      4     67      0
+  other                                      256     36      7
 
 *********************************************************************************************
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  main Init SWL_Init Clock_Set20MHZ 
+  main Init rand SWL_Init SWL_TOG Clock_Set20MHZ GetRandom sci0_Init2 
+  sci0_txByte RTI_Init RTI_Delay_ms 
+SECTION: ".data"
+  seed 
+SECTION: ".bss"
+  rtiMasterCount 
 SECTION: ".init"
   _Startup 
+SECTION: "NON_BANKED"
+  _LNEG _LINC _LMULS16x32 _lDivMod _NEG_P _LDIVS _LMODS 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -2684,6 +2738,8 @@ SECTION: ".abs_section_3ac"
   _XGR6 
 SECTION: ".abs_section_3ae"
   _XGR7 
+SECTION: ".common"
+  data 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
@@ -2729,11 +2785,11 @@ OBJECT LIST SORTED BY ADDRESS
      _DDRK                                       33       1       1       0   .abs_section_33
      _SYNR                                       34       1       1       1   .abs_section_34
      _REFDV                                      35       1       1       1   .abs_section_35
-     _CRGFLG                                     37       1       1       1   .abs_section_37
+     _CRGFLG                                     37       1       1       4   .abs_section_37
      _CRGINT                                     38       1       1       0   .abs_section_38
      _CLKSEL                                     39       1       1       2   .abs_section_39
      _PLLCTL                                     3A       1       1       1   .abs_section_3a
-     _RTICTL                                     3B       1       1       0   .abs_section_3b
+     _RTICTL                                     3B       1       1       3   .abs_section_3b
      _COPCTL                                     3C       1       1       0   .abs_section_3c
      _ARMCOP                                     3F       1       1       0   .abs_section_3f
      _TIOS                                       40       1       1       0   .abs_section_40
@@ -3193,7 +3249,7 @@ OBJECT LIST SORTED BY ADDRESS
      _DDR1AD0                                   273       1       1       0   .abs_section_273
      _RDR1AD0                                   275       1       1       0   .abs_section_275
      _PER1AD0                                   277       1       1       0   .abs_section_277
-     _PT01AD1                                   278       2       2       1   .abs_section_278
+     _PT01AD1                                   278       2       2       3   .abs_section_278
      _DDR01AD1                                  27A       2       2       1   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -3336,26 +3392,66 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR5                                      3AA       2       2       0   .abs_section_3aa
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
+     seed                                      2100       4       4      13   .data       
+     rtiMasterCount                            2104       4       4       8   .bss        
+     data                                      2108       1       1       2   .common     
      _Startup                                  C000       F      15       0   .init       
-     main                                    FE8000      22      34       2   .text       
-     Init                                    FE8022      29      41       2   .text       
-     SWL_Init                                FE804B       D      13       2   .text       
-     Clock_Set20MHZ                          FE8058      15      21       2   .text       
+     _LNEG                                     C031       9       9       1   NON_BANKED  
+     _LINC                                     C03A       5       5       1   NON_BANKED  
+     _LMULS16x32                               C03F      1C      28       2   NON_BANKED  
+     _lDivMod                                  C05B      B9     185       4   NON_BANKED  
+     _NEG_P                                    C114       C      12       7   NON_BANKED  
+     _LDIVS                                    C120      35      53       1   NON_BANKED  
+     _LMODS                                    C155      2A      42       1   NON_BANKED  
+     main                                    FE8000      34      52       2   .text       
+     Init                                    FE8034      29      41       2   .text       
+     rand                                    FE805D      73     115       2   .text       
+     SWL_Init                                FE80D0       D      13       2   .text       
+     SWL_TOG                                 FE80DD       B      11       2   .text       
+     Clock_Set20MHZ                          FE80E8      15      21       2   .text       
+     GetRandom                               FE80FD       A      10       2   .text       
+     sci0_Init2                              FE8107       C      12       2   .text       
+     sci0_txByte                             FE8113       D      13       2   .text       
+     RTI_Init                                FE8120       5       5       4   .text       
+     RTI_Delay_ms                            FE8125      3E      62       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
+STDLIB.C.o (ansixbi.lib):
+  atexit getenv system mblen mbtowc wctomb mbstowcs wcstombs CheckCharWithBase 
+  _strtoul strtoul _strtol strtol _itoa bsearch swap qsort div ldiv abs labs 
+  srand 
+rtshc12.c.o (ansixbi.lib):
+  _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
+  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LCOM _LDEC _LMUL 
+  _LMULU16x32 _LDIVU _LMODU _ILSEXT _COPY _CASE_DIRECT _CASE_DIRECT_BYTE 
+  _CASE_CHECKED _CASE_CHECKED_BYTE _CASE_SEARCH _CASE_SEARCH_BYTE 
+  _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL _FPCMP _PADD _PSUB _PINC _PDEC 
 SWL_LED.c.o:
-  SWL_ON SWL_Pushed SWL_OFF SWL_TOG GetCount countUp 
+  SWL_ON SWL_Pushed SWL_OFF GetCount countUp 
 clock.c.o:
   Clock_EnableOutput Clock_Set8MHZ Clock_Set24MHZ Clock_Set40MHZ 
   Clock_GetBusSpeed 
+sci.c.o:
+  sci0_rxByte 
+NOT USED VARIABLES
+STDLIB.C.o (ansixbi.lib):
+  channels errno 
+rtshc12.c.o (ansixbi.lib):
+  _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC031 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC17F ---- SIZE       4 ---
+Filling bytes inserted
+ 00012103
+------- ROM-ADDRESS: 0xC183 ---- RAM-ADDRESS: 0x2103 ---- SIZE       1 ---
+Name of initialized Object : seed:3
+ 01
+------- ROM-ADDRESS: 0xC184 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3363,11 +3459,21 @@ Filling bytes inserted
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
-main                      USES SWL_Init Clock_Set20MHZ _SCI0BD _SCI0CR2 
-                                _SCI0SR1 _SCI0DRL 
+_LMULS16x32               USES _LNEG 
+_LDIVS                    USES _NEG_P _lDivMod 
+_LMODS                    USES _NEG_P _lDivMod 
+main                      USES SWL_Init Clock_Set20MHZ sci0_Init2 RTI_Init 
+                                GetRandom data RTI_Delay_ms SWL_TOG sci0_txByte 
 Init                      USES _startupData 
+rand                      USES seed _LDIVS _LMODS _LMULS16x32 
 SWL_Init                  USES _PT01AD1 _DDR01AD1 _ATD1DIEN 
+SWL_TOG                   USES _PT01AD1 
 Clock_Set20MHZ            USES _SYNR _REFDV _CLKSEL _PLLCTL _CRGFLG 
+GetRandom                 USES rand 
+sci0_Init2                USES _SCI0BD _SCI0CR2 
+sci0_txByte               USES _SCI0DRL _SCI0SR1 
+RTI_Init                  USES _RTICTL 
+RTI_Delay_ms              USES _RTICTL _CRGFLG rtiMasterCount RTI_Init _LINC 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -3379,6 +3485,40 @@ DEPENDENCY TREE
  |  +- SWL_Init            
  |  |    
  |  +- Clock_Set20MHZ      
+ |  |    
+ |  +- sci0_Init2          
+ |  |    
+ |  +- RTI_Init            
+ |  |    
+ |  +- GetRandom           
+ |  |  | 
+ |  |  +- rand                
+ |  |     | 
+ |  |     +- _LDIVS              
+ |  |     |  | 
+ |  |     |  +- _NEG_P              
+ |  |     |  |    
+ |  |     |  +- _lDivMod            
+ |  |     |       
+ |  |     +- _LMODS              
+ |  |     |  | 
+ |  |     |  +- _NEG_P               (see above)
+ |  |     |  |  
+ |  |     |  +- _lDivMod             (see above)
+ |  |     |     
+ |  |     +- _LMULS16x32         
+ |  |        | 
+ |  |        +- _LNEG               
+ |  |             
+ |  +- RTI_Delay_ms        
+ |  |  | 
+ |  |  +- RTI_Init             (see above)
+ |  |  |  
+ |  |  +- _LINC               
+ |  |       
+ |  +- SWL_TOG             
+ |  |    
+ |  +- sci0_txByte         
  |       
  +- _Startup            
     | 
@@ -3392,6 +3532,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 162
+Number of blocks to be downloaded: 6
+Total size of all blocks to be downloaded: 747
 

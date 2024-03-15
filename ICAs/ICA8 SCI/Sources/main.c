@@ -17,8 +17,9 @@
 #include "derivative.h" /* derivative-specific definitions */
 #include "../../Lib/SWL_LED.h"
 #include "../../Lib/clock.h"
+#include "../../Lib/rti.h" 
 //Other system includes or your includes go here
-//#include <stdlib.h>
+#include <stdlib.h>
 //#include <stdio.h>
 
 
@@ -33,7 +34,7 @@
 /********************************************************************/
 // Global Variables
 /********************************************************************/
-
+ unsigned char data;
 /********************************************************************/
 // Constants
 /********************************************************************/
@@ -54,36 +55,49 @@ void main(void)
 /********************************************************************/
 SWL_Init();
 Clock_Set20MHZ(); 
-// set baud rate//
-  SCI0BD=130;
- //enable transfer//
-  SCI0CR2_TE=1;
-  
-  //enable receiver
-  SCI0CR2_RE=1;
-
+sci0_Init2();
+RTI_Init();
 /********************************************************************/
   // main program loop
 /********************************************************************/
 
   for (;;)
   {
-  //Non-locking 1 byte transmission
+
+
+  data=GetRandom() + 'A';
+
+  RTI_Delay_ms(50);
+  SWL_TOG(SWL_RED);
+  sci0_txByte(data);
 
 
 
-if(SCI0SR1 & SCI0SR1_TDRE_MASK) //Check if transmit data register is empty
-{
-SCI0DRL='A';
-}
+
+//sci0_rxByte(&data)
+  
  
+ 
+
+
+
+
+ 
+
+
+
+
+
+}
+
+
  
  
  
  
  
   }                   
-}
+
 
 /********************************************************************/
 // Functions
