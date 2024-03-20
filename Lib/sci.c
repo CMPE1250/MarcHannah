@@ -1,5 +1,3 @@
-
-
 #include "derivative.h"
 #include <hidef.h>
 #include "sci.h"

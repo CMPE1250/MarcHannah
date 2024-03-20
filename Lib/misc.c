@@ -1,9 +1,11 @@
 
 
+
 #include "derivative.h"
 #include <hidef.h>
 #include "misc.h"
 #include "SWL_LED.h"
+#include "sci.h"
 #include "stdlib.h"
 
 int GetRandom( int iHighEx)
@@ -58,14 +60,16 @@ char getVowel(int capital)
  
 
 void transmit20Vowels(void)
-{
+{ char letter;
+    int i=0;
+    
     SWL_OFF(SWL_RED);
 
-    for (int i = 0; i < 20; i++)
+    for ( i = 0; i < 20; i++)
     {
         SWL_ON(SWL_RED);
 
-        char letter;
+        
 
         // Check if button is pushed for capital letters or not
 
@@ -75,7 +79,7 @@ void transmit20Vowels(void)
     }
     SWL_OFF(SWL_RED);
 }
-
+/*
 void transmit20VowelsWithSum(void)
 {
     int sum = 0;
@@ -147,4 +151,4 @@ void transmit20VowelsWithSumColors(void)
     Console.ResetColor();
     SWL_OFF(SWL_RED);
     sum++;
-}
+}   */
