@@ -20,6 +20,7 @@
 #include "../../Lib/clock.h"
 #include "../../Lib/rti.h"
 #include "../../Lib/misc.h"
+#include "../../Lib/sci.h"
 // #include <stdio.h>
 
 /********************************************************************/
@@ -57,7 +58,7 @@ void main(void)
   SWL_Init();
   Clock_Set20MHZ();
   // sci0_Init2();
-  sci0_InitEnum(enum BaudRate BAUD_19200);
+  sci0_InitEnum(BAUD_19200);
   RTI_Init();
   /********************************************************************/
   // main program loop
