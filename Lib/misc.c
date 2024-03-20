@@ -55,7 +55,7 @@ char getVowel(int capital)
     return vowel;
 }
 
-/* 
+ 
 
 void transmit20Vowels(void)
 {
@@ -147,4 +147,4 @@ void transmit20VowelsWithSumColors(void)
     Console.ResetColor();
     SWL_OFF(SWL_RED);
     sum++;
-}*/
+}
