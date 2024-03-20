@@ -15,13 +15,17 @@
 #include "derivative.h" /* derivative-specific definitions */
 
 // Other system includes or your includes go here
+
+#include "SWL_LED.h"
+#include "clock.h"
+#include "rti.h"
+#include "misc.h"
+#include "sci.h"
+
+
+
 #include <stdlib.h>
-#include "../../Lib/SWL_LED.h"
-#include "../../Lib/clock.h"
-#include "../../Lib/rti.h"
-#include "../../Lib/misc.h"
-#include "../../Lib/sci.h"
-// #include <stdio.h>
+#include <stdio.h>
 
 /********************************************************************/
 // Defines
@@ -37,7 +41,7 @@
  
 unsigned char keyPressed;
 unsigned char *input = &keyPressed;
-unsigned char data;
+int data;
 /********************************************************************/
 // Constants
 /********************************************************************/

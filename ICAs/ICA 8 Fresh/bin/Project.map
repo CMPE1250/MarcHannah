@@ -30,7 +30,7 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2100     12
+  _Range   pZeroOut       0x2100     13
   _Copy    *toCopyDownBeg 0xC199
 } _startupData;
 
@@ -42,7 +42,7 @@ Section Name                    Size  Type     From       To       Segment
 .startData                        34     R     0xC00F     0xC030   ROM_C000
 NON_BANKED                       360     R     0xC031     0xC198   ROM_C000
 .copy                             12     R     0xC199     0xC1A4   ROM_C000
-.text                            494     R   0xFE8000   0xFE81ED   PAGE_FE
+.text                            495     R   0xFE8000   0xFE81EE   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .data                              6   R/W     0x2100     0x2105   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
@@ -693,12 +693,12 @@ NON_BANKED                       360     R     0xC031     0xC198   ROM_C000
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
 .bss                               4   R/W     0x2106     0x2109   RAM
-.common                            2   R/W     0x210A     0x210B   RAM
+.common                            3   R/W     0x210A     0x210C   RAM
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         395 (dec:      917)
-READ_WRITE (R/W):      10C (dec:      268)
+READ_ONLY (R):         396 (dec:      918)
+READ_WRITE (R/W):      10D (dec:      269)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -1363,14 +1363,14 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    FE8000      71     113       2   .text       
+     main                                    FE8000      72     114       2   .text       
 - VARIABLES:
      input                                     2100       2       2       2   .data       
-     data                                      210A       1       1       2   .common     
-     keyPressed                                210B       1       1       1   .common     
+     keyPressed                                210A       1       1       1   .common     
+     data                                      210B       2       2       2   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE8071      29      41       2   .text       
+     Init                                    FE8072      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
@@ -1378,7 +1378,7 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2100       0       0       1               
 MODULE:                 -- STDLIB.C.o (ansixbi.lib) --
 - PROCEDURES:
-     rand                                    FE809A      73     115       2   .text       
+     rand                                    FE809B      73     115       2   .text       
 - VARIABLES:
      seed                                      2102       4       4      13   .data       
 MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
@@ -1394,31 +1394,31 @@ MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
 - VARIABLES:
 MODULE:                 -- clock.c.o --
 - PROCEDURES:
-     Clock_Set20MHZ                          FE810D      15      21       2   .text       
+     Clock_Set20MHZ                          FE810E      15      21       2   .text       
 - VARIABLES:
 MODULE:                 -- SWL_LED.c.o --
 - PROCEDURES:
-     SWL_Init                                FE8122       D      13       2   .text       
-     SWL_ON                                  FE812F       B      11       4   .text       
-     SWL_OFF                                 FE813A       C      12       6   .text       
-     SWL_TOG                                 FE8146       B      11       2   .text       
+     SWL_Init                                FE8123       D      13       2   .text       
+     SWL_ON                                  FE8130       B      11       4   .text       
+     SWL_OFF                                 FE813B       C      12       6   .text       
+     SWL_TOG                                 FE8147       B      11       2   .text       
 - VARIABLES:
 MODULE:                 -- rti.c.o --
 - PROCEDURES:
-     RTI_Init                                FE8151       5       5       4   .text       
-     RTI_Delay_ms                            FE8156      3E      62       2   .text       
+     RTI_Init                                FE8152       5       5       4   .text       
+     RTI_Delay_ms                            FE8157      3E      62       2   .text       
 - VARIABLES:
      rtiMasterCount                            2106       4       4       8   .bss        
 MODULE:                 -- sci.c.o --
 - PROCEDURES:
-     sci0_txByte                             FE8194       9       9       2   .text       
-     sci0_rxByte                             FE819D      12      18       2   .text       
-     sci0_Init2                              FE81AF       C      12       2   .text       
+     sci0_txByte                             FE8195       9       9       2   .text       
+     sci0_rxByte                             FE819E      12      18       2   .text       
+     sci0_Init2                              FE81B0       C      12       2   .text       
 - VARIABLES:
 MODULE:                 -- misc.c.o --
 - PROCEDURES:
-     GetRandom                               FE81BB       B      11       2   .text       
-     IsVowel                                 FE81C6      28      40       2   .text       
+     GetRandom                               FE81BC       B      11       2   .text       
+     IsVowel                                 FE81C7      28      40       2   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1426,7 +1426,7 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     4    113      0
+  main.c.o                                     5    114      0
   Start12.c.o                                  0     56      0
   STDLIB.C.o (ansixbi.lib)                     4    115      0
   rtshc12.c.o (ansixbi.lib)                    0    360      0
@@ -2746,7 +2746,7 @@ SECTION: ".abs_section_3ac"
 SECTION: ".abs_section_3ae"
   _XGR7 
 SECTION: ".common"
-  data keyPressed 
+  keyPressed data 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
@@ -3402,8 +3402,8 @@ OBJECT LIST SORTED BY ADDRESS
      input                                     2100       2       2       2   .data       
      seed                                      2102       4       4      13   .data       
      rtiMasterCount                            2106       4       4       8   .bss        
-     data                                      210A       1       1       2   .common     
-     keyPressed                                210B       1       1       1   .common     
+     keyPressed                                210A       1       1       1   .common     
+     data                                      210B       2       2       2   .common     
      _Startup                                  C000       F      15       0   .init       
      _LNEG                                     C031       9       9       1   NON_BANKED  
      _LINC                                     C03A       5       5       1   NON_BANKED  
@@ -3413,21 +3413,21 @@ OBJECT LIST SORTED BY ADDRESS
      _LDIVS                                    C120      35      53       1   NON_BANKED  
      _LMODS                                    C155      2A      42       1   NON_BANKED  
      _CASE_SEARCH_8_BYTE                       C17F      1A      26       1   NON_BANKED  
-     main                                    FE8000      71     113       2   .text       
-     Init                                    FE8071      29      41       2   .text       
-     rand                                    FE809A      73     115       2   .text       
-     Clock_Set20MHZ                          FE810D      15      21       2   .text       
-     SWL_Init                                FE8122       D      13       2   .text       
-     SWL_ON                                  FE812F       B      11       4   .text       
-     SWL_OFF                                 FE813A       C      12       6   .text       
-     SWL_TOG                                 FE8146       B      11       2   .text       
-     RTI_Init                                FE8151       5       5       4   .text       
-     RTI_Delay_ms                            FE8156      3E      62       2   .text       
-     sci0_txByte                             FE8194       9       9       2   .text       
-     sci0_rxByte                             FE819D      12      18       2   .text       
-     sci0_Init2                              FE81AF       C      12       2   .text       
-     GetRandom                               FE81BB       B      11       2   .text       
-     IsVowel                                 FE81C6      28      40       2   .text       
+     main                                    FE8000      72     114       2   .text       
+     Init                                    FE8072      29      41       2   .text       
+     rand                                    FE809B      73     115       2   .text       
+     Clock_Set20MHZ                          FE810E      15      21       2   .text       
+     SWL_Init                                FE8123       D      13       2   .text       
+     SWL_ON                                  FE8130       B      11       4   .text       
+     SWL_OFF                                 FE813B       C      12       6   .text       
+     SWL_TOG                                 FE8147       B      11       2   .text       
+     RTI_Init                                FE8152       5       5       4   .text       
+     RTI_Delay_ms                            FE8157      3E      62       2   .text       
+     sci0_txByte                             FE8195       9       9       2   .text       
+     sci0_rxByte                             FE819E      12      18       2   .text       
+     sci0_Init2                              FE81B0       C      12       2   .text       
+     GetRandom                               FE81BC       B      11       2   .text       
+     IsVowel                                 FE81C7      28      40       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -3466,7 +3466,7 @@ Filling bytes inserted
  00062100
 ------- ROM-ADDRESS: 0xC19D ---- RAM-ADDRESS: 0x2100 ---- SIZE       2 ---
 Name of initialized Object : input
- 210B
+ 210A
 ------- ROM-ADDRESS: 0xC19F ---- SIZE       3 ---
 Filling bytes inserted
  000000
@@ -3571,5 +3571,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 917
+Total size of all blocks to be downloaded: 918
 
