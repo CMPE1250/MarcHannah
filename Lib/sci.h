@@ -38,6 +38,24 @@ typedef struct SCI_Typedef__
     unsigned char DRL;
 }SCI_Typedef;
 
+ typedef enum eBaudRate
+{
+    BAUD_300 = 4,
+    BAUD_1200 = 1042,
+    BAUD_9600 = 130,
+    BAUD_19200 = 65,
+    BAUD_38400 = 33,
+    BAUD_57600 = 22
+   
+} BaudRate; 
+
+
+
+
+
+
+
+
 typedef SCI_Typedef* SCI_Base;
 
 #define SCI0_BASE (SCI_Base)&SCI0BD//0x000000C8
@@ -56,32 +74,26 @@ typedef SCI_Typedef* SCI_Base;
 unsigned long sci0_Init(unsigned long ulBaudRate, int iRDRF_Interrupt);
 
 
-void sci0_Init2 (void);
-
-
-
-
-
-
+void sci0_Init2(void);
 
 
 // blocking byte read
 // waits for a byte to arrive and returns it
-unsigned char sci0_bread(unsigned char * pData);
+unsigned char sci0_bread(void);
 
 // read a byte, non-blocking
 // returns 1 if byte read, 0 if not
-unsigned int sci0_rxByte(unsigned char * pData);
+int sci0_rxByte(unsigned char * pData);
 
 // send a byte over SCI
-void sci0_txByte (unsigned char data);
+void sci0_txByte ( char data);
 
 // send a null-terminated string over SCI
 void sci0_txStr (char const * straddr);
 
 /* BASIC FUNCTIONS END*******************************************************/
 
-
+void sciI
 
 /* Other SCIs "Available". These items are optional, for other SCI ports
 SCI1 - IRDA mode for using IR module - RDX1-> PS2 (PIN 91), TDX1-> PS3 (PIN 92)
@@ -94,7 +106,7 @@ SCI5 - Shared with SPI2 and LCD -      RDX5-> PH6 (PIN 33), TDX5-> PH7 (PIN 32)
 
 //ADVANCED FUNCTIONS  - To Work with any sci*************************************
 //int sci_Init(SCI_Base sci, unsigned long ulBaudRate, int iRDRF_Interrupt);
-//unsigned char sci0_rxByte(unsigned char * pData);
+//unsigned char sci_rxByte(unsigned char * pData);
 //void sci_txByte (SCI_Base sci, unsigned char data);
 //void sci_txStr (SCI_Base sci, char const *straddr);
 //unsigned char sci_rxByte(SCI_Base sci, unsigned char * pData);

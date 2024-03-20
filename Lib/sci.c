@@ -4,40 +4,44 @@
 #include <hidef.h>
 #include "sci.h"
 
-void sci0_Init2(void)
+void sci0_txByte( char data)
 {
-    // set baud rate//
-    SCI0BD = 130;
-    // enable transfer//
-    SCI0CR2_TE = 1;
+    while (!(SCI0SR1 & SCI0SR1_TDRE_MASK))
+    {
+        ;
+    }
 
-    // enable receiver
-    SCI0CR2_RE = 1;
+    SCI0DRL = data;
 }
 
-unsigned int sci0_rxByte(unsigned char * pData)
+int sci0_rxByte(unsigned char *pData)
 {
 
-    if (&pData)
+    if (SCI0SR1 & SCI0SR1_RDRF_MASK) // Check if a character has been received
     {
-        return 0;
-    }
-    else
-    {
+        *pData = SCI0DRL;
         return 1;
     }
+    return 0;
 }
-   
-   
-   
-   
-void sci0_txByte (unsigned char data)
-    {
 
-       while(!(SCI0SR1 & SCI0SR1_TDRE_MASK  ))
-            {
-             // Wait till transmit data register is empty
-             SCI0DRL = data;
-        
-            }
-    }
+void sci0_Init2(void)
+{
+    // Set baud rate//
+    SCI0BD = 130;
+
+    // Enable transfer - Set TE bit in SCI0CR2 register
+    SCI0CR2 |= (1 << 3);
+
+    // Enable receiver - Set RE bit in SCI0CR2 register
+    SCI0CR2 |= (1 << 2);
+}
+
+void sci0_InitEnum(BaudRate br)
+{
+    SCI0BD = br;
+    SCI0CR2 |= (1 << 3);
+
+    // Enable receiver - Set RE bit in SCI0CR2 register
+    SCI0CR2 |= (1 << 2);
+}
