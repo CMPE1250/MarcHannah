@@ -20,6 +20,7 @@
 #include "../../Lib/clock.h"
 #include "../../Lib/rti.h"
 #include "../../Lib/misc.h"
+#include "../../Lib/sci.h"
 // #include <stdio.h>
 
 /********************************************************************/
@@ -57,7 +58,7 @@ void main(void)
   SWL_Init();
   Clock_Set20MHZ();
   // sci0_Init2();
-  sci0_InitMath(20000000, 19200);
+  sci0_InitEnum(BAUD_19200);
   RTI_Init();
   /********************************************************************/
   // main program loop
@@ -66,8 +67,8 @@ void main(void)
   for (;;)
   {
   partA();
-  PartB();
-  partC();
+ // PartB();
+ // partC();
   }
 }
 /********************************************************************/
@@ -82,13 +83,13 @@ void partA(void)
 void partB(void)
 {
   RTI_Delay_ms(250);
-  transmit20VowelsWithSum();
+  //transmit20VowelsWithSum();
 }
  
  void partC(void)
  {
   RTI_Delay_ms(250);
-  transmit20VowelsWithSumColors();
+ // transmit20VowelsWithSumColors();
   }
 
 
