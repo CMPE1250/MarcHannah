@@ -42,7 +42,7 @@
 
 
 
-unsigned char *input;
+unsigned char input;
 int data;
 
 
@@ -76,19 +76,22 @@ void main(void)
 
   for (;;)
   {
-
+      
     data = GetRandom(26) + 'A';
 
     RTI_Delay_ms(50);
     SWL_TOG(SWL_RED);
-    sci0_txByte(data);
-  
+    
+  sci0_txByte(data);
  
     if (sci0_rxByte(&input) )
 
     { 
-        SWL_TOG(SWL_GREEN);
-      if (IsVowel(&input))
+       
+     
+      if(IsVowel(input))
+     
+      
       {
         SWL_ON(SWL_GREEN);
         SWL_OFF(SWL_YELLOW);
