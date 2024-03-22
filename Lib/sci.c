@@ -1,6 +1,8 @@
 #include "derivative.h"
 #include <hidef.h>
 #include "sci.h"
+#include "SWL_LED.h"
+
 
 void sci0_txByte(  unsigned char data)
 {
@@ -17,6 +19,9 @@ int sci0_rxByte(unsigned char *pData)
 
     if (SCI0SR1 & SCI0SR1_RDRF_MASK) // Check if a character has been received
     {
+
+
+        
         *pData = SCI0DRL;
         return 1;
     }
@@ -47,3 +52,12 @@ void sci0_Init2(void)
 
 
 }  
+
+void sci0_txStr(const char* straddr)
+{
+    while (*straddr != '\0')
+    {
+        sci0_txByte(*straddr);
+        ++straddr;
+    }
+}

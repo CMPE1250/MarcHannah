@@ -1,6 +1,5 @@
 
 
-
 #include "derivative.h"
 #include <hidef.h>
 #include "misc.h"
@@ -8,7 +7,7 @@
 #include "sci.h"
 #include "stdlib.h"
 
-int GetRandom( int iHighEx)
+int GetRandom(int iHighEx)
 {
     int value = rand() % (iHighEx);
 
@@ -17,33 +16,46 @@ int GetRandom( int iHighEx)
 
 int IsVowel(unsigned char *c)
 {
-    
-    unsigned char ch = *c;
 
-    switch (ch)
+    unsigned char ch = *c;
+   
+   
+    if (ch ==  'a'||ch=='A')
     {
-        case 'a':
-        case 'A':
-        case 'e':
-        case 'E':
-        case 'i':
-        case 'I':
-        case 'o':
-        case 'O':
-        case 'u':
-        case 'U':
-            return 1; // It's a vowel
-        default:
-            return 0; // Not a vowel
+        return 1;
     }
+    else if (ch == 'e' || ch == 'E')
+    {
+        return 1;
+        
+    }
+    else if (ch == 'i' || ch == 'I')
+    {
+        return 1;
+        
+    }
+    else if (ch == 'o' || ch == 'U')
+    {
+        return  1;
+       
+    }
+    else if (ch == 'u' || ch == 'U')
+    {
+        return   1 ;
+      
+    }
+    else
+        return 0;
 }
-char getVowel(int capital)
+
+
+ /*char getVowel(int capital)
 {
     char vowel;
     static const char lowercaseVowels[] = "aeiou";
     static const char uppercaseVowels[] = "AEIOU";
 
-    int index = rand() % 5;
+    int index = GetRandom(5) ;
 
     if (capital)
     {
@@ -57,26 +69,41 @@ char getVowel(int capital)
     return vowel;
 }
 
- 
+*/
+
+char getVowel(int capital)
+{
+    static const char lowercaseVowels[] = "aeiou";
+    static const char uppercaseVowels[] = "AEIOU";
+
+    // Determine the set of vowels based on capital
+    const char* vowels = capital ? uppercaseVowels : lowercaseVowels;
+
+    // Get a random index within the valid range
+    int numVowels =  GetRandom(5) ;
+    int index = GetRandom(numVowels);
+
+    // Retrieve the vowel at the selected index
+    char vowel = vowels[index];
+
+    return vowel;
+}
 
 void transmit20Vowels(void)
-{ char letter;
-    int i=0;
-    
+{
+    char letter;
+    int i = 0;
+    char vowelstring[20]; 
     SWL_OFF(SWL_RED);
 
-    for ( i = 0; i < 20; i++)
-    {
-        SWL_ON(SWL_RED);
-
-        
-
-        // Check if button is pushed for capital letters or not
-
-        letter = getVowel(SWL_Pushed(SWL_CTR));
-
-        sci0_txByte(letter);
-    }
+  for (i = 0; i < 20; i++)
+{
+    letter = getVowel(SWL_Pushed(SWL_CTR));
+    vowelstring[i] = letter; // Store the vowel in the array
+}
+    
+    SWL_ON(SWL_RED);
+    sci0_txStr(vowelstring);
     SWL_OFF(SWL_RED);
 }
 /*
@@ -99,6 +126,7 @@ void transmit20VowelsWithSum(void)
 
         sci0_txByte(letter);
     }
+    
 
     // Transmit space, followed by padded sum as a four-digit decimal number
     sci0_txByte(' ');
