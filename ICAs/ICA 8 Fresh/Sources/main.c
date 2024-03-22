@@ -84,11 +84,11 @@ void main(void)
     sci0_txByte(data);
   
  
-    if (sci0_rxByte(input) == 1)
+    if (sci0_rxByte(&input) )
 
     { 
         SWL_TOG(SWL_GREEN);
-      if (IsVowel(input))
+      if (IsVowel(&input))
       {
         SWL_ON(SWL_GREEN);
         SWL_OFF(SWL_YELLOW);
