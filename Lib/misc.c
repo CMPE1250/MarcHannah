@@ -14,32 +14,32 @@ int GetRandom(int iHighEx)
     return value;
 }
 
-int IsVowel(unsigned char *c)
+int IsVowel(unsigned char c)
 {
 
-    unsigned char ch = *c;
+    
    
    
-    if (ch ==  'a'||ch=='A')
+    if (c ==  'a'||c=='A')
     {
         return 1;
     }
-    else if (ch == 'e' || ch == 'E')
+    else if (c == 'e' || c == 'E')
     {
         return 1;
         
     }
-    else if (ch == 'i' || ch == 'I')
+    else if (c == 'i' || c == 'I')
     {
         return 1;
         
     }
-    else if (ch == 'o' || ch == 'U')
+    else if (c == 'o' || c == 'O')
     {
         return  1;
        
     }
-    else if (ch == 'u' || ch == 'U')
+    else if (c == 'u' || c == 'U')
     {
         return   1 ;
       
@@ -106,7 +106,7 @@ void transmit20Vowels(void)
     sci0_txStr(&vowelstring);
     SWL_OFF(SWL_RED);
 }
-
+/*
 void transmit20VowelsWithSum(void)
 {
     int sum = 0;
@@ -142,7 +142,7 @@ void transmit20VowelsWithSum(void)
   
     SWL_OFF(SWL_RED);
 }
- /*
+
 void transmit20VowelsWithSumColors(void)
 {
 
