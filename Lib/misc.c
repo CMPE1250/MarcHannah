@@ -68,8 +68,8 @@ int IsVowel(unsigned char *c)
 
     return vowel;
 }
-
 */
+
 
 char getVowel(int capital)
 {
@@ -103,10 +103,10 @@ void transmit20Vowels(void)
 }
     
     SWL_ON(SWL_RED);
-    sci0_txStr(vowelstring);
+    sci0_txStr(&vowelstring);
     SWL_OFF(SWL_RED);
 }
-/*
+
 void transmit20VowelsWithSum(void)
 {
     int sum = 0;
@@ -132,15 +132,17 @@ void transmit20VowelsWithSum(void)
     sci0_txByte(' ');
 
     char buffer[5];
-    sprintf(buffer, "%04d", sum); // Format integer 'sum' as a zero-padded string
+    sprintf(buffer, "%04d", ); // Format integer 'sum' as a zero-padded string
+ 
 
-    for (int j = 0; j < 4; j++)
-    {
-        sci0_txByte(buffer[j]);
-    }
+   sci0_txStr(&buffer);
+  
+  
+  
+  
     SWL_OFF(SWL_RED);
 }
-
+ /*
 void transmit20VowelsWithSumColors(void)
 {
 
