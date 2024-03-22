@@ -83,7 +83,7 @@ void partA(void)
 void partB(void)
 {
   RTI_Delay_ms(250);
-  //transmit20VowelsWithSum();
+ transmit20VowelsWithSum();
 }
  
  void partC(void)
