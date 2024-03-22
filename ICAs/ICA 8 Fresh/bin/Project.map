@@ -1365,8 +1365,8 @@ MODULE:                 -- main.c.o --
 - PROCEDURES:
      main                                    FE8000      66     102       2   .text       
 - VARIABLES:
-     input                                     2108       1       1       3   .common     
-     data                                      2109       2       2       1   .common     
+     input                                     2108       1       1       2   .common     
+     data                                      2109       2       2       2   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
      Init                                    FE8066      29      41       2   .text       
@@ -3399,8 +3399,8 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
      seed                                      2100       4       4      13   .data       
      rtiMasterCount                            2104       4       4       8   .bss        
-     input                                     2108       1       1       3   .common     
-     data                                      2109       2       2       1   .common     
+     input                                     2108       1       1       2   .common     
+     data                                      2109       2       2       2   .common     
      _Startup                                  C000       F      15       0   .init       
      _LNEG                                     C031       9       9       1   NON_BANKED  
      _LINC                                     C03A       5       5       1   NON_BANKED  
@@ -3447,14 +3447,12 @@ SWL_LED.c.o:
 sci.c.o:
   sci0_InitEnum sci0_txStr 
 misc.c.o:
-  getVowel transmit20Vowels 
+  getVowel transmit20Vowels transmit20VowelsWithSum 
 NOT USED VARIABLES
 STDLIB.C.o (ansixbi.lib):
   channels errno 
 rtshc12.c.o (ansixbi.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
-misc.c.o:
-  lowercaseVowels.1 uppercaseVowels.3 
 
 *********************************************************************************************
 COPYDOWN SECTION
@@ -3477,8 +3475,8 @@ _LMULS16x32               USES _LNEG
 _LDIVS                    USES _NEG_P _lDivMod 
 _LMODS                    USES _NEG_P _lDivMod 
 main                      USES SWL_Init Clock_Set20MHZ sci0_Init2 RTI_Init 
-                                GetRandom data RTI_Delay_ms SWL_TOG input sci0_rxByte 
-                                sci0_txByte IsVowel SWL_ON SWL_OFF 
+                                GetRandom data RTI_Delay_ms SWL_TOG sci0_txByte input 
+                                sci0_rxByte IsVowel SWL_ON SWL_OFF 
 Init                      USES _startupData 
 rand                      USES seed _LDIVS _LMODS _LMULS16x32 
 Clock_Set20MHZ            USES _SYNR _REFDV _CLKSEL _PLLCTL _CRGFLG 
@@ -3536,9 +3534,9 @@ DEPENDENCY TREE
  |  |       
  |  +- SWL_TOG             
  |  |    
- |  +- sci0_rxByte         
- |  |    
  |  +- sci0_txByte         
+ |  |    
+ |  +- sci0_rxByte         
  |  |    
  |  +- IsVowel             
  |  |    
