@@ -55,9 +55,6 @@ void sci0_Init2(void)
 
 void sci0_txStr(const char* straddr)
 {
-    while (*straddr != '\0')
-    {
-        sci0_txByte(*straddr);
-        ++straddr;
-    }
+   for(;*straddr;++straddr)
+   {sci0_txByte(*straddr);}
 }
