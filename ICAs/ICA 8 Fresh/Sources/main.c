@@ -82,11 +82,12 @@ void main(void)
     RTI_Delay_ms(50);
     SWL_TOG(SWL_RED);
     sci0_txByte(data);
-
+  
  
     if (sci0_rxByte(input) == 1)
 
-    {
+    { 
+        SWL_TOG(SWL_GREEN);
       if (IsVowel(input))
       {
         SWL_ON(SWL_GREEN);
@@ -99,9 +100,7 @@ void main(void)
         SWL_OFF(SWL_GREEN);
       }
     }
-    SWL_OFF(SWL_GREEN);
-    SWL_OFF(SWL_YELLOW);
-
+    
 
 
 
