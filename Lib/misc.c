@@ -6,6 +6,10 @@
 #include "SWL_LED.h"
 #include "sci.h"
 #include "stdlib.h"
+#include "stdio.h"
+
+
+
 
 int GetRandom(int iHighEx)
 {
@@ -77,11 +81,11 @@ void transmit20Vowels(void)
 
 void transmit20VowelsWithSum(void)
 {
-    int sum = 0;
+    int sum=0;
     char letter;
     int i = 0;
-    char vowelstring[22] = "";
-    char buffer[10] = "";
+    char vowelstring[22];
+    char buffer[10];
 
     SWL_OFF(SWL_RED);
 
@@ -90,14 +94,21 @@ void transmit20VowelsWithSum(void)
         letter = getVowel(SWL_Pushed(SWL_CTR));
 
         vowelstring[i] = letter; 
+
         sum+=letter;
     }
-
+   
+    sprintf(buffer, "   %04d  ",sum );
+  
+  
+  
     SWL_ON(SWL_RED);
     sci0_txStr(vowelstring);
 
     sci0_txByte(' ');
-    sprintf(buffer, "%04d", sum);
+  
+    
+  
     sci0_txStr(buffer);
     sci0_txByte(' ');
     SWL_OFF(SWL_RED);
@@ -122,7 +133,7 @@ void transmit20VowelsWithSumColors(void)
         sci0_txStr(myName);
         NameDisplayed += 1;
 
-        ;
+        
     }
 
     for (i = 0; i < 20; i++)
