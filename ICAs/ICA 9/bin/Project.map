@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\mhannah4\source\repos\CMPE1250\MarcHannah\ICAs\ICA 9\bin\Project.abs"
+PROGRAM "C:\Users\Marc\source\repos\CMPE1250\MarcHannah\ICAs\ICA 9\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -3443,7 +3443,7 @@ clock.c.o:
   Clock_EnableOutput Clock_Set8MHZ Clock_Set24MHZ Clock_Set40MHZ 
   Clock_GetBusSpeed 
 misc.c.o:
-  IsVowel transmit20VowelsWithSum 
+  IsVowel transmit20VowelsWithSum transmit20VowelsWithSumColors 
 SWL_LED.c.o:
   SWL_TOG GetCount countUp 
 sci.c.o:
@@ -3453,6 +3453,10 @@ STDLIB.C.o (ansixbi.lib):
   channels errno 
 rtshc12.c.o (ansixbi.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
+misc.c.o:
+  STRING..04d.6 STRING...31m.10 STRING...0.2H.11 STRING...31m.12 
+  STRING...37m.13 STRING..04d.14 STRING...33m.15 STRING...37m.16 STRING...2J.17 
+  NameDisplayed 
 
 *********************************************************************************************
 COPYDOWN SECTION
