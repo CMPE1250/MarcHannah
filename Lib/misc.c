@@ -46,13 +46,12 @@ char getVowel(int capital)
     char lowercaseVowels[] = "aeiou";
     char uppercaseVowels[] = "AEIOU";
 
-    // Determine the set of vowels based on capital
+  
     char *vowels = capital ? uppercaseVowels : lowercaseVowels;
 
-    // Get a random index within the valid range
+
     int numVowels = GetRandom(5);
 
-    // Retrieve the vowel at the selected index
     char vowel = vowels[numVowels];
 
     return vowel;
@@ -68,7 +67,7 @@ void transmit20Vowels(void)
     for (i = 0; i < 20; i++)
     {
         letter = getVowel(SWL_Pushed(SWL_CTR));
-        vowelstring[i] = letter; // Store the vowel in the array
+        vowelstring[i] = letter;
     }
 
     SWL_ON(SWL_RED);
@@ -89,7 +88,9 @@ void transmit20VowelsWithSum(void)
     for (i = 0; i < 20; i++)
     {
         letter = getVowel(SWL_Pushed(SWL_CTR));
-        vowelstring[i] = letter; // Store the vowel in the array
+
+        vowelstring[i] = letter; 
+        sum+=letter;
     }
 
     SWL_ON(SWL_RED);
@@ -127,7 +128,8 @@ void transmit20VowelsWithSumColors(void)
     for (i = 0; i < 20; i++)
     {
         letter = getVowel(SWL_Pushed(SWL_CTR));
-        vowelstring[i] = letter; // Store the vowel in the array
+        sum+=letter;
+        vowelstring[i] = letter; 
     }
 
     SWL_ON(SWL_RED);
@@ -143,6 +145,10 @@ void transmit20VowelsWithSumColors(void)
     sci0_txStr(buffer);
     sci0_txStr("\x1b[37m");
     sci0_txByte(' ');
+   
+   sci0_txStr("\x1b[0;4H");
+   
+   
     SWL_OFF(SWL_RED);
 
     sci0_txStr("\x1b[2J");
