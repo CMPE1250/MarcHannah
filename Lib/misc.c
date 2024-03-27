@@ -47,7 +47,7 @@ char getVowel(int capital)
     char uppercaseVowels[] = "AEIOU";
 
     // Determine the set of vowels based on capital
-    char * vowels = capital ? uppercaseVowels : lowercaseVowels;
+    char *vowels = capital ? uppercaseVowels : lowercaseVowels;
 
     // Get a random index within the valid range
     int numVowels = GetRandom(5);
@@ -78,10 +78,12 @@ void transmit20Vowels(void)
 
 void transmit20VowelsWithSum(void)
 {
-
+    int sum = 0;
     char letter;
     int i = 0;
     char vowelstring[22] = "";
+    char buffer[10] = "";
+
     SWL_OFF(SWL_RED);
 
     for (i = 0; i < 20; i++)
@@ -92,57 +94,56 @@ void transmit20VowelsWithSum(void)
 
     SWL_ON(SWL_RED);
     sci0_txStr(vowelstring);
-    SWL_OFF(SWL_RED);
 
     sci0_txByte(' ');
-
-    char buffer[10] = "";
-
-
+    sprintf(buffer, "%04d", sum);
+    sci0_txStr(buffer);
+    sci0_txByte(' ');
+    SWL_OFF(SWL_RED);
 }
-  //  sprintf(buffer, "%04d", sum); // Format integer 'sum' as a zero-padded string
 
-  //  sci0_txStr(buffer);
+int NameDisplayed = 0;
 
-  //  SWL_OFF(SWL_RED);
-
-/*
 void transmit20VowelsWithSumColors(void)
 {
-
-    Console.Clear();
     int sum = 0;
-    int NameDisplayed = 0;
+    char letter;
+    int i = 0;
+    char vowelstring[22] = "";
+    char buffer[10] = "";
+    char myName[20] = "Marc Hannah";
+
     SWL_OFF(SWL_RED);
-   
+
     if (!NameDisplayed)
     {
-        print("Marc Hannah");
-        NameDisplayed = 1;
-    }
-  
+        sci0_txStr("\x1b[31m");
+        sci0_txStr(myName);
+        NameDisplayed += 1;
 
-    for (int i = 0; i < 20; i++)
+        ;
+    }
+
+    for (i = 0; i < 20; i++)
     {
-        SWL_ON(SWL_RED);
-
-       
-    
-        char letter;
-
-        // Check if button is pushed for capital letters or not
-
-        letter = getVowel(SWL_Pushed(SWL_CTR)>0);
-
-        sci0_txByte(letter);
-        Console.ResetColor();
+        letter = getVowel(SWL_Pushed(SWL_CTR));
+        vowelstring[i] = letter; // Store the vowel in the array
     }
-  
-   
-    // Transmit space, followed by padded sum as a four-digit decimal number
+
+    SWL_ON(SWL_RED);
+
+    sci0_txStr("\x1b[0;2H");
+    sci0_txStr("\x1b[31m");
+    sci0_txStr(vowelstring);
+    sci0_txStr("\x1b[37m");
+
     sci0_txByte(' ');
-    sprintf(sum);
-    Console.ResetColor();
+    sprintf(buffer, "%04d", sum);
+    sci0_txStr("\x1b[33m");
+    sci0_txStr(buffer);
+    sci0_txStr("\x1b[37m");
+    sci0_txByte(' ');
     SWL_OFF(SWL_RED);
-    sum++;
-}   */
+
+    sci0_txStr("\x1b[2J");
+}
