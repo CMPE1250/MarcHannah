@@ -6,7 +6,7 @@ char getVowel(int capital);
 
 int IsVowel(unsigned char c);
 
-int GetRandomMin(int min, int max);
+int GetRandomMin(int min, int exMax);
 
 void transmit20Vowels(void); 
 

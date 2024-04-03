@@ -18,9 +18,9 @@ int GetRandom(int iHighEx)
     return value;
 }
 
-int GetRandomMin(int min, int max)
+int GetRandomMin(int min, int exMax)
 {
-    int range = max - min + 1;
+    int range = exMax - min + 1;
     int value = rand() % range + min;
 
     return value;
@@ -72,45 +72,22 @@ char getVowel(int capital)
 
  char getLetter()
  {
-    int randomPick=GetRandom(2);
+   
     char letter;
     int letterIndex;
-    char lowAlpha[]="abcdefghijklmnopqrstuvwxyz"
-    char upAlpha[]= "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    char alphabet[]="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    
 
-    if(randomPick==1)
-    {
-        letterIndex = GetRandom(26);
+   
+        letterIndex = GetRandom(52);
 
-        letter = upAlpha[letterIndex];
+        letter = alphabet[letterIndex];
         return letter;
-    }
-    else
-    {
+  
             
-        letterIndex = GetRandom(26);
+    
 
-        letter = lowAlpha[letterIndex];
-        return letter;
-
-    }
-
-
-
- }
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 
