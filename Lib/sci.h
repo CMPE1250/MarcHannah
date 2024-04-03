@@ -93,6 +93,16 @@ void sci0_txByte ( unsigned char data);
 // send a null-terminated string over SCI
 void sci0_txStr (char const * straddr);
 
+
+
+
+
+void sci0_GotoXY (int iCol, int iRow);
+
+void sci0_txStrXY (int iCol, int iRow, char const * straddr);
+
+void sci0_ClearScreen (void);
+
 /* BASIC FUNCTIONS END*******************************************************/
 
 

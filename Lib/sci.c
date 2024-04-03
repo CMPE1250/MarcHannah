@@ -58,3 +58,20 @@ void sci0_txStr(const char* straddr)
    for(;*straddr;++straddr)
    {sci0_txByte(*straddr);}
 }
+
+
+void sci0_GotoXY(int iCol, int iRow) {
+    printf("\x1B[%d;%dH", iRow, iCol);
+}
+
+// Function to print a string at a specific position
+void sci0_txStrXY(int iCol, int iRow, char const *straddr) {
+    sci0_GotoXY(iCol, iRow);
+    sci0_txStr(straddr);
+}
+
+
+void sci0_ClearScreen (void)
+{
+    sci0_txStr("\x1b[2J");
+}
