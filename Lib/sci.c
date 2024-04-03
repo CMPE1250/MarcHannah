@@ -61,7 +61,11 @@ void sci0_txStr(const char* straddr)
 
 
 void sci0_GotoXY(int iCol, int iRow) {
-    printf("\x1B[%d;%dH", iRow, iCol);
+   
+   char location[20];
+    sprintf(location,"\x1B[%d;%dH", iRow, iCol);
+    sci0_txStr(location);
+    
 }
 
 // Function to print a string at a specific position
