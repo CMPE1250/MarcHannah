@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\Marc\source\repos\CMPE1250\MarcHannah\test project\bin\Project.abs"
+PROGRAM "C:\Users\mhannah4\source\repos\CMPE1250\MarcHannah\test project\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -29,8 +29,8 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2100     11
-  _Copy    *toCopyDownBeg 0xC0F7
+  _Range   pZeroOut       0x2100     26
+  _Copy    *toCopyDownBeg 0xC101
 } _startupData;
 
 *********************************************************************************************
@@ -40,10 +40,10 @@ Section Name                    Size  Type     From       To       Segment
 .init                             15     R     0xC000     0xC00E   ROM_C000
 .startData                        34     R     0xC00F     0xC030   ROM_C000
 .rodata                          116     R     0xC031     0xC0A4   ROM_C000
-.rodata1                          14     R     0xC0A5     0xC0B2   ROM_C000
-NON_BANKED                        68     R     0xC0B3     0xC0F6   ROM_C000
-.copy                              2     R     0xC0F7     0xC0F8   ROM_C000
-.text                           1507     R   0xFE8000   0xFE85E2   PAGE_FE
+.rodata1                          24     R     0xC0A5     0xC0BC   ROM_C000
+NON_BANKED                        68     R     0xC0BD     0xC100   ROM_C000
+.copy                              2     R     0xC101     0xC102   ROM_C000
+.text                           1599     R   0xFE8000   0xFE863E   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -693,11 +693,12 @@ NON_BANKED                        68     R     0xC0B3     0xC0F6   ROM_C000
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
 .bss                              11   R/W     0x2100     0x210A   RAM
+.common                           15   R/W     0x210B     0x2119   RAM
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         6DE (dec:     1758)
-READ_WRITE (R/W):      10B (dec:      267)
+READ_ONLY (R):         744 (dec:     1860)
+READ_WRITE (R/W):      11A (dec:      282)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -1302,7 +1303,7 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _CAN2TXTSR                                 1FE       2       2       0   .abs_section_1fe
      _CAN3RXTSR                                 22E       2       2       0   .abs_section_22e
      _CAN3TXTSR                                 23E       2       2       0   .abs_section_23e
-     _PT01AD1                                   278       2       2       1   .abs_section_278
+     _PT01AD1                                   278       2       2       4   .abs_section_278
      _DDR01AD1                                  27A       2       2       1   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -1362,13 +1363,19 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    FE8000      79     121       2   .text       
-     GotoXY                                  FE8079      23      35       2   .text       
+     main                                    FE8000      C9     201       4   .text       
+     GotoXY                                  FE80C9      23      35       4   .text       
 - VARIABLES:
-     STRING....d..dH.2                         C0A5       9       9       1   .rodata1    
+     STRING.....04d...1                        C0A5       A      10       1   .rodata1    
+     STRING...1K.2                             C0AF       5       5       1   .rodata1    
+     STRING....d..dH.3                         C0B4       9       9       1   .rodata1    
+     data                                      210B       1       1       6   .common     
+     count                                     210C       2       2       3   .common     
+     count2                                    210E       2       2       5   .common     
+     buffer                                    2110       A      10       1   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE809C      29      41       2   .text       
+     Init                                    FE80EC      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
@@ -1376,10 +1383,10 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2100       0       0       1               
 MODULE:                 -- PRINTF.C.o (ansixbi.lib) --
 - PROCEDURES:
-     vprintf                                 FE80C5     44F    1103      53   .text       
-     _out                                    FE8514       9       9       2   .text       
-     deposit_char                            FE851D       A      10       3   .text       
-     sprintf                                 FE8527      2D      45       2   .text       
+     vprintf                                 FE8115     44F    1103      53   .text       
+     _out                                    FE8564       9       9       2   .text       
+     deposit_char                            FE856D       A      10       3   .text       
+     sprintf                                 FE8577      2D      45       4   .text       
 - VARIABLES:
      pow10                                     C031      28      40       4   .rodata     
      pow16                                     C059      20      32       4   .rodata     
@@ -1387,33 +1394,33 @@ MODULE:                 -- PRINTF.C.o (ansixbi.lib) --
      pbuf                                      2100       7       7      15   .bss        
 MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
 - PROCEDURES:
-     _LNEG                                     C0B3       9       9       1   NON_BANKED  
-     _LINC                                     C0BC       5       5       1   NON_BANKED  
-     _CASE_DIRECT_BYTE                         C0C1       5       5       1   NON_BANKED  
-     _CASE_SEARCH_8                            C0C6      17      23       1   NON_BANKED  
-     _CASE_SEARCH_8_BYTE                       C0DD      1A      26       1   NON_BANKED  
+     _LNEG                                     C0BD       9       9       1   NON_BANKED  
+     _LINC                                     C0C6       5       5       1   NON_BANKED  
+     _CASE_DIRECT_BYTE                         C0CB       5       5       1   NON_BANKED  
+     _CASE_SEARCH_8                            C0D0      17      23       1   NON_BANKED  
+     _CASE_SEARCH_8_BYTE                       C0E7      1A      26       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- sci.c.o --
 - PROCEDURES:
-     sci0_txByte                             FE8554       9       9       2   .text       
-     sci0_InitEnum                           FE855D       9       9       2   .text       
-     sci0_txStr                              FE8566      10      16       6   .text       
-     sci0_ClearScreen                        FE8576       8       8       2   .text       
+     sci0_txByte                             FE85A4       9       9       6   .text       
+     sci0_InitEnum                           FE85AD       9       9       2   .text       
+     sci0_txStr                              FE85B6      10      16       4   .text       
 - VARIABLES:
-     STRING...2J.2                             C0AE       5       5       1   .rodata1    
 MODULE:                 -- clock.c.o --
 - PROCEDURES:
-     Clock_Set20MHZ                          FE857E      15      21       2   .text       
+     Clock_Set20MHZ                          FE85C6      15      21       2   .text       
 - VARIABLES:
 MODULE:                 -- rti.c.o --
 - PROCEDURES:
-     RTI_Init                                FE8593       5       5       4   .text       
-     RTI_Delay_ms                            FE8598      3E      62       4   .text       
+     RTI_Init                                FE85DB       5       5       4   .text       
+     RTI_Delay_ms                            FE85E0      3E      62       2   .text       
 - VARIABLES:
      rtiMasterCount                            2107       4       4       8   .bss        
 MODULE:                 -- SWL_LED.c.o --
 - PROCEDURES:
-     SWL_Init                                FE85D6       D      13       2   .text       
+     SWL_Init                                FE861E       D      13       2   .text       
+     SWL_Pushed                              FE862B       9       9       6   .text       
+     SWL_TOG                                 FE8634       B      11       4   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1421,14 +1428,14 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     0    156      9
+  main.c.o                                    15    236     24
   Start12.c.o                                  0     56      0
   PRINTF.C.o (ansixbi.lib)                     7   1167    116
   rtshc12.c.o (ansixbi.lib)                    0     68      0
-  sci.c.o                                      0     42      5
+  sci.c.o                                      0     34      0
   clock.c.o                                    0     21      0
   rti.c.o                                      4     67      0
-  SWL_LED.c.o                                  0     13      0
+  SWL_LED.c.o                                  0     33      0
   other                                      256     36      2
 
 *********************************************************************************************
@@ -1436,7 +1443,7 @@ SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
   main GotoXY Init vprintf _out deposit_char sprintf sci0_txByte sci0_InitEnum 
-  sci0_txStr sci0_ClearScreen Clock_Set20MHZ RTI_Init RTI_Delay_ms SWL_Init 
+  sci0_txStr Clock_Set20MHZ RTI_Init RTI_Delay_ms SWL_Init SWL_Pushed SWL_TOG 
 SECTION: ".bss"
   pbuf rtiMasterCount 
 SECTION: ".init"
@@ -1444,7 +1451,7 @@ SECTION: ".init"
 SECTION: ".rodata"
   pow10 pow16 pow8 
 SECTION: ".rodata1"
-  STRING....d..dH.2 STRING...2J.2 
+  STRING.....04d...1 STRING...1K.2 STRING....d..dH.3 
 SECTION: "NON_BANKED"
   _LNEG _LINC _CASE_DIRECT_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE 
 SECTION: ".abs_section_8"
@@ -2741,6 +2748,8 @@ SECTION: ".abs_section_3ac"
   _XGR6 
 SECTION: ".abs_section_3ae"
   _XGR7 
+SECTION: ".common"
+  data count count2 buffer 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
@@ -3250,7 +3259,7 @@ OBJECT LIST SORTED BY ADDRESS
      _DDR1AD0                                   273       1       1       0   .abs_section_273
      _RDR1AD0                                   275       1       1       0   .abs_section_275
      _PER1AD0                                   277       1       1       0   .abs_section_277
-     _PT01AD1                                   278       2       2       1   .abs_section_278
+     _PT01AD1                                   278       2       2       4   .abs_section_278
      _DDR01AD1                                  27A       2       2       1   .abs_section_27a
      _RDR01AD1                                  27C       2       2       0   .abs_section_27c
      _PER01AD1                                  27E       2       2       0   .abs_section_27e
@@ -3395,32 +3404,38 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
      pbuf                                      2100       7       7      15   .bss        
      rtiMasterCount                            2107       4       4       8   .bss        
+     data                                      210B       1       1       6   .common     
+     count                                     210C       2       2       3   .common     
+     count2                                    210E       2       2       5   .common     
+     buffer                                    2110       A      10       1   .common     
      _Startup                                  C000       F      15       0   .init       
      pow10                                     C031      28      40       4   .rodata     
      pow16                                     C059      20      32       4   .rodata     
      pow8                                      C079      2C      44       4   .rodata     
-     STRING....d..dH.2                         C0A5       9       9       1   .rodata1    
-     STRING...2J.2                             C0AE       5       5       1   .rodata1    
-     _LNEG                                     C0B3       9       9       1   NON_BANKED  
-     _LINC                                     C0BC       5       5       1   NON_BANKED  
-     _CASE_DIRECT_BYTE                         C0C1       5       5       1   NON_BANKED  
-     _CASE_SEARCH_8                            C0C6      17      23       1   NON_BANKED  
-     _CASE_SEARCH_8_BYTE                       C0DD      1A      26       1   NON_BANKED  
-     main                                    FE8000      79     121       2   .text       
-     GotoXY                                  FE8079      23      35       2   .text       
-     Init                                    FE809C      29      41       2   .text       
-     vprintf                                 FE80C5     44F    1103      53   .text       
-     _out                                    FE8514       9       9       2   .text       
-     deposit_char                            FE851D       A      10       3   .text       
-     sprintf                                 FE8527      2D      45       2   .text       
-     sci0_txByte                             FE8554       9       9       2   .text       
-     sci0_InitEnum                           FE855D       9       9       2   .text       
-     sci0_txStr                              FE8566      10      16       6   .text       
-     sci0_ClearScreen                        FE8576       8       8       2   .text       
-     Clock_Set20MHZ                          FE857E      15      21       2   .text       
-     RTI_Init                                FE8593       5       5       4   .text       
-     RTI_Delay_ms                            FE8598      3E      62       4   .text       
-     SWL_Init                                FE85D6       D      13       2   .text       
+     STRING.....04d...1                        C0A5       A      10       1   .rodata1    
+     STRING...1K.2                             C0AF       5       5       1   .rodata1    
+     STRING....d..dH.3                         C0B4       9       9       1   .rodata1    
+     _LNEG                                     C0BD       9       9       1   NON_BANKED  
+     _LINC                                     C0C6       5       5       1   NON_BANKED  
+     _CASE_DIRECT_BYTE                         C0CB       5       5       1   NON_BANKED  
+     _CASE_SEARCH_8                            C0D0      17      23       1   NON_BANKED  
+     _CASE_SEARCH_8_BYTE                       C0E7      1A      26       1   NON_BANKED  
+     main                                    FE8000      C9     201       4   .text       
+     GotoXY                                  FE80C9      23      35       4   .text       
+     Init                                    FE80EC      29      41       2   .text       
+     vprintf                                 FE8115     44F    1103      53   .text       
+     _out                                    FE8564       9       9       2   .text       
+     deposit_char                            FE856D       A      10       3   .text       
+     sprintf                                 FE8577      2D      45       4   .text       
+     sci0_txByte                             FE85A4       9       9       6   .text       
+     sci0_InitEnum                           FE85AD       9       9       2   .text       
+     sci0_txStr                              FE85B6      10      16       4   .text       
+     Clock_Set20MHZ                          FE85C6      15      21       2   .text       
+     RTI_Init                                FE85DB       5       5       4   .text       
+     RTI_Delay_ms                            FE85E0      3E      62       2   .text       
+     SWL_Init                                FE861E       D      13       2   .text       
+     SWL_Pushed                              FE862B       9       9       6   .text       
+     SWL_TOG                                 FE8634       B      11       4   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -3435,22 +3450,22 @@ rtshc12.c.o (ansixbi.lib):
   _COPY _CASE_DIRECT _CASE_CHECKED _CASE_CHECKED_BYTE _CASE_SEARCH 
   _CASE_SEARCH_BYTE _FCALL _FPCMP _PADD _PSUB _PINC _PDEC 
 sci.c.o:
-  sci0_rxByte sci0_Init2 sci0_GotoXY sci0_txStrXY 
+  sci0_rxByte sci0_Init2 sci0_GotoXY sci0_txStrXY sci0_ClearScreen 
 clock.c.o:
   Clock_EnableOutput Clock_Set8MHZ Clock_Set24MHZ Clock_Set40MHZ 
   Clock_GetBusSpeed 
 SWL_LED.c.o:
-  SWL_ON SWL_Pushed SWL_OFF SWL_TOG GetCount countUp 
+  SWL_ON SWL_OFF GetCount countUp 
 NOT USED VARIABLES
 rtshc12.c.o (ansixbi.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 sci.c.o:
-  STRING....d..dH.1 
+  STRING....d..dH.1 STRING...2J.2 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC0F7 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC101 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3459,8 +3474,10 @@ OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
 main                      USES SWL_Init Clock_Set20MHZ sci0_InitEnum RTI_Init 
-                                RTI_Delay_ms GotoXY sci0_txStr sci0_ClearScreen 
-GotoXY                    USES STRING....d..dH.2 sprintf sci0_txStr 
+                                main data SWL_Pushed RTI_Delay_ms SWL_TOG 
+                                sci0_txByte count count2 STRING.....04d...1 buffer sprintf 
+                                GotoXY STRING...1K.2 sci0_txStr 
+GotoXY                    USES STRING....d..dH.3 sprintf sci0_txStr 
 Init                      USES _startupData 
 vprintf                   USES vprintf _CASE_SEARCH_8_BYTE _CASE_DIRECT_BYTE 
                                 _CASE_SEARCH_8 pbuf _LNEG pow8 pow16 pow10 _out 
@@ -3470,11 +3487,12 @@ sprintf                   USES pbuf deposit_char vprintf
 sci0_txByte               USES _SCI0SR1 _SCI0DRL 
 sci0_InitEnum             USES _SCI0BD _SCI0CR2 
 sci0_txStr                USES sci0_txByte 
-sci0_ClearScreen          USES STRING...2J.2 sci0_txStr 
 Clock_Set20MHZ            USES _SYNR _REFDV _CLKSEL _PLLCTL _CRGFLG 
 RTI_Init                  USES _RTICTL 
 RTI_Delay_ms              USES _RTICTL _CRGFLG rtiMasterCount RTI_Init _LINC 
 SWL_Init                  USES _PT01AD1 _DDR01AD1 _ATD1DIEN 
+SWL_Pushed                USES _PT01AD1 
+SWL_TOG                   USES _PT01AD1 
 
 *********************************************************************************************
 DEPENDENCY TREE
@@ -3491,40 +3509,44 @@ DEPENDENCY TREE
  |  |    
  |  +- RTI_Init            
  |  |    
+ |  +- SWL_Pushed          
+ |  |    
  |  +- RTI_Delay_ms        
  |  |  | 
  |  |  +- RTI_Init             (see above)
  |  |  |  
  |  |  +- _LINC               
  |  |       
+ |  +- SWL_TOG             
+ |  |    
+ |  +- sci0_txByte         
+ |  |    
+ |  +- sprintf             
+ |  |  | 
+ |  |  +- deposit_char        
+ |  |  |    
+ |  |  +- vprintf             
+ |  |     | 
+ |  |     +- _CASE_SEARCH_8_BYTE 
+ |  |     |    
+ |  |     +- _CASE_DIRECT_BYTE   
+ |  |     |    
+ |  |     +- _CASE_SEARCH_8      
+ |  |     |    
+ |  |     +- _LNEG               
+ |  |     |    
+ |  |     +- _out                
+ |  |          
  |  +- GotoXY              
  |  |  | 
- |  |  +- sprintf             
- |  |  |  | 
- |  |  |  +- deposit_char        
- |  |  |  |    
- |  |  |  +- vprintf             
- |  |  |     | 
- |  |  |     +- _CASE_SEARCH_8_BYTE 
- |  |  |     |    
- |  |  |     +- _CASE_DIRECT_BYTE   
- |  |  |     |    
- |  |  |     +- _CASE_SEARCH_8      
- |  |  |     |    
- |  |  |     +- _LNEG               
- |  |  |     |    
- |  |  |     +- _out                
- |  |  |          
+ |  |  +- sprintf              (see above)
+ |  |  |  
  |  |  +- sci0_txStr          
  |  |     | 
- |  |     +- sci0_txByte         
- |  |          
+ |  |     +- sci0_txByte          (see above)
+ |  |        
  |  +- sci0_txStr           (see above)
- |  |  
- |  +- sci0_ClearScreen    
- |     | 
- |     +- sci0_txStr           (see above)
- |        
+ |     
  +- _Startup            
     | 
     +- Init                
@@ -3537,6 +3559,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 6
-Total size of all blocks to be downloaded: 1758
+Number of blocks to be downloaded: 5
+Total size of all blocks to be downloaded: 1860
 
