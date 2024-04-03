@@ -18,6 +18,15 @@ int GetRandom(int iHighEx)
     return value;
 }
 
+int GetRandomMin(int min, int max)
+{
+    int range = max - min + 1;
+    int value = rand() % range + min;
+
+    return value;
+}
+
+
 int IsVowel(unsigned char c)
 {
 
@@ -60,6 +69,50 @@ char getVowel(int capital)
 
     return vowel;
 }
+
+ char getLetter()
+ {
+    int randomPick=GetRandom(2);
+    char letter;
+    int letterIndex;
+    char lowAlpha[]="abcdefghijklmnopqrstuvwxyz"
+    char upAlpha[]= "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    if(randomPick==1)
+    {
+        letterIndex = GetRandom(26);
+
+        letter = upAlpha[letterIndex];
+        return letter;
+    }
+    else
+    {
+            
+        letterIndex = GetRandom(26);
+
+        letter = lowAlpha[letterIndex];
+        return letter;
+
+    }
+
+
+
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void transmit20Vowels(void)
 {
