@@ -91,6 +91,170 @@ char getVowel(int capital)
 
 
 
+int ToDigitVal(char digit) {
+    if (digit >= '0' && digit <= '9') {
+        return digit - '0';
+    }
+     else if (digit >= 'a' && digit <= 'f') {
+        return 10 + (digit - 'a');
+    }
+     else if (digit >= 'A' && digit <= 'F') {
+        return 10 + (digit - 'A');
+    }
+     else {
+        
+        return 0;
+    }
+}
+
+
+
+unsigned int HexArrayToUInt16(char *pArray) {
+    unsigned int result = 0;
+    int i=0;
+   
+   
+   
+    for ( i = 0; i < 4; i++) {
+        
+        int digitValue = ToDigitVal(pArray[i]);
+        
+        // Update the result by shifting previous values to the left by multiplying with 16 and adding current digit value
+        result+=digitValue;
+    }
+    
+    return result;
+}
+
+
+
+
+
+void Lab1Init()
+{
+   
+   
+   
+    char myName[]="Marc Hannah";
+    char labTitle[]="Simple Binary Calculator";
+    char opA[]="Op A:";
+    char opB[]="OP B:";
+    char line[]="----------";
+
+
+
+
+
+
+    
+    sci0_txStr(myName);
+   
+    sci0_txStrXY(1,2,labTitle);
+
+    sci0_txStrXY(5,5,opA);
+   
+    sci0_txStrXY(5,6,opB);
+   
+    sci0_txStrXY(11,10,line);
+
+}
+
+
+
+
+
+void Parseinput( unsigned char input)
+{
+    
+    int flip;
+
+
+ if (input == '|')
+    { 
+        sci0_txByteXY(11,10,'|');
+     
+    }
+
+ if (input == '&')
+    { 
+        sci0_txByteXY(11,12,'|');
+   
+    }
+
+ if (input == '\x09')
+    { 
+            if(flip)
+        {
+            sci0_GotoXY(10,10);
+            flip=0;
+            }
+        else
+        {
+            sci0_GotoXY(10,9);
+            flip=1;
+        }
+       
+    }
+
+if(IsHexLetter(input))
+{
+    sci0_txByte(input);
+}
+
+
+
+}
+
+
+
+int IsHexLetter(unsigned char c)
+{
+
+    if (c == 'a' || c == 'A')
+    {
+        return 1;
+    }
+    else if (c == 'b' || c == 'B')
+    {
+        return 1;
+    }
+    else if (c == 'c' || c == 'C')
+    {
+        return 1;
+    }
+    else if (c == 'd' || c == 'D')
+    {
+        return 1;
+    }
+    else if (c == 'E' || c == 'E')
+    {
+        return 1;
+    }
+    else if (c == 'f' || c == 'F')
+    {
+        return 1;
+    }
+    if (c == '1' || c == '2'||c=='3'||c=='4'||c=='5'||c=='6'||c=='7'||c=='8'||c=='9'||c=='0')
+    {
+        return 1;
+    }
+    else
+        return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void transmit20Vowels(void)
 {
     char letter;

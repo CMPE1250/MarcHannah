@@ -94,13 +94,13 @@ void sci0_txByte ( unsigned char data);
 void sci0_txStr (char const * straddr);
 
 
+int sci0_Peek (void);
 
 
-
-void sci0_GotoXY (int iCol, int iRow);
+void sci0_GotoXY(int iCol, int iRow);
 
 void sci0_txStrXY (int iCol, int iRow, char const * straddr);
-
+void sci0_txByteXY(int iCol, int iRow, unsigned char c);
 void sci0_ClearScreen (void);
 
 /* BASIC FUNCTIONS END*******************************************************/

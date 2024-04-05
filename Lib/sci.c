@@ -59,23 +59,78 @@ void sci0_txStr(const char* straddr)
    {sci0_txByte(*straddr);}
 }
 
-
+/*
 void sci0_GotoXY(int iCol, int iRow) {
    
-   char location[20];
+   char location[22];
+   
+   
+   
     sprintf(location,"\x1B[%d;%dH", iRow, iCol);
+   
     sci0_txStr(location);
     
 }
+*/
 
 // Function to print a string at a specific position
 void sci0_txStrXY(int iCol, int iRow, char const *straddr) {
+   
+   
     sci0_GotoXY(iCol, iRow);
-    sci0_txStr(straddr);
+   
+   
+   sci0_txStr(straddr);
 }
+
+
+void sci0_txByteXY(int iCol, int iRow, unsigned char c) {
+   
+   
+    sci0_GotoXY(iCol, iRow);
+   
+   
+   sci0_txByte(c);
+}
+
+
+
+
 
 
 void sci0_ClearScreen (void)
 {
     sci0_txStr("\x1b[2J");
 }
+
+
+
+int sci0_Peek (void)
+{
+if (SCI0SR1 & SCI0SR1_RDRF_MASK)
+{
+    return 1;
+}
+else return 1;
+}
+
+
+void sci0_ShowBin16(unsigned int iVal) {
+
+int i;
+
+for ( i = 15; i >= 0; i--)
+ {
+
+if ((iVal & (1 << i)) != 0)
+{
+
+sci0_txByte('1');
+
+
+} else {
+sci0_txByte('0');
+}
+}
+}
+
