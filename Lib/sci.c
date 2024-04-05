@@ -2,7 +2,8 @@
 #include <hidef.h>
 #include "sci.h"
 #include "SWL_LED.h"
-
+#include <stdio.h>
+#include <stdlib.h>
 
 void sci0_txByte(  unsigned char data)
 {
