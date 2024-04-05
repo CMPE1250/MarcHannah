@@ -26,3 +26,6 @@ void Lab1Init();
 void Parseinput( unsigned char input);
 
 int IsHexLetter(unsigned char c);
+
+
+int Power(int base, unsigned int exp);

@@ -60,7 +60,9 @@ void sci0_txStr(const char* straddr)
    {sci0_txByte(*straddr);}
 }
 
-/*
+
+
+
 void sci0_GotoXY(int iCol, int iRow) {
    
    char location[22];
@@ -72,7 +74,6 @@ void sci0_GotoXY(int iCol, int iRow) {
     sci0_txStr(location);
     
 }
-*/
 
 // Function to print a string at a specific position
 void sci0_txStrXY(int iCol, int iRow, char const *straddr) {

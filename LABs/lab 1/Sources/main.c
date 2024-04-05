@@ -24,7 +24,10 @@
 #include "rti.h"
 #include "misc.h"
 #include "sci.h"
+ #include <math.h>
 
+
+ 
 /********************************************************************/
 //Defines
 /********************************************************************/
@@ -59,6 +62,10 @@ void main(void)
 
   char letter='!';
   char myString[]= "this is a string please work";
+  int testInt;
+  char intBuffer[8]="";
+  char hexBuffer[8]="1234";
+
 
 
   // main entry point
@@ -95,18 +102,18 @@ void main(void)
       Parseinput(input);
       
 
+      
+     testInt=Power(2,4);
 
 
+    //  HexArrayToUInt16(hexBuffer);
+
+  
+
+       sprintf(intBuffer,"%d",testInt);
 
 
-
-
-
-
-
-
-
-
+       sci0_txStrXY(12,12,intBuffer);
 
     }
    
@@ -129,17 +136,6 @@ void main(void)
 /********************************************************************/
 // Functions
 /********************************************************************/
-void sci0_GotoXY(int iCol, int iRow) {
-   
-   char location[22];
-   
-   
-   
-    sprintf(location,"\x1B[%d;%dH", iRow, iCol);
-   
-    sci0_txStr(location);
-    
-}
 
 /********************************************************************/
 // Interrupt Service Routines
