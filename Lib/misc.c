@@ -83,8 +83,10 @@ int ToDigitVal(char digit)
 
     if (digit >= '0' && digit <= '9')
     {
+
+        
        return digit-48;
-   }
+    }
 
     if (digit =='A' || digit == 'a')
     {
@@ -226,6 +228,74 @@ int IsHexLetter(unsigned char c)
     }
     else
         return 0;
+}
+
+int Power(int base, unsigned int exp)
+{
+    int i, result = 1;
+    for (i = 0; i < exp; i++)
+        result *= base;
+    return result;
+}
+
+
+int ToDigitVal(char digit)
+{
+
+    if (digit >= '0' && digit <= '9')
+    {
+
+        
+       return digit-48;
+    }
+
+    if (digit =='A' || digit == 'a')
+    {
+        return 10;
+    }
+
+    if (digit == 'b' || digit == 'B')
+    {
+        return 11;
+    }
+
+    if (digit == 'c' || digit == 'C')
+    {
+        return 12;
+    }
+
+    if (digit == 'd' || digit == 'D')
+    {
+        return 13;
+    }
+
+    if (digit == 'e' || digit == 'E')
+    {
+        return 14;
+    }
+   
+    if (digit == 'f' || digit == 'F')
+        {
+         return 15;
+        }
+}
+unsigned int HexArrayToUInt16(char *pArray)
+{
+    unsigned int result = 0;
+    int i;
+    int exp=0;
+
+    for (i = 3; i>= 0; i--)
+    {
+
+       
+       result+=ToDigitVal(pArray[i])*Power(16,exp);
+        exp++;
+
+
+    }
+
+    return result;
 }
 
 int Power(int base, unsigned int exp)

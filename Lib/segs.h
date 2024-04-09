@@ -99,7 +99,7 @@ void Segs_Init (void);
 
 // show HEX decoding (changes all of display to HEX, w/wo dp)
 /* Params: (address, data, dp) */
-Segs_Normal (unsigned char Addr, unsigned char Value, Segs_DPOption dp)
+void Segs_Normal (unsigned char Addr, unsigned char Value, Segs_DPOption dp)
 
 // control segs manually
 /* Params: (address, data) */
