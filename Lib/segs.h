@@ -95,11 +95,11 @@ typedef enum Segs_LineOption_
 // Library Prototypes
 /////////////////////////////////////////////////////////////////////////////
 // setup ports to speak with 7-segs
-void Segs_Init(void);
+void Segs_Init (void);
 
 // show HEX decoding (changes all of display to HEX, w/wo dp)
 /* Params: (address, data, dp) */
-void Segs_Normal (unsigned char Addr, unsigned char Value, Segs_DPOption dp)
+void Segs_Normal (unsigned char, unsigned char, Segs_DPOption);
 
 // control segs manually
 /* Params: (address, data) */
