@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\Marc\source\repos\CMPE1250\MarcHannah\LABs\lab 1\bin\Project.abs"
+PROGRAM "C:\Users\mhannah4\source\repos\CMPE1250\MarcHannah\LABs\lab 1\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -44,7 +44,7 @@ Section Name                    Size  Type     From       To       Segment
 .rodata1                          23     R     0xC0A5     0xC0BB   ROM_C000
 NON_BANKED                        74     R     0xC0BC     0xC105   ROM_C000
 .copy                              2     R     0xC106     0xC107   ROM_C000
-.text                           2849     R   0xFE8000   0xFE8B20   PAGE_FE
+.text                           2866     R   0xFE8000   0xFE8B31   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -698,7 +698,7 @@ NON_BANKED                        74     R     0xC0BC     0xC105   ROM_C000
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         C2B (dec:     3115)
+READ_ONLY (R):         C3C (dec:     3132)
 READ_WRITE (R/W):      112 (dec:      274)
 NO_INIT (N/I):         300 (dec:      768)
 
@@ -1364,20 +1364,20 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    FE8000     151     337       7   .text       
-     DrawState                               FE8151      9A     154       2   .text       
+     main                                    FE8000     162     354       8   .text       
+     DrawState                               FE8162      9A     154       4   .text       
 - VARIABLES:
-     STRING...05d..3                           C0A5       7       7       1   .rodata1    
-     STRING...05d..4                           C0AC       7       7       1   .rodata1    
+     STRING...05u..3                           C0A5       7       7       1   .rodata1    
+     STRING...05u..4                           C0AC       7       7       1   .rodata1    
      input                                     2107       1       1       7   .common     
      AorB                                      2108       2       2       6   .common     
-     operation                                 210A       2       2       3   .common     
+     operation                                 210A       2       2       4   .common     
      opIndex                                   210C       2       2      11   .common     
-     iOPA                                      210E       2       2       2   .common     
-     iOPB                                      2110       2       2       1   .common     
+     iOPA                                      210E       2       2       3   .common     
+     iOPB                                      2110       2       2       2   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE81EB      29      41       2   .text       
+     Init                                    FE81FC      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
@@ -1385,10 +1385,10 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2100       0       0       1               
 MODULE:                 -- PRINTF.C.o (ansixbi.lib) --
 - PROCEDURES:
-     vprintf                                 FE8214     44F    1103      53   .text       
-     _out                                    FE8663       9       9       2   .text       
-     deposit_char                            FE866C       A      10       3   .text       
-     sprintf                                 FE8676      2D      45       6   .text       
+     vprintf                                 FE8225     44F    1103      53   .text       
+     _out                                    FE8674       9       9       2   .text       
+     deposit_char                            FE867D       A      10       3   .text       
+     sprintf                                 FE8687      2D      45       6   .text       
 - VARIABLES:
      pow10                                     C031      28      40       4   .rodata     
      pow16                                     C059      20      32       4   .rodata     
@@ -1404,36 +1404,36 @@ MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
 - VARIABLES:
 MODULE:                 -- clock.c.o --
 - PROCEDURES:
-     Clock_Set20MHZ                          FE86A3      15      21       2   .text       
+     Clock_Set20MHZ                          FE86B4      15      21       2   .text       
 - VARIABLES:
 MODULE:                 -- misc.c.o --
 - PROCEDURES:
-     Lab1Init                                FE86B8     262     610       2   .text       
-     IsHexLetter                             FE891A      5A      90       2   .text       
-     ToDigitVal                              FE8974      5C      92       2   .text       
-     HexArrayToUInt16                        FE89D0      3A      58       4   .text       
-     Power                                   FE8A0A      12      18       2   .text       
+     Lab1Init                                FE86C9     262     610       2   .text       
+     IsHexLetter                             FE892B      5A      90       2   .text       
+     ToDigitVal                              FE8985      5C      92       2   .text       
+     HexArrayToUInt16                        FE89E1      3A      58       4   .text       
+     Power                                   FE8A1B      12      18       2   .text       
 - VARIABLES:
 MODULE:                 -- rti.c.o --
 - PROCEDURES:
-     RTI_Init                                FE8A1C       5       5       2   .text       
+     RTI_Init                                FE8A2D       5       5       2   .text       
 - VARIABLES:
 MODULE:                 -- sci.c.o --
 - PROCEDURES:
-     sci0_txByte                             FE8A21       9       9       6   .text       
-     sci0_bread                              FE8A2A       F      15       2   .text       
-     sci0_InitEnum                           FE8A39       9       9       2   .text       
-     sci0_txStr                              FE8A42      10      16       4   .text       
-     sci0_GotoXY                             FE8A52      23      35      16   .text       
-     sci0_txStrXY                            FE8A75      12      18      26   .text       
-     sci0_txByteXY                           FE8A87      12      18       6   .text       
-     sci0_Peek                               FE8A99       4       4       2   .text       
-     sci0_ShowBin16                          FE8A9D      77     119       6   .text       
+     sci0_txByte                             FE8A32       9       9       6   .text       
+     sci0_bread                              FE8A3B       F      15       2   .text       
+     sci0_InitEnum                           FE8A4A       9       9       2   .text       
+     sci0_txStr                              FE8A53      10      16       4   .text       
+     sci0_GotoXY                             FE8A63      23      35      16   .text       
+     sci0_txStrXY                            FE8A86      12      18      26   .text       
+     sci0_txByteXY                           FE8A98      12      18       6   .text       
+     sci0_Peek                               FE8AAA       4       4       2   .text       
+     sci0_ShowBin16                          FE8AAE      77     119       6   .text       
 - VARIABLES:
      STRING....d..dH.1                         C0B3       9       9       1   .rodata1    
 MODULE:                 -- SWL_LED.c.o --
 - PROCEDURES:
-     SWL_Init                                FE8B14       D      13       2   .text       
+     SWL_Init                                FE8B25       D      13       2   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1441,7 +1441,7 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                    11    491     14
+  main.c.o                                    11    508     14
   Start12.c.o                                  0     56      0
   PRINTF.C.o (ansixbi.lib)                     7   1167    116
   rtshc12.c.o (ansixbi.lib)                    0     74      0
@@ -1467,7 +1467,7 @@ SECTION: ".init"
 SECTION: ".rodata"
   pow10 pow16 pow8 
 SECTION: ".rodata1"
-  STRING...05d..3 STRING...05d..4 STRING....d..dH.1 
+  STRING...05u..3 STRING...05u..4 STRING....d..dH.1 
 SECTION: "NON_BANKED"
   _ISHRU _LNEG _CASE_DIRECT_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE 
 SECTION: ".abs_section_8"
@@ -3421,46 +3421,46 @@ OBJECT LIST SORTED BY ADDRESS
      pbuf                                      2100       7       7      15   .bss        
      input                                     2107       1       1       7   .common     
      AorB                                      2108       2       2       6   .common     
-     operation                                 210A       2       2       3   .common     
+     operation                                 210A       2       2       4   .common     
      opIndex                                   210C       2       2      11   .common     
-     iOPA                                      210E       2       2       2   .common     
-     iOPB                                      2110       2       2       1   .common     
+     iOPA                                      210E       2       2       3   .common     
+     iOPB                                      2110       2       2       2   .common     
      _Startup                                  C000       F      15       0   .init       
      pow10                                     C031      28      40       4   .rodata     
      pow16                                     C059      20      32       4   .rodata     
      pow8                                      C079      2C      44       4   .rodata     
-     STRING...05d..3                           C0A5       7       7       1   .rodata1    
-     STRING...05d..4                           C0AC       7       7       1   .rodata1    
+     STRING...05u..3                           C0A5       7       7       1   .rodata1    
+     STRING...05u..4                           C0AC       7       7       1   .rodata1    
      STRING....d..dH.1                         C0B3       9       9       1   .rodata1    
      _ISHRU                                    C0BC       B      11       1   NON_BANKED  
      _LNEG                                     C0C7       9       9       1   NON_BANKED  
      _CASE_DIRECT_BYTE                         C0D0       5       5       1   NON_BANKED  
      _CASE_SEARCH_8                            C0D5      17      23       1   NON_BANKED  
      _CASE_SEARCH_8_BYTE                       C0EC      1A      26       1   NON_BANKED  
-     main                                    FE8000     151     337       7   .text       
-     DrawState                               FE8151      9A     154       2   .text       
-     Init                                    FE81EB      29      41       2   .text       
-     vprintf                                 FE8214     44F    1103      53   .text       
-     _out                                    FE8663       9       9       2   .text       
-     deposit_char                            FE866C       A      10       3   .text       
-     sprintf                                 FE8676      2D      45       6   .text       
-     Clock_Set20MHZ                          FE86A3      15      21       2   .text       
-     Lab1Init                                FE86B8     262     610       2   .text       
-     IsHexLetter                             FE891A      5A      90       2   .text       
-     ToDigitVal                              FE8974      5C      92       2   .text       
-     HexArrayToUInt16                        FE89D0      3A      58       4   .text       
-     Power                                   FE8A0A      12      18       2   .text       
-     RTI_Init                                FE8A1C       5       5       2   .text       
-     sci0_txByte                             FE8A21       9       9       6   .text       
-     sci0_bread                              FE8A2A       F      15       2   .text       
-     sci0_InitEnum                           FE8A39       9       9       2   .text       
-     sci0_txStr                              FE8A42      10      16       4   .text       
-     sci0_GotoXY                             FE8A52      23      35      16   .text       
-     sci0_txStrXY                            FE8A75      12      18      26   .text       
-     sci0_txByteXY                           FE8A87      12      18       6   .text       
-     sci0_Peek                               FE8A99       4       4       2   .text       
-     sci0_ShowBin16                          FE8A9D      77     119       6   .text       
-     SWL_Init                                FE8B14       D      13       2   .text       
+     main                                    FE8000     162     354       8   .text       
+     DrawState                               FE8162      9A     154       4   .text       
+     Init                                    FE81FC      29      41       2   .text       
+     vprintf                                 FE8225     44F    1103      53   .text       
+     _out                                    FE8674       9       9       2   .text       
+     deposit_char                            FE867D       A      10       3   .text       
+     sprintf                                 FE8687      2D      45       6   .text       
+     Clock_Set20MHZ                          FE86B4      15      21       2   .text       
+     Lab1Init                                FE86C9     262     610       2   .text       
+     IsHexLetter                             FE892B      5A      90       2   .text       
+     ToDigitVal                              FE8985      5C      92       2   .text       
+     HexArrayToUInt16                        FE89E1      3A      58       4   .text       
+     Power                                   FE8A1B      12      18       2   .text       
+     RTI_Init                                FE8A2D       5       5       2   .text       
+     sci0_txByte                             FE8A32       9       9       6   .text       
+     sci0_bread                              FE8A3B       F      15       2   .text       
+     sci0_InitEnum                           FE8A4A       9       9       2   .text       
+     sci0_txStr                              FE8A53      10      16       4   .text       
+     sci0_GotoXY                             FE8A63      23      35      16   .text       
+     sci0_txStrXY                            FE8A86      12      18      26   .text       
+     sci0_txByteXY                           FE8A98      12      18       6   .text       
+     sci0_Peek                               FE8AAA       4       4       2   .text       
+     sci0_ShowBin16                          FE8AAE      77     119       6   .text       
+     SWL_Init                                FE8B25       D      13       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -3508,7 +3508,7 @@ main                      USES SWL_Init Clock_Set20MHZ sci0_InitEnum RTI_Init
                                 Lab1Init main sci0_Peek input sci0_bread operation 
                                 sci0_txByteXY AorB opIndex sci0_GotoXY IsHexLetter 
                                 HexArrayToUInt16 iOPA iOPB DrawState sci0_txByte 
-DrawState                 USES STRING...05d..3 sprintf STRING...05d..4 
+DrawState                 USES STRING...05u..3 sprintf STRING...05u..4 
                                 sci0_txStrXY sci0_ShowBin16 opIndex AorB sci0_GotoXY 
 Init                      USES _startupData 
 vprintf                   USES vprintf _CASE_SEARCH_8_BYTE _CASE_DIRECT_BYTE 
@@ -3626,5 +3626,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 7
-Total size of all blocks to be downloaded: 3115
+Total size of all blocks to be downloaded: 3132
 

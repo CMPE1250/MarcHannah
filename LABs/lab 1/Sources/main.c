@@ -93,6 +93,7 @@ void main(void)
         sci0_txByteXY(9, 9, '|');
         
         sci0_GotoXY(13+opIndex,5+AorB);
+         DrawState(iOPA, iOPB, operation);
       }
 
       if (input == '&')
@@ -101,6 +102,7 @@ void main(void)
         sci0_txByteXY(9, 9, '&');
        
         sci0_GotoXY(13+opIndex,5+AorB);
+         DrawState(iOPA, iOPB, operation);
       }
 
     if (input == '\x09')
@@ -171,8 +173,8 @@ void DrawState(unsigned int iOPA, unsigned int iOPB, int operation)
   char bBuffer[8];
   int result;
 
-  sprintf(aBuffer, "(%05d)", iOPA);
-  sprintf(bBuffer, "(%05d)", iOPB);
+  sprintf(aBuffer, "(%05u)", iOPA);
+  sprintf(bBuffer, "(%05u)", iOPB);
   sci0_txStrXY(18, 5, aBuffer);
   sci0_txStrXY(18, 6, bBuffer);
 
