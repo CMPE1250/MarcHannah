@@ -78,75 +78,19 @@ char getLetter()
     return letter;
 }
 
-int ToDigitVal(char digit)
-{
 
-    if (digit >= '0' && digit <= '9')
-    {
-
-        
-       return digit-48;
-    }
-
-    if (digit =='A' || digit == 'a')
-    {
-        return 10;
-    }
-
-    if (digit == 'b' || digit == 'B')
-    {
-        return 11;
-    }
-
-    if (digit == 'c' || digit == 'C')
-    {
-        return 12;
-    }
-
-    if (digit == 'd' || digit == 'D')
-    {
-        return 13;
-    }
-
-    if (digit == 'e' || digit == 'E')
-    {
-        return 14;
-    }
-   
-    if (digit == 'f' || digit == 'F')
-        {
-         return 15;
-        }
-}
-
-unsigned int HexArrayToUInt16(char *pArray)
-{
-    unsigned int result = 0;
-    int i = 0;
-    int exp=1;
-
-    for (i = 3; i > 0; i++)
-    {
-
-       
-       result+=ToDigitVal(pArray[i])*Power(16,exp);
-        exp++;
-
-
-    }
-
-    return result;
-}
 
 void Lab1Init()
 {
 
     char myName[] = "Marc Hannah";
     char labTitle[] = "Simple Binary Calculator";
-    char opA[] = "Op A:";
-    char opB[] = "OP B:";
-    char line[] = "----------";
-
+    char opA[] = "Op A: 0x0000";
+    char opB[] = "OP B: 0x0000";
+    char line[] = "----------------";
+    char binA[]= "000000000000000";
+    char binB[]= "000000000000000";
+    char result[]="000000000000000";
 
 
    sci0_txStrXY (1,1,myName);
@@ -157,43 +101,18 @@ void Lab1Init()
 
     sci0_txStrXY(5, 6, opB);
 
+    sci0_txStrXY(11,8,binA);
+    sci0_txStrXY(11,9,binB);
     sci0_txStrXY(11, 10, line);
+    sci0_txByteXY(9,9,'&');
+    sci0_txStrXY(11,11,result);
+
+
+
+    sci0_GotoXY(13,5);
 }
 
-void Parseinput(unsigned char input)
-{
 
-    int flip;
-
-    if (input == '|')
-    {
-        sci0_txByteXY(11, 10, '|');
-    }
-
-    if (input == '&')
-    {
-        sci0_txByteXY(11, 12, '|');
-    }
-
-    if (input == '\x09')
-    {
-        if (flip)
-        {
-            sci0_GotoXY(10, 10);
-            flip = 0;
-        }
-        else
-        {
-            sci0_GotoXY(10, 9);
-            flip = 1;
-        }
-    }
-
-    if (IsHexLetter(input))
-    {
-        sci0_txByte(input);
-    }
-}
 
 int IsHexLetter(unsigned char c)
 {
@@ -230,13 +149,7 @@ int IsHexLetter(unsigned char c)
         return 0;
 }
 
-int Power(int base, unsigned int exp)
-{
-    int i, result = 1;
-    for (i = 0; i < exp; i++)
-        result *= base;
-    return result;
-}
+
 
 
 int ToDigitVal(char digit)
@@ -305,3 +218,6 @@ int Power(int base, unsigned int exp)
         result *= base;
     return result;
 }
+
+
+

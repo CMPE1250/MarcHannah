@@ -21,7 +21,7 @@ void transmit20VowelsWithSum(void);
 
 void transmit20VowelsWithSumColors(void);
 
-void Lab1Init();
+void Lab1Init(void);
 
 void Parseinput( unsigned char input);
 
@@ -29,3 +29,5 @@ int IsHexLetter(unsigned char c);
 
 
 int Power(int base, unsigned int exp);
+
+char* toBinaryString(int n);

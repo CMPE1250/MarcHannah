@@ -15,6 +15,17 @@ void sci0_txByte(  unsigned char data)
     SCI0DRL = data;
 }
 
+
+
+
+unsigned char sci0_bread(unsigned char *pData) {
+    while (!(SCI0SR1 & SCI0SR1_RDRF_MASK)) {
+        // Wait until a character is received
+    }
+    *pData = SCI0DRL; // Read the character
+    return 1; // Success: character read
+}
+
 int sci0_rxByte(unsigned char *pData)
 {
 
@@ -116,23 +127,24 @@ if (SCI0SR1 & SCI0SR1_RDRF_MASK)
 else return 1;
 }
 
+void sci0_ShowBin16(unsigned int iVal, int position) {
+    char binBuffer[17];
+    int i;
 
-void sci0_ShowBin16(unsigned int iVal) {
+    // Construct the binary string
+    for (i = 15; i >= 0; i--) {
+        binBuffer[15 - i] = ((iVal >> i) & 1) ? '1' : '0'; 
+    }
+    
+    binBuffer[16] = '\0';
 
-int i;
+    if(position == 1)
+        sci0_txStrXY(11,8,binBuffer);
+  
+     if(position == 2)
+        sci0_txStrXY(11,9,binBuffer);
 
-for ( i = 15; i >= 0; i--)
- {
+     if(position == 3)
+        sci0_txStrXY(11,11,binBuffer);
 
-if ((iVal & (1 << i)) != 0)
-{
-
-sci0_txByte('1');
-
-
-} else {
-sci0_txByte('0');
 }
-}
-}
-

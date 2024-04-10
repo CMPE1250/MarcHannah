@@ -81,7 +81,7 @@ void sci0_InitEnum( BaudRate br);
 
 // blocking byte read
 // waits for a byte to arrive and returns it
-unsigned char sci0_bread(void);
+unsigned char sci0_bread(unsigned char *pData);
 
 // read a byte, non-blocking
 // returns 1 if byte read, 0 if not
@@ -93,6 +93,7 @@ void sci0_txByte ( unsigned char data);
 // send a null-terminated string over SCI
 void sci0_txStr (char const * straddr);
 
+void sci0_ShowBin16(unsigned int iVal,int position);
 
 int sci0_Peek (void);
 
