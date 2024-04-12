@@ -152,8 +152,8 @@ void Segs_Init(void)
     Segs_Clear();
 
      Segs_Normal(4,'3',Segs_DP_OFF);
-     Segs_8H(7,0x00E0);
-     Segs_8H(0,0x0040);
+     Segs_8H(7,0x00E4);
+     
 
     
 
