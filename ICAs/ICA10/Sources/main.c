@@ -193,40 +193,79 @@ Segs_16H(hexCount, Segs_LineBottom);
 
 void Tier3(void)
 {
-
-
+  
+  
   if (SWL_Pushed(SWL_RIGHT))
   {
-    count++;
-  }
-  if (count == 10)
-  {
-    addr=(addr + 1) % 4;    
-    count = 0;
-    
+   count++;
+
+
   }
 
   if (SWL_Pushed(SWL_LEFT))
   {
+
     count2++;
-  }
-  if (count2 == 10)
-  {
+   }
 
-    count = 0;
-    (addr - 1) % 5;
-  }
 
-  Segs_Custom(addr, 0b01000001);
-  RTI_Delay_ms(200);
-  Segs_Custom(addr, 0b01100000);
-  RTI_Delay_ms(200);
-  Segs_Custom(addr, 0b00011000);
-  RTI_Delay_ms(200);
-  Segs_Custom(addr, 0b00000110);
-  RTI_Delay_ms(200);
-  Segs_Custom(addr, 0b01000001);
+if( count==10)
+{
+    addr = (addr + 1) % 4;
+    Segs_ClearLine(Segs_LineTop);
+    hexCount++;
+    count=0;
 }
+if (count2==10)
+{
+    if (addr == 0)
+    {
+      addr = 3;
+      Segs_ClearLine(Segs_LineTop);
+    }
+    else
+    {
+      addr = (addr - 1);
+      Segs_ClearLine(Segs_LineTop);
+    }
+
+    hexCount++;
+    count2=0;
+    }
+
+
+
+
+
+
+
+
+if (count%5==1){
+  Segs_Custom(addr,FRAME_1);
+}
+if (count%5==2){
+  Segs_Custom(addr,FRAME_2);
+}
+if (count%5==3){
+  Segs_Custom(addr,FRAME_3);
+}
+if (count%5==4){
+  Segs_Custom(addr,FRAME_4);
+}if (count%5==5){
+  Segs_Custom(addr,FRAME_5);
+}
+
+Segs_16H(hexCount, Segs_LineBottom);
+ RTI_Delay_ms(100);
+
+   
+  }
+
+
+
+
+
+
 
 /********************************************************************/
 // Interrupt Service Routines
