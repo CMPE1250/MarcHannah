@@ -76,8 +76,8 @@ void main(void)
   for (;;)
   { 
     // Tier1();
-     Tier2();
-    //Tier3();
+    // Tier2();
+    Tier3();
   }
 }
 
@@ -191,9 +191,11 @@ Segs_16H(hexCount, Segs_LineBottom);
  RTI_Delay_ms(100);
 }
 
+
+
 void Tier3(void)
 {
-  
+  countActual++;
   
   if (SWL_Pushed(SWL_RIGHT))
   {
@@ -237,26 +239,26 @@ if (count2==10)
 
 
 
-
-
-
-if (count%5==1){
+if (countActual%5==1){
   Segs_Custom(addr,FRAME_1);
 }
-if (count%5==2){
+if (countActual%5==2){
   Segs_Custom(addr,FRAME_2);
 }
-if (count%5==3){
+if (countActual%5==3){
   Segs_Custom(addr,FRAME_3);
 }
-if (count%5==4){
+if (countActual%5==4){
   Segs_Custom(addr,FRAME_4);
-}if (count%5==5){
+}if (countActual%5==5){
   Segs_Custom(addr,FRAME_5);
 }
 
+
+
+
 Segs_16H(hexCount, Segs_LineBottom);
- RTI_Delay_ms(100);
+RTI_Delay_ms(100);
 
    
   }

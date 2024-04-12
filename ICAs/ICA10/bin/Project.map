@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\Marc\source\repos\CMPE1250\MarcHannah\ICAs\ICA10\bin\Project.abs"
+PROGRAM "C:\Users\mhannah4\source\repos\CMPE1250\MarcHannah\ICAs\ICA10\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -27,7 +27,7 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2100     9
+  _Range   pZeroOut       0x2100     11
   _Copy    *toCopyDownBeg 0xC04B
 } _startupData;
 
@@ -39,7 +39,7 @@ Section Name                    Size  Type     From       To       Segment
 .startData                        34     R     0xC00F     0xC030   ROM_C000
 NON_BANKED                        26     R     0xC031     0xC04A   ROM_C000
 .copy                              2     R     0xC04B     0xC04C   ROM_C000
-.text                            797     R   0xFE8000   0xFE831C   PAGE_FE
+.text                            799     R   0xFE8000   0xFE831E   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -688,13 +688,13 @@ NON_BANKED                        26     R     0xC031     0xC04A   ROM_C000
 .abs_section_3aa                   2   N/I      0x3AA      0x3AB   .absSeg644
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
-.bss                               7   R/W     0x2100     0x2106   RAM
-.common                            2   R/W     0x2107     0x2108   RAM
+.bss                               9   R/W     0x2100     0x2108   RAM
+.common                            2   R/W     0x2109     0x210A   RAM
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         36C (dec:      876)
-READ_WRITE (R/W):      109 (dec:      265)
+READ_ONLY (R):         36E (dec:      878)
+READ_WRITE (R/W):      10B (dec:      267)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -1360,14 +1360,16 @@ MODULE:                 -- mc9s12xdp512.c.o --
 MODULE:                 -- main.c.o --
 - PROCEDURES:
      main                                    FE8000      15      21       2   .text       
-     Tier2                                   FE8015      D3     211       2   .text       
+     Tier3                                   FE8015      DE     222       2   .text       
 - VARIABLES:
-     count                                     2100       1       1       4   .bss        
-     hexCount                                  2101       2       2       3   .bss        
-     addr                                      2107       2       2      10   .common     
+     countActual                               2100       1       1       2   .bss        
+     count                                     2101       1       1       3   .bss        
+     count2                                    2102       1       1       3   .bss        
+     hexCount                                  2103       2       2       3   .bss        
+     addr                                      2109       2       2      10   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE80E8      29      41       2   .text       
+     Init                                    FE80F3      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
@@ -1375,30 +1377,30 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2100       0       0       1               
 MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
 - PROCEDURES:
-     _BDIVMODU                                 C031       A      10       2   NON_BANKED  
+     _BDIVMODU                                 C031       A      10       1   NON_BANKED  
      _ISHRU                                    C03B       B      11       1   NON_BANKED  
      _LINC                                     C046       5       5       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- segs.c.o --
 - PROCEDURES:
-     Segs_Normal                             FE8111      2C      44      16   .text       
-     Segs_Custom                             FE813D      21      33      22   .text       
-     Segs_8H                                 FE815E      42      66       4   .text       
-     Segs_16H                                FE81A0      7C     124       2   .text       
-     Segs_Clear                              FE821C      18      24       2   .text       
-     Segs_ClearLine                          FE8234      3A      58       4   .text       
-     Segs_Init                               FE826E      56      86       2   .text       
+     Segs_Normal                             FE811C      2C      44      16   .text       
+     Segs_Custom                             FE8148      21      33      22   .text       
+     Segs_8H                                 FE8169      42      66       2   .text       
+     Segs_16H                                FE81AB      7C     124       2   .text       
+     Segs_Clear                              FE8227      18      24       2   .text       
+     Segs_ClearLine                          FE823F      3A      58       4   .text       
+     Segs_Init                               FE8279      4D      77       2   .text       
 - VARIABLES:
 MODULE:                 -- rti.c.o --
 - PROCEDURES:
-     RTI_Init                                FE82C4       5       5       4   .text       
-     RTI_Delay_ms                            FE82C9      3E      62       2   .text       
+     RTI_Init                                FE82C6       5       5       4   .text       
+     RTI_Delay_ms                            FE82CB      3E      62       2   .text       
 - VARIABLES:
-     rtiMasterCount                            2103       4       4       8   .bss        
+     rtiMasterCount                            2105       4       4       8   .bss        
 MODULE:                 -- SWL_LED.c.o --
 - PROCEDURES:
-     SWL_Init                                FE8307       D      13       2   .text       
-     SWL_Pushed                              FE8314       9       9       4   .text       
+     SWL_Init                                FE8309       D      13       2   .text       
+     SWL_Pushed                              FE8316       9       9       4   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1406,10 +1408,10 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     5    232      0
+  main.c.o                                     7    243      0
   Start12.c.o                                  0     56      0
   rtshc12.c.o (ansixbi.lib)                    0     26      0
-  segs.c.o                                     0    435      0
+  segs.c.o                                     0    426      0
   rti.c.o                                      4     67      0
   SWL_LED.c.o                                  0     22      0
   other                                      256     36      2
@@ -1418,10 +1420,10 @@ MODULE STATISTIC
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  main Tier2 Init Segs_Normal Segs_Custom Segs_8H Segs_16H Segs_Clear 
+  main Tier3 Init Segs_Normal Segs_Custom Segs_8H Segs_16H Segs_Clear 
   Segs_ClearLine Segs_Init RTI_Init RTI_Delay_ms SWL_Init SWL_Pushed 
 SECTION: ".bss"
-  count hexCount rtiMasterCount 
+  countActual count count2 hexCount rtiMasterCount 
 SECTION: ".init"
   _Startup 
 SECTION: "NON_BANKED"
@@ -3374,35 +3376,37 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR5                                      3AA       2       2       0   .abs_section_3aa
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
-     count                                     2100       1       1       4   .bss        
-     hexCount                                  2101       2       2       3   .bss        
-     rtiMasterCount                            2103       4       4       8   .bss        
-     addr                                      2107       2       2      10   .common     
+     countActual                               2100       1       1       2   .bss        
+     count                                     2101       1       1       3   .bss        
+     count2                                    2102       1       1       3   .bss        
+     hexCount                                  2103       2       2       3   .bss        
+     rtiMasterCount                            2105       4       4       8   .bss        
+     addr                                      2109       2       2      10   .common     
      _Startup                                  C000       F      15       0   .init       
-     _BDIVMODU                                 C031       A      10       2   NON_BANKED  
+     _BDIVMODU                                 C031       A      10       1   NON_BANKED  
      _ISHRU                                    C03B       B      11       1   NON_BANKED  
      _LINC                                     C046       5       5       1   NON_BANKED  
      main                                    FE8000      15      21       2   .text       
-     Tier2                                   FE8015      D3     211       2   .text       
-     Init                                    FE80E8      29      41       2   .text       
-     Segs_Normal                             FE8111      2C      44      16   .text       
-     Segs_Custom                             FE813D      21      33      22   .text       
-     Segs_8H                                 FE815E      42      66       4   .text       
-     Segs_16H                                FE81A0      7C     124       2   .text       
-     Segs_Clear                              FE821C      18      24       2   .text       
-     Segs_ClearLine                          FE8234      3A      58       4   .text       
-     Segs_Init                               FE826E      56      86       2   .text       
-     RTI_Init                                FE82C4       5       5       4   .text       
-     RTI_Delay_ms                            FE82C9      3E      62       2   .text       
-     SWL_Init                                FE8307       D      13       2   .text       
-     SWL_Pushed                              FE8314       9       9       4   .text       
+     Tier3                                   FE8015      DE     222       2   .text       
+     Init                                    FE80F3      29      41       2   .text       
+     Segs_Normal                             FE811C      2C      44      16   .text       
+     Segs_Custom                             FE8148      21      33      22   .text       
+     Segs_8H                                 FE8169      42      66       2   .text       
+     Segs_16H                                FE81AB      7C     124       2   .text       
+     Segs_Clear                              FE8227      18      24       2   .text       
+     Segs_ClearLine                          FE823F      3A      58       4   .text       
+     Segs_Init                               FE8279      4D      77       2   .text       
+     RTI_Init                                FE82C6       5       5       4   .text       
+     RTI_Delay_ms                            FE82CB      3E      62       2   .text       
+     SWL_Init                                FE8309       D      13       2   .text       
+     SWL_Pushed                              FE8316       9       9       4   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
 main.c.o:
-  Tier1 Tier3 
+  Tier1 Tier2 
 rtshc12.c.o (ansixbi.lib):
   _BSHL _BSHRS _BSHRU _BDIVMODS _ISHL _ISHRS _LSHL _LSHRU _LSHRS _LADD _LSUB 
   _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LDEC _LMUL _LMULU16x32 
@@ -3410,11 +3414,13 @@ rtshc12.c.o (ansixbi.lib):
   _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE _CASE_SEARCH 
   _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL _FPCMP _PADD 
   _PSUB _PINC _PDEC 
+segs.c.o:
+  Segs_16D 
 SWL_LED.c.o:
   SWL_ON SWL_OFF SWL_TOG GetCount countUp 
 NOT USED VARIABLES
 main.c.o:
-  activateCount countActual count10s count100s count1000s count2 
+  activateCount count10s count100s count1000s 
 rtshc12.c.o (ansixbi.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 
@@ -3429,9 +3435,10 @@ Filling bytes inserted
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
-main                      USES Segs_Init SWL_Init RTI_Init Tier2 
-Tier2                     USES count SWL_Pushed addr Segs_ClearLine hexCount 
-                                _BDIVMODU Segs_Custom Segs_16H RTI_Delay_ms 
+main                      USES Segs_Init SWL_Init RTI_Init Tier3 
+Tier3                     USES countActual SWL_Pushed count count2 addr 
+                                Segs_ClearLine hexCount Segs_Custom Segs_16H RTI_Delay_ms 
+                                _BDIVMODU 
 Init                      USES _startupData 
 Segs_Normal               USES _PORTAB 
 Segs_Custom               USES _PORTAB 
@@ -3471,7 +3478,7 @@ DEPENDENCY TREE
  |  |    
  |  +- RTI_Init            
  |  |    
- |  +- Tier2               
+ |  +- Tier3               
  |     | 
  |     +- SWL_Pushed          
  |     |    
@@ -3479,8 +3486,6 @@ DEPENDENCY TREE
  |     |  | 
  |     |  +- Segs_Custom          (see above)
  |     |     
- |     +- _BDIVMODU           
- |     |    
  |     +- Segs_Custom          (see above)
  |     |  
  |     +- Segs_16H            
@@ -3490,11 +3495,13 @@ DEPENDENCY TREE
  |     |  +- Segs_Normal          (see above)
  |     |     
  |     +- RTI_Delay_ms        
- |        | 
- |        +- RTI_Init             (see above)
- |        |  
- |        +- _LINC               
- |             
+ |     |  | 
+ |     |  +- RTI_Init             (see above)
+ |     |  |  
+ |     |  +- _LINC               
+ |     |       
+ |     +- _BDIVMODU           
+ |          
  +- _Startup            
     | 
     +- Init                
@@ -3508,5 +3515,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 6
-Total size of all blocks to be downloaded: 876
+Total size of all blocks to be downloaded: 878
 
