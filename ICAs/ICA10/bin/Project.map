@@ -27,8 +27,8 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2100     8
-  _Copy    *toCopyDownBeg 0xC036
+  _Range   pZeroOut       0x2100     9
+  _Copy    *toCopyDownBeg 0xC041
 } _startupData;
 
 *********************************************************************************************
@@ -37,9 +37,9 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             15     R     0xC000     0xC00E   ROM_C000
 .startData                        34     R     0xC00F     0xC030   ROM_C000
-NON_BANKED                         5     R     0xC031     0xC035   ROM_C000
-.copy                              2     R     0xC036     0xC037   ROM_C000
-.text                            534     R   0xFE8000   0xFE8215   PAGE_FE
+NON_BANKED                        16     R     0xC031     0xC040   ROM_C000
+.copy                              2     R     0xC041     0xC042   ROM_C000
+.text                            762     R   0xFE8000   0xFE82F9   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -688,13 +688,13 @@ NON_BANKED                         5     R     0xC031     0xC035   ROM_C000
 .abs_section_3aa                   2   N/I      0x3AA      0x3AB   .absSeg644
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
-.bss                               4   R/W     0x2100     0x2103   RAM
-.common                            4   R/W     0x2104     0x2107   RAM
+.bss                               7   R/W     0x2100     0x2106   RAM
+.common                            2   R/W     0x2107     0x2108   RAM
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         250 (dec:      592)
-READ_WRITE (R/W):      108 (dec:      264)
+READ_ONLY (R):         33F (dec:      831)
+READ_WRITE (R/W):      109 (dec:      265)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -1360,14 +1360,14 @@ MODULE:                 -- mc9s12xdp512.c.o --
 MODULE:                 -- main.c.o --
 - PROCEDURES:
      main                                    FE8000      15      21       2   .text       
-     Tier3                                   FE8015      82     130       2   .text       
+     Tier2                                   FE8015      B0     176       2   .text       
 - VARIABLES:
-     count                                     2104       1       1       4   .common     
-     count2                                    2105       1       1       2   .common     
-     addr                                      2106       2       2       4   .common     
+     count                                     2100       1       1       3   .bss        
+     hexCount                                  2101       2       2       3   .bss        
+     addr                                      2107       2       2       7   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE8097      29      41       2   .text       
+     Init                                    FE80C5      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
@@ -1375,26 +1375,29 @@ MODULE:                 -- Start12.c.o --
      __SEG_END_SSTACK                          2100       0       0       1               
 MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
 - PROCEDURES:
-     _LINC                                     C031       5       5       1   NON_BANKED  
+     _ISHRU                                    C031       B      11       1   NON_BANKED  
+     _LINC                                     C03C       5       5       1   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- segs.c.o --
 - PROCEDURES:
-     Segs_Normal                             FE80C0      2C      44       6   .text       
-     Segs_Custom                             FE80EC      21      33      20   .text       
-     Segs_8H                                 FE810D      42      66       4   .text       
-     Segs_Clear                              FE814F      18      24       2   .text       
-     Segs_Init                               FE8167      56      86       2   .text       
+     Segs_Normal                             FE80EE      2C      44      16   .text       
+     Segs_Custom                             FE811A      21      33      22   .text       
+     Segs_8H                                 FE813B      42      66       4   .text       
+     Segs_16H                                FE817D      7C     124       2   .text       
+     Segs_Clear                              FE81F9      18      24       2   .text       
+     Segs_ClearLine                          FE8211      3A      58       4   .text       
+     Segs_Init                               FE824B      56      86       2   .text       
 - VARIABLES:
 MODULE:                 -- rti.c.o --
 - PROCEDURES:
-     RTI_Init                                FE81BD       5       5       4   .text       
-     RTI_Delay_ms                            FE81C2      3E      62       2   .text       
+     RTI_Init                                FE82A1       5       5       4   .text       
+     RTI_Delay_ms                            FE82A6      3E      62       4   .text       
 - VARIABLES:
-     rtiMasterCount                            2100       4       4       8   .bss        
+     rtiMasterCount                            2103       4       4       8   .bss        
 MODULE:                 -- SWL_LED.c.o --
 - PROCEDURES:
-     SWL_Init                                FE8200       D      13       2   .text       
-     SWL_Pushed                              FE820D       9       9       4   .text       
+     SWL_Init                                FE82E4       D      13       2   .text       
+     SWL_Pushed                              FE82F1       9       9       4   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1402,10 +1405,10 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     4    151      0
+  main.c.o                                     5    197      0
   Start12.c.o                                  0     56      0
-  rtshc12.c.o (ansixbi.lib)                    0      5      0
-  segs.c.o                                     0    253      0
+  rtshc12.c.o (ansixbi.lib)                    0     16      0
+  segs.c.o                                     0    435      0
   rti.c.o                                      4     67      0
   SWL_LED.c.o                                  0     22      0
   other                                      256     36      2
@@ -1414,14 +1417,14 @@ MODULE STATISTIC
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  main Tier3 Init Segs_Normal Segs_Custom Segs_8H Segs_Clear Segs_Init 
-  RTI_Init RTI_Delay_ms SWL_Init SWL_Pushed 
+  main Tier2 Init Segs_Normal Segs_Custom Segs_8H Segs_16H Segs_Clear 
+  Segs_ClearLine Segs_Init RTI_Init RTI_Delay_ms SWL_Init SWL_Pushed 
 SECTION: ".bss"
-  rtiMasterCount 
+  count hexCount rtiMasterCount 
 SECTION: ".init"
   _Startup 
 SECTION: "NON_BANKED"
-  _LINC 
+  _ISHRU _LINC 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -2717,7 +2720,7 @@ SECTION: ".abs_section_3ac"
 SECTION: ".abs_section_3ae"
   _XGR7 
 SECTION: ".common"
-  count count2 addr 
+  addr 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
@@ -3370,52 +3373,53 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR5                                      3AA       2       2       0   .abs_section_3aa
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
-     rtiMasterCount                            2100       4       4       8   .bss        
-     count                                     2104       1       1       4   .common     
-     count2                                    2105       1       1       2   .common     
-     addr                                      2106       2       2       4   .common     
+     count                                     2100       1       1       3   .bss        
+     hexCount                                  2101       2       2       3   .bss        
+     rtiMasterCount                            2103       4       4       8   .bss        
+     addr                                      2107       2       2       7   .common     
      _Startup                                  C000       F      15       0   .init       
-     _LINC                                     C031       5       5       1   NON_BANKED  
+     _ISHRU                                    C031       B      11       1   NON_BANKED  
+     _LINC                                     C03C       5       5       1   NON_BANKED  
      main                                    FE8000      15      21       2   .text       
-     Tier3                                   FE8015      82     130       2   .text       
-     Init                                    FE8097      29      41       2   .text       
-     Segs_Normal                             FE80C0      2C      44       6   .text       
-     Segs_Custom                             FE80EC      21      33      20   .text       
-     Segs_8H                                 FE810D      42      66       4   .text       
-     Segs_Clear                              FE814F      18      24       2   .text       
-     Segs_Init                               FE8167      56      86       2   .text       
-     RTI_Init                                FE81BD       5       5       4   .text       
-     RTI_Delay_ms                            FE81C2      3E      62       2   .text       
-     SWL_Init                                FE8200       D      13       2   .text       
-     SWL_Pushed                              FE820D       9       9       4   .text       
+     Tier2                                   FE8015      B0     176       2   .text       
+     Init                                    FE80C5      29      41       2   .text       
+     Segs_Normal                             FE80EE      2C      44      16   .text       
+     Segs_Custom                             FE811A      21      33      22   .text       
+     Segs_8H                                 FE813B      42      66       4   .text       
+     Segs_16H                                FE817D      7C     124       2   .text       
+     Segs_Clear                              FE81F9      18      24       2   .text       
+     Segs_ClearLine                          FE8211      3A      58       4   .text       
+     Segs_Init                               FE824B      56      86       2   .text       
+     RTI_Init                                FE82A1       5       5       4   .text       
+     RTI_Delay_ms                            FE82A6      3E      62       4   .text       
+     SWL_Init                                FE82E4       D      13       2   .text       
+     SWL_Pushed                              FE82F1       9       9       4   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
 ---------------------------------------------------------------------------------------------
 NOT USED PROCEDURES
 main.c.o:
-  Tier1 Tier2 
+  Tier1 Tier3 
 rtshc12.c.o (ansixbi.lib):
-  _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRU _ISHRS _LSHL _LSHRU 
-  _LSHRS _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LDEC 
-  _LMUL _LMULU16x32 _LMULS16x32 _lDivMod _LDIVU _NEG_P _LDIVS _LMODU _LMODS 
-  _ILSEXT _COPY _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE 
+  _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRS _LSHL _LSHRU _LSHRS 
+  _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LDEC _LMUL 
+  _LMULU16x32 _LMULS16x32 _lDivMod _LDIVU _NEG_P _LDIVS _LMODU _LMODS _ILSEXT 
+  _COPY _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE 
   _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL 
   _FPCMP _PADD _PSUB _PINC _PDEC 
-segs.c.o:
-  Segs_16H Segs_ClearLine 
 SWL_LED.c.o:
   SWL_ON SWL_OFF SWL_TOG GetCount countUp 
 NOT USED VARIABLES
 main.c.o:
-  activateCount countActual count10s count100s count1000s hexCount 
+  activateCount countActual count10s count100s count1000s count2 
 rtshc12.c.o (ansixbi.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC036 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC041 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3423,14 +3427,16 @@ Filling bytes inserted
 OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
-main                      USES Segs_Init SWL_Init RTI_Init Tier3 
-Tier3                     USES SWL_Pushed count addr count2 Segs_Custom 
-                                RTI_Delay_ms 
+main                      USES Segs_Init SWL_Init RTI_Init Tier2 
+Tier2                     USES count SWL_Pushed addr Segs_ClearLine hexCount 
+                                RTI_Delay_ms Segs_Custom Segs_16H 
 Init                      USES _startupData 
 Segs_Normal               USES _PORTAB 
 Segs_Custom               USES _PORTAB 
 Segs_8H                   USES Segs_Normal 
+Segs_16H                  USES _ISHRU Segs_Normal 
 Segs_Clear                USES Segs_Custom 
+Segs_ClearLine            USES Segs_Custom 
 Segs_Init                 USES _PORTAB _DDRAB Segs_Clear Segs_Normal Segs_8H 
                                 Segs_Custom 
 RTI_Init                  USES _RTICTL 
@@ -3463,18 +3469,28 @@ DEPENDENCY TREE
  |  |    
  |  +- RTI_Init            
  |  |    
- |  +- Tier3               
+ |  +- Tier2               
  |     | 
  |     +- SWL_Pushed          
  |     |    
+ |     +- Segs_ClearLine      
+ |     |  | 
+ |     |  +- Segs_Custom          (see above)
+ |     |     
+ |     +- RTI_Delay_ms        
+ |     |  | 
+ |     |  +- RTI_Init             (see above)
+ |     |  |  
+ |     |  +- _LINC               
+ |     |       
  |     +- Segs_Custom          (see above)
  |     |  
- |     +- RTI_Delay_ms        
+ |     +- Segs_16H            
  |        | 
- |        +- RTI_Init             (see above)
- |        |  
- |        +- _LINC               
- |             
+ |        +- _ISHRU              
+ |        |    
+ |        +- Segs_Normal          (see above)
+ |           
  +- _Startup            
     | 
     +- Init                
@@ -3487,6 +3503,6 @@ STATISTIC SECTION
 
 ExeFile:
 --------
-Number of blocks to be downloaded: 6
-Total size of all blocks to be downloaded: 592
+Number of blocks to be downloaded: 5
+Total size of all blocks to be downloaded: 831
 

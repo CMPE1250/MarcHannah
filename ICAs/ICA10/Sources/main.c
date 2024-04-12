@@ -38,14 +38,14 @@ void Tier3(void);
 /********************************************************************/
 int activateCount = 0;
 
-unsigned char countActual;
-unsigned char count10s;
-unsigned char count100s;
-unsigned char count1000s;
-unsigned char count;
-unsigned char count2;
+unsigned char countActual=0;
+unsigned char count10s=0;
+unsigned char count100s=0;
+unsigned char count1000s=0;
+unsigned char count=0;
+unsigned char count2=0;
 
-unsigned int hexCount;
+unsigned int hexCount=0;
 int addr;
 
 /********************************************************************/
@@ -76,8 +76,8 @@ void main(void)
   for (;;)
   {
     // Tier1();
-    // Tier2();
-    Tier3();
+     Tier2();
+    //Tier3();
   }
 }
 
@@ -142,8 +142,8 @@ void Tier2(void)
 {
 
   count++;
-  // while (count==10)
-  //{
+   while (count==10)
+  {
 
   if (SWL_Pushed(SWL_RIGHT))
   {
@@ -166,7 +166,7 @@ void Tier2(void)
     }
 
     hexCount++;
-    //}
+    }
 
     count = 0;
     RTI_Delay_ms(100);
