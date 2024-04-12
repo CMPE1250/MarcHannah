@@ -90,6 +90,18 @@ typedef enum Segs_LineOption_
   Segs_LineBottom = 1
 } Segs_LineOption;
 
+typedef enum Segs_Animation_Frames_
+{
+    FRAME_1 = 0b11000001,
+    FRAME_2 = 0b11100000,
+    FRAME_3 = 0b10011000,
+    FRAME_4 = 0b10000110,
+    FRAME_5 = 0b10000001
+
+}Segs_Animation_Frames;
+
+
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Library Prototypes
