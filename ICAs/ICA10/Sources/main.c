@@ -74,7 +74,7 @@ void main(void)
   /********************************************************************/
 
   for (;;)
-  {
+  { 
     // Tier1();
      Tier2();
     //Tier3();
@@ -169,20 +169,26 @@ void Tier2(void)
     }
 
     count = 0;
-    RTI_Delay_ms(100);
+  
   }
+if (count%5==1){
+  Segs_Custom(addr,FRAME_1);
+}
+if (count%5==2){
+  Segs_Custom(addr,FRAME_2);
+}
+if (count%5==3){
+  Segs_Custom(addr,FRAME_3);
+}
+if (count%5==4){
+  Segs_Custom(addr,FRAME_4);
+}if (count%5==5){
+  Segs_Custom(addr,FRAME_5);
+}
 
-  Segs_Custom(addr, 0b01000001);
-  RTI_Delay_ms(200);
-  Segs_Custom(addr, 0b01100000);
-  RTI_Delay_ms(200);
-  Segs_Custom(addr, 0b00011000);
-  RTI_Delay_ms(200);
-  Segs_Custom(addr, 0b00000110);
-  RTI_Delay_ms(200);
-  Segs_Custom(addr, 0b01000001);
 
-  Segs_16H(hexCount, Segs_LineBottom);
+Segs_16H(hexCount, Segs_LineBottom);
+ RTI_Delay_ms(100);
 }
 
 void Tier3(void)
