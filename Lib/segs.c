@@ -107,6 +107,33 @@ void Segs_16H(unsigned int Value, Segs_LineOption lineOption)
   }
 
 
+void Segs_16D (unsigned int value, Segs_LineOption line)
+{
+        int thousands= value/1000;
+        int hundreds=(value%thousands)/100;
+        int tens=(value%hundreds)/10;
+        int ones=(value%tens)/1;
+
+  if (line)
+  {
+    Segs_Normal(0,thousands,Segs_DP_OFF);
+    Segs_Normal(1,hundreds,Segs_DP_OFF);
+    Segs_Normal(2,tens,Segs_DP_OFF);
+    Segs_Normal(3,ones,Segs_DP_OFF);
+  }
+  else{
+    Segs_Normal(4,thousands,Segs_DP_OFF);
+    Segs_Normal(5,hundreds,Segs_DP_OFF);
+    Segs_Normal(6,tens,Segs_DP_OFF);
+    Segs_Normal(7,ones,Segs_DP_OFF);
+    }
+
+
+
+}
+
+
+
 void Segs_Clear(void)
 {
     int i = 0;
