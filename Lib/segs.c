@@ -1,18 +1,17 @@
 
-#include <hidef.h>      
+#include <hidef.h>
 #include "derivative.h"
 #include "segs.h"
 
-
-
-#define Segs_WLATCH PORTA &= (~0x01); PORTA |= 0x01;
+#define Segs_WLATCH   \
+    PORTA &= (~0x01); \
+    PORTA |= 0x01;
 #define Segs_ML PORTA &= (~0x02);
 #define Segs_MH PORTA |= 0x02;
 
-
 void Segs_Normal(unsigned char Addr, unsigned char Value, Segs_DPOption dp)
 {
-    Addr &= 0x07l;
+    Addr &= 0x07;
 
     Addr |= 0b01011000;
 
@@ -23,130 +22,125 @@ void Segs_Normal(unsigned char Addr, unsigned char Value, Segs_DPOption dp)
 
     // present controlbyte
     PORTB = Addr;
-    Segs_MH;
+    Segs_MH
 
-    Segs_WLATCH;
-    PORTB=Value;
-    Segs_ML;
+    Segs_WLATCH
+    PORTB = Value;
+    Segs_ML
 
-    Segs_WLATCH;
+    Segs_WLATCH
 }
 
 void Segs_Custom(unsigned char Addr, unsigned char Value)
 {
 
-    Addr &= 0x07l;
+    Addr &= 0x07;
 
-    Addr |= 0b01110000;
+    Addr |= 0b01111000;
 
-    Value &= (~0x80);
-
-    Value |= 0x80;
 
     PORTB = Addr;
-    Segs_MH;
+   
+    Segs_MH
 
-    Segs_WLATCH;
+    Segs_WLATCH
 
-    PORTB=Value;
-    Segs_ML;
+    PORTB = Value;
+   
+    Segs_ML
 
-    Segs_WLATCH;
+    Segs_WLATCH
 }
 
 void Segs_8H(unsigned char Addr, unsigned char value)
 {
-    char lower_nibble;
-    char upper_nibble;
-if(Addr>7)
-{return;}
+   
+    if (Addr > 7)
+    {
+        return;
+    }
+    else{
+    unsigned int char1=value>>4;
+    unsigned int char2=value & 0x0F;
+    
+    Segs_Normal(Addr,char1,Segs_DP_OFF);
+    
+    if(Addr+1==8)
+    {
+        Segs_Normal(0,char2,Segs_DP_OFF);
+    }
+    else{Segs_Normal(Addr+1,char2,Segs_DP_OFF);}
 
 
-    lower_nibble = value & 0x0F;
-    Segs_Normal(Addr, lower_nibble, Segs_DP_OFF);
 
-    upper_nibble = (value >> 4) & 0x0F;
-    Segs_Normal(Addr+1, upper_nibble, Segs_DP_OFF);
-
+    }
 
 }
 
 void Segs_16H(unsigned int Value, Segs_LineOption lineOption)
 {
-    char first=(Value >>12) % 0x000f;
-    char second=(Value>>8) % 0x000f;
-    char third=(Value>>4) % 0x000f;
-    char fourth=Value & 0x000f;
+    char first = (Value >> 12) & 0x000f;
+    char second = (Value >> 8) & 0x000f;
+    char third = (Value >> 4) & 0x000f;
+    char fourth = Value & 0x000f;
 
-    if(lineOption)
-    {   int i;
-        for ( i = 0; i <= 3; i++)
-        {
-           switch (i)
-           {
-           case 0:
-            Segs_Custom(i,first);
-            break;
-         
-           case 1:
-           Segs_Custom(i,second);
-           break;
-          
-           case 2:
-           Segs_Custom(i,third);
-            break;
-           
-           
-            case 3:
-            Segs_Custom(i,fourth);
-          
-           default:
-            break;
-           }
+    if (!lineOption)
+    {
+        Segs_Normal(0,first,Segs_DP_OFF);
+        Segs_Normal(1,second,Segs_DP_OFF);
+        Segs_Normal(2,third,Segs_DP_OFF);
+        Segs_Normal(3,fourth,Segs_DP_OFF);
 
-        }
 
     }
-    else{ 
-        for ( i = 0; i <= 3; i++)
-        {
-           switch (i)
-           {
-           case 0:
-            Segs_Custom(i,first);
-            break;
-         
-           case 1:
-           Segs_Custom(i,second);
-           break;
-          
-           case 2:
-           Segs_Custom(i,third);
-            break;
-           
-           
-            case 3:
-            Segs_Custom(i,fourth);
-          
-           default:
-            break;
-           }
-         }
-      }
-}
+    else
+    {
+        Segs_Normal(4,first,Segs_DP_OFF);
+        Segs_Normal(5,second,Segs_DP_OFF);
+        Segs_Normal(6,third,Segs_DP_OFF);
+        Segs_Normal(7,fourth,Segs_DP_OFF);
 
 
+
+
+    }
+  }
 
 
 void Segs_Clear(void)
 {
     int i = 0;
 
-    for (i; i < 7; i++)
+    for (i; i < 8; i++)
     {
-        Segs_Custom(i , 0b10000000);
+        Segs_Custom(i, 0b10000000);
     }
 }
+
+
+
+void Segs_ClearLine(Segs_LineOption line)
+{
+   
+    if(line == Segs_LineTop){
+
+    int i;
+    for (i=0; i < 4; i++)
+    {
+        Segs_Custom(i, 0b10000000);
+    }}
+    if(line == Segs_LineBottom)
+    {   int i;
+         for (i=4; i < 8; i++)
+    {
+        Segs_Custom(i, 0b10000000);
+    }
+    }
+}
+
+
+
+
 
 void Segs_Init(void)
 {
@@ -155,5 +149,19 @@ void Segs_Init(void)
     DDRA |= 0x03;
     DDRB |= 0xFF;
 
-   // Segs_Clear();
+    Segs_Clear();
+
+     Segs_Normal(4,'3',Segs_DP_OFF);
+     Segs_8H(7,0x00E0);
+     Segs_8H(0,0x0040);
+
+    
+
+    Segs_Custom(1,0b01001010);
+
+    Segs_Custom(2,0b11110000);
+
+    Segs_Custom(5,0b10001011);
+
+     Segs_Custom(6,0b10110001);
 }
