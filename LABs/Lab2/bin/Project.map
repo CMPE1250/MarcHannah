@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\Marc\source\repos\CMPE1250\MarcHannah\LABs\Lab2\bin\Project.abs"
+PROGRAM "C:\Users\mhannah4\source\repos\CMPE1250\MarcHannah\LABs\Lab2\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -39,7 +39,7 @@ Section Name                    Size  Type     From       To       Segment
 .startData                        34     R     0xC00F     0xC030   ROM_C000
 NON_BANKED                        16     R     0xC031     0xC040   ROM_C000
 .copy                              7     R     0xC041     0xC047   ROM_C000
-.text                            867     R   0xFE8000   0xFE8362   PAGE_FE
+.text                            850     R   0xFE8000   0xFE8351   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .data                              2   R/W     0x2100     0x2101   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
@@ -694,7 +694,7 @@ NON_BANKED                        16     R     0xC031     0xC040   ROM_C000
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         3AD (dec:      941)
+READ_ONLY (R):         39C (dec:      924)
 READ_WRITE (R/W):      10C (dec:      268)
 NO_INIT (N/I):         300 (dec:      768)
 
@@ -1363,15 +1363,15 @@ MODULE:                 -- main.c.o --
      main                                    FE8000      83     131       2   .text       
      CountUp                                 FE8083      17      23       2   .text       
      CountHex                                FE809A      17      23       2   .text       
-     MoveDecimal                             FE80B1      A9     169       3   .text       
+     MoveDecimal                             FE80B1      98     152       2   .text       
 - VARIABLES:
      decOrHex                                  2100       2       2       4   .data       
-     countPoints                               2102       2       2      12   .bss        
+     countPoints                               2102       2       2       8   .bss        
      countDelays                               2108       2       2       3   .common     
      countActual                               210A       2       2       5   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE815A      29      41       2   .text       
+     Init                                    FE8149      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
@@ -1384,24 +1384,24 @@ MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
 - VARIABLES:
 MODULE:                 -- rti.c.o --
 - PROCEDURES:
-     RTI_Init                                FE8183       5       5       4   .text       
-     RTI_Delay_ms                            FE8188      3E      62       2   .text       
+     RTI_Init                                FE8172       5       5       4   .text       
+     RTI_Delay_ms                            FE8177      3E      62       2   .text       
 - VARIABLES:
      rtiMasterCount                            2104       4       4       8   .bss        
 MODULE:                 -- segs.c.o --
 - PROCEDURES:
-     Segs_Normal                             FE81C6      2C      44      20   .text       
-     Segs_Custom                             FE81F2      21      33      10   .text       
-     Segs_16H                                FE8213      7C     124       2   .text       
-     Segs_16D                                FE828F      8C     140       2   .text       
-     Segs_Clear                              FE831B      18      24       2   .text       
-     Segs_Init                               FE8333       F      15       2   .text       
+     Segs_Normal                             FE81B5      2C      44      20   .text       
+     Segs_Custom                             FE81E1      21      33      10   .text       
+     Segs_16H                                FE8202      7C     124       2   .text       
+     Segs_16D                                FE827E      8C     140       2   .text       
+     Segs_Clear                              FE830A      18      24       2   .text       
+     Segs_Init                               FE8322       F      15       2   .text       
 - VARIABLES:
 MODULE:                 -- SWL_LED.c.o --
 - PROCEDURES:
-     SWL_Init                                FE8342       D      13       2   .text       
-     SWL_Pushed                              FE834F       9       9       6   .text       
-     SWL_TOG                                 FE8358       B      11       6   .text       
+     SWL_Init                                FE8331       D      13       2   .text       
+     SWL_Pushed                              FE833E       9       9       6   .text       
+     SWL_TOG                                 FE8347       B      11       6   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1409,7 +1409,7 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                     8    346      0
+  main.c.o                                     8    329      0
   Start12.c.o                                  0     56      0
   rtshc12.c.o (ansixbi.lib)                    0     16      0
   rti.c.o                                      4     67      0
@@ -3381,7 +3381,7 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
      decOrHex                                  2100       2       2       4   .data       
-     countPoints                               2102       2       2      12   .bss        
+     countPoints                               2102       2       2       8   .bss        
      rtiMasterCount                            2104       4       4       8   .bss        
      countDelays                               2108       2       2       3   .common     
      countActual                               210A       2       2       5   .common     
@@ -3391,19 +3391,19 @@ OBJECT LIST SORTED BY ADDRESS
      main                                    FE8000      83     131       2   .text       
      CountUp                                 FE8083      17      23       2   .text       
      CountHex                                FE809A      17      23       2   .text       
-     MoveDecimal                             FE80B1      A9     169       3   .text       
-     Init                                    FE815A      29      41       2   .text       
-     RTI_Init                                FE8183       5       5       4   .text       
-     RTI_Delay_ms                            FE8188      3E      62       2   .text       
-     Segs_Normal                             FE81C6      2C      44      20   .text       
-     Segs_Custom                             FE81F2      21      33      10   .text       
-     Segs_16H                                FE8213      7C     124       2   .text       
-     Segs_16D                                FE828F      8C     140       2   .text       
-     Segs_Clear                              FE831B      18      24       2   .text       
-     Segs_Init                               FE8333       F      15       2   .text       
-     SWL_Init                                FE8342       D      13       2   .text       
-     SWL_Pushed                              FE834F       9       9       6   .text       
-     SWL_TOG                                 FE8358       B      11       6   .text       
+     MoveDecimal                             FE80B1      98     152       2   .text       
+     Init                                    FE8149      29      41       2   .text       
+     RTI_Init                                FE8172       5       5       4   .text       
+     RTI_Delay_ms                            FE8177      3E      62       2   .text       
+     Segs_Normal                             FE81B5      2C      44      20   .text       
+     Segs_Custom                             FE81E1      21      33      10   .text       
+     Segs_16H                                FE8202      7C     124       2   .text       
+     Segs_16D                                FE827E      8C     140       2   .text       
+     Segs_Clear                              FE830A      18      24       2   .text       
+     Segs_Init                               FE8322       F      15       2   .text       
+     SWL_Init                                FE8331       D      13       2   .text       
+     SWL_Pushed                              FE833E       9       9       6   .text       
+     SWL_TOG                                 FE8347       B      11       6   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -3448,7 +3448,7 @@ main                      USES Segs_Init SWL_Init RTI_Init RTI_Delay_ms
                                 SWL_Pushed countActual 
 CountUp                   USES countActual SWL_TOG Segs_16D 
 CountHex                  USES countActual Segs_16H SWL_TOG 
-MoveDecimal               USES countPoints MoveDecimal Segs_Custom 
+MoveDecimal               USES countPoints Segs_Custom 
 Init                      USES _startupData 
 RTI_Init                  USES _RTICTL 
 RTI_Delay_ms              USES _RTICTL _CRGFLG rtiMasterCount RTI_Init _LINC 
@@ -3524,5 +3524,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 941
+Total size of all blocks to be downloaded: 924
 

@@ -44,7 +44,7 @@ int count1000s;
 int countDelays;
 int decOrHex = 1;
 int countActual;
-int countPoints = 0;
+ int countPoints = 0;
 
 /********************************************************************/
 // Constants
@@ -60,7 +60,7 @@ void main(void)
   // main entry point
   _DISABLE_COP();
   // EnableInterrupts;
-
+   
   /********************************************************************/
   // one-time initializations
   /********************************************************************/
@@ -132,48 +132,47 @@ void CountHex(void)
 
 void MoveDecimal(void)
 {
+  
+  
+
   if(countPoints==0)
   
   {
-
+    Segs_Custom(4,0b10000000); Segs_Custom(5,0b10000000); Segs_Custom(6,0b10000000); Segs_Custom(7,0b10000000);
     
-    
-    countPoints++;
-    }
+  }
 
   if (countPoints == 1)
   {
     Segs_Custom(4,0b00000000); Segs_Custom(5,0b10000000); Segs_Custom(6,0b10000000); Segs_Custom(7,0b10000000);
-    countPoints++;
+    
   }
   if(countPoints==2)
   {
     
     Segs_Custom(4,0b00000000); Segs_Custom(5,0b00000000); Segs_Custom(6,0b10000000); Segs_Custom(7,0b10000000);
-    countPoints++;
+    
   }
   if(countPoints==3)
   {
     Segs_Custom(4,0b00000000); Segs_Custom(5,0b00000000); Segs_Custom(6,0b00000000); Segs_Custom(7,0b10000000);
-    countPoints++;
+    
   }
   if(countPoints==4)
   {
     Segs_Custom(4,0b00000000); Segs_Custom(5,0b00000000); Segs_Custom(6,0b00000000); Segs_Custom(7,0b00000000);
-   countPoints++;
-   
+ 
+
   }
+ 
+  countPoints++;
+  
   if(countPoints==5)
   {
-   // Segs_ClearLine(Segs_LineBottom);
-   Segs_Custom(4,0b10000000); Segs_Custom(5,0b10000000); Segs_Custom(6,0b10000000); Segs_Custom(7,0b10000000);
     countPoints=0;
-  
-
   }
 
-  
-  
+
 }
 
 /********************************************************************/
