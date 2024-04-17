@@ -109,24 +109,25 @@ void Segs_16H(unsigned int Value, Segs_LineOption lineOption)
 
 void Segs_16D (unsigned int value, Segs_LineOption line)
 {
-        int thousands= value/1000;
-        int hundreds=(value%thousands)/100;
-        int tens=(value%hundreds)/10;
-        int ones=(value%tens)/1;
+    int thousands = value / 1000;
+    int hundreds = (value % 1000) / 100;
+    int tens = (value % 100) / 10;
+    int ones = value % 10;
 
+    
   if (line)
   {
-    Segs_Normal(0,thousands,Segs_DP_OFF);
-    Segs_Normal(1,hundreds,Segs_DP_OFF);
-    Segs_Normal(2,tens,Segs_DP_OFF);
-    Segs_Normal(3,ones,Segs_DP_OFF);
-  }
-  else{
     Segs_Normal(4,thousands,Segs_DP_OFF);
     Segs_Normal(5,hundreds,Segs_DP_OFF);
     Segs_Normal(6,tens,Segs_DP_OFF);
     Segs_Normal(7,ones,Segs_DP_OFF);
-    }
+  }
+  else{
+    Segs_Normal(0,thousands,Segs_DP_OFF);
+    Segs_Normal(1,hundreds,Segs_DP_OFF);
+    Segs_Normal(2,tens,Segs_DP_OFF);
+    Segs_Normal(3,ones,Segs_DP_OFF);
+}
 
 
 
@@ -178,17 +179,5 @@ void Segs_Init(void)
 
     Segs_Clear();
 
-     Segs_Normal(4,'3',Segs_DP_OFF);
-     Segs_8H(7,0x00E4);
-     
-
-    
-
-    Segs_Custom(1,0b01001010);
-
-    Segs_Custom(2,0b11110000);
-
-    Segs_Custom(5,0b10001011);
-
-     Segs_Custom(6,0b10110001);
+ 
 }
