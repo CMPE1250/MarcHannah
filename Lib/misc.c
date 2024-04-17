@@ -8,6 +8,9 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include <math.h>
+#include "segs.h"
+
+
 
 int GetRandom(int iHighEx)
 {
@@ -220,4 +223,21 @@ int Power(int base, unsigned int exp)
 }
 
 
+void Lab3SegsInit(void)
+{
+
+    PORTA |= 0x03;
+    DDRA |= 0x03;
+    DDRB |= 0xFF;
+
+    Segs_Clear();
+
+
+    Segs_16D(0,Segs_LineTop);
+    Segs_16D(0,Segs_LineBottom);
+    Segs_Normal(0,0,Segs_DP_ON);
+
+
+
+}
 

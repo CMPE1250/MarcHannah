@@ -31,3 +31,6 @@ int IsHexLetter(unsigned char c);
 int Power(int base, unsigned int exp);
 
 char* toBinaryString(int n);
+
+
+void Lab3SegsInit(void);
