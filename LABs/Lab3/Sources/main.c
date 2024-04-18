@@ -1,10 +1,10 @@
 /********************************************************************/
-// HC12 Program:  YourProg - MiniExplanation
+// HC12 Program:  LAb3
 // Processor:     MC9S12XDP512
-// Bus Speed:     MHz
-// Author:        This B. You
-// Details:       A more detailed explanation of the program is entered here
-// Date:          Date Created
+// Bus Speed:     16MHz
+// Author:        Marc Hannah
+// Details:  
+// Date:          
 // Revision History :
 //  each revision will have a date + desc. of changes
 
@@ -32,8 +32,7 @@
 /********************************************************************/
 
 void DrawTop(void);
-int valueMath(void);
-
+void valueMath(void);
 
 /********************************************************************/
 // Global Variables
@@ -44,7 +43,8 @@ int thousands;
 int hundreds;
 int tens;
 int ones;
-
+int leftPushed;
+int RightPushed;
 /********************************************************************/
 // Constants
 /********************************************************************/
@@ -78,45 +78,71 @@ void main(void)
     if (SWL_Pushed(SWL_LEFT))
     {
 
-      if (index == 3)
+      if (index > 0)
       {
-        index = 0;
-      }
-      else
-      {
-        index++;
+
+        index--;
       }
     }
     if (SWL_Pushed(SWL_RIGHT))
     {
 
-      if (index == 3)
+      if (index < 3)
       {
-        index = 0;
-      }
-      else
-      {
-        index--;
+        index++;
       }
     }
-    
-  
+
+    if (SWL_Pushed(SWL_UP))
+    {
+      switch (index)
+      {
+      case 0:
+        thousands++;
+        break;
+      case 1:
+        hundreds++;
+        break;
+
+      case 2:
+        tens++;
+        break;
+
+      case 3:
+        ones++ : break;
+
+      default:;
+      }
     }
 
+    if (SWL_Pushed(SWL_DOWN))
+    {
+      switch (index)
+      {
+      case 0:
+        thousands--;
+        break;
+      case 1:
+        hundreds--;
+        break;
 
+      case 2:
+        tens--;
+        break;
 
+      case 3:
+        ones-- : break;
 
+      default:;
+      }
+    }
 
-
-
-
-
+    valueMath();
 
     DrawTop();
     Segs_16H(trueValue, Segs_LineBottom);
   }
-
-
+}
 /********************************************************************/
 // Functions
 /********************************************************************/
@@ -124,31 +150,37 @@ void main(void)
 void DrawTop(void)
 {
 
-  thousands = trueValue / 1000;
-  hundreds = (trueValue % 1000) / 100;
-  tens = (trueValue % 100) / 10;
-  ones = trueValue % 10;
+  int thousands2;
+  int hundreds2;
+  int tens2;
+  int ones2;
+
+
+  thousands2 = trueValue / 1000;
+  hundreds2 = (trueValue % 1000) / 100;
+  tens2 = (trueValue % 100) / 10;
+  ones2 = trueValue % 10;
 
   if (index = 0)
   {
-    Segs_Normal(0, thousands, Segs_DP_ON);
-    Segs_Normal(1, hundreds, Segs_DP_OFF);
-    Segs_Normal(2, tens, Segs_DP_OFF);
-    Segs_Normal(3, ones, Segs_DP_OFF);
+    Segs_Normal(0, thousands2, Segs_DP_ON);
+    Segs_Normal(1, hundreds2, Segs_DP_OFF);
+    Segs_Normal(2, tens2, Segs_DP_OFF);
+    Segs_Normal(3, ones2, Segs_DP_OFF);
   }
   if (index == 1)
   {
-    Segs_Normal(0, thousands, Segs_DP_OFF);
-    Segs_Normal(1, hundreds, Segs_DP_ON);
-    Segs_Normal(2, tens, Segs_DP_OFF);
-    Segs_Normal(3, ones, Segs_DP_OFF);
+    Segs_Normal(0, thousands2, Segs_DP_OFF);
+    Segs_Normal(1, hundreds2, Segs_DP_ON);
+    Segs_Normal(2, tens2, Segs_DP_OFF);
+    Segs_Normal(3, ones2, Segs_DP_OFF);
   }
   if (index == 2)
   {
-    Segs_Normal(0, thousands, Segs_DP_OFF);
-    Segs_Normal(1, hundreds, Segs_DP_OFF);
-    Segs_Normal(2, tens, Segs_DP_ON);
-    Segs_Normal(3, ones, Segs_DP_OFF);
+    Segs_Normal(0, thousands2, Segs_DP_OFF);
+    Segs_Normal(1, hundreds2, Segs_DP_OFF);
+    Segs_Normal(2, tens2, Segs_DP_ON);
+    Segs_Normal(3, ones2, Segs_DP_OFF);
   }
 
   if (index == 3)
@@ -158,26 +190,13 @@ void DrawTop(void)
     Segs_Normal(2, tens, Segs_DP_OFF);
     Segs_Normal(3, ones, Segs_DP_ON);
   }
-
-
-
-
-
-
 }
 
-int valueMath(void)
+void valueMath(void)
 {
-  int value;
 
-  value=(thousands*1000)+(hundreds*100)+(tens*10)+(ones);
-
-return value;
-
+  trueValue = (thousands * 1000) + (hundreds * 100) + (tens * 10) + (ones);
 }
-
-
-
 
 /********************************************************************/
 // Interrupt Service Routines
