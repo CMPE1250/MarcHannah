@@ -37,7 +37,7 @@ void valueMath(void);
 /********************************************************************/
 // Global Variables
 /********************************************************************/
-int index;
+int index=0;
 int trueValue;
 int thousands;
 int hundreds;
@@ -45,6 +45,11 @@ int tens;
 int ones;
 int leftPushed;
 int RightPushed;
+
+int leftCurrent;
+int rightCurrent;
+int upCurrent;
+int downCurrent;
 
 int oldLeftState=0;
 int oldRightState=0;
@@ -79,11 +84,11 @@ void main(void)
   for (;;)
   {
     RTI_Delay_ms(50);
+{
+     leftCurrent=SWL_Pushed(SWL_LEFT);
 
-  int  leftCurrent=SWL_Pushed(SWL_LEFT);
 
-
-    if (leftCurrent!=oldLeftState)
+    if ((leftCurrent!=oldLeftState)&&leftCurrent)
     {
 
       if (index > 0)
@@ -96,11 +101,13 @@ void main(void)
 
     oldLeftState=leftCurrent;
 
+}
 
-   int  rightCurrent=SWL_Pushed(SWL_RIGHT);
+{
+   rightCurrent=SWL_Pushed(SWL_RIGHT);
 
 
-    if (rightCurrent!=oldRightState)
+    if ((rightCurrent!=oldRightState)&&rightCurrent)
     {
 
       if (index < 3)
@@ -108,60 +115,106 @@ void main(void)
         index++;
       }
     }
+  
     oldRightState=rightCurrent;
 
+}
 
- int  upCurrent=SWL_Pushed(SWL_UP);
+{
+ upCurrent=SWL_Pushed(SWL_UP);
 
 
-    if (upCurrent!=oldUpState)
+    if ((upCurrent!=oldUpState)&&upCurrent)
     {
       switch (index)
       {
       case 0:
         thousands++;
+        if(thousands==10)
+        {
+          thousands=0;
+        }
         break;
       case 1:
         hundreds++;
+        if(hundreds==10)
+        {
+          hundreds=0;
+        }
         break;
 
       case 2:
         tens++;
+        if(tens==10)
+        {
+          tens=0;
+        }
+
         break;
 
       case 3:
-        ones++ : break;
+        ones++;
+       if(ones==10)
+        {
+          ones=0;
+        }
+
+
+         break;
 
       default:;
       }
     }
 
     oldUpState=upCurrent;
+}
+{
+   downCurrent=SWL_Pushed(SWL_DOWN);
 
-   int  downCurrent=SWL_Pushed(SWL_DOWN);
 
-
-    if (downCurrent!=oldDownState)
+    if ((downCurrent!=oldDownState)&&downCurrent)
     {
       switch (index)
       {
       case 0:
         thousands--;
+       if(thousands<0)
+        {
+          thousands=0;
+        }
+
         break;
       case 1:
         hundreds--;
+
+          if(hundreds<0)
+        {
+          hundreds=0;
+        }
         break;
 
       case 2:
         tens--;
+          if(tens<0)
+        {
+          tens=0;
+        }
         break;
 
       case 3:
-        ones-- : break;
+        ones--;
+          if(ones<0)
+        {
+          ones=0;
+        }
+       break;
 
       default:;
       }
     }
+    oldDownState=downCurrent;
+}
+
 
     valueMath();
 
@@ -176,37 +229,28 @@ void main(void)
 void DrawTop(void)
 {
 
-  int thousands2;
-  int hundreds2;
-  int tens2;
-  int ones2;
 
 
-  thousands2 = trueValue / 1000;
-  hundreds2 = (trueValue % 1000) / 100;
-  tens2 = (trueValue % 100) / 10;
-  ones2 = trueValue % 10;
-
-  if (index = 0)
+  if (index == 0)
   {
-    Segs_Normal(0, thousands2, Segs_DP_ON);
-    Segs_Normal(1, hundreds2, Segs_DP_OFF);
-    Segs_Normal(2, tens2, Segs_DP_OFF);
-    Segs_Normal(3, ones2, Segs_DP_OFF);
+    Segs_Normal(0, thousands, Segs_DP_ON);
+    Segs_Normal(1, hundreds, Segs_DP_OFF);
+    Segs_Normal(2, tens, Segs_DP_OFF);
+    Segs_Normal(3, ones, Segs_DP_OFF);
   }
   if (index == 1)
   {
-    Segs_Normal(0, thousands2, Segs_DP_OFF);
-    Segs_Normal(1, hundreds2, Segs_DP_ON);
-    Segs_Normal(2, tens2, Segs_DP_OFF);
-    Segs_Normal(3, ones2, Segs_DP_OFF);
+    Segs_Normal(0, thousands, Segs_DP_OFF);
+    Segs_Normal(1, hundreds, Segs_DP_ON);
+    Segs_Normal(2, tens, Segs_DP_OFF);
+    Segs_Normal(3, ones, Segs_DP_OFF);
   }
   if (index == 2)
   {
-    Segs_Normal(0, thousands2, Segs_DP_OFF);
-    Segs_Normal(1, hundreds2, Segs_DP_OFF);
-    Segs_Normal(2, tens2, Segs_DP_ON);
-    Segs_Normal(3, ones2, Segs_DP_OFF);
+    Segs_Normal(0, thousands, Segs_DP_OFF);
+    Segs_Normal(1, hundreds, Segs_DP_OFF);
+    Segs_Normal(2, tens, Segs_DP_ON);
+    Segs_Normal(3, ones, Segs_DP_OFF);
   }
 
   if (index == 3)

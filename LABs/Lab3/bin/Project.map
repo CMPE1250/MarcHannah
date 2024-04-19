@@ -1,5 +1,5 @@
 *** EVALUATION ***
-PROGRAM "C:\Users\mhannah4\source\repos\CMPE1250\MarcHannah\LABs\Lab3\bin\Project.abs"
+PROGRAM "C:\Users\mhannah4\Documents\GitHub\MarcHannah\LABs\Lab3\bin\Project.abs"
 
 *********************************************************************************************
 TARGET SECTION
@@ -28,8 +28,8 @@ Entry point: 0xC000 (_Startup)
 _startupData is allocated at 0xC00F and uses 6 Bytes
 extern struct _tagStartup {
   unsigned nofZeroOut     1
-  _Range   pZeroOut       0x2100     16
-  _Copy    *toCopyDownBeg 0xC041
+  _Range   pZeroOut       0x2100     32
+  _Copy    *toCopyDownBeg 0xC055
 } _startupData;
 
 *********************************************************************************************
@@ -38,9 +38,9 @@ Section Name                    Size  Type     From       To       Segment
 ---------------------------------------------------------------------------------------------
 .init                             15     R     0xC000     0xC00E   ROM_C000
 .startData                        34     R     0xC00F     0xC030   ROM_C000
-NON_BANKED                        16     R     0xC031     0xC040   ROM_C000
-.copy                              2     R     0xC041     0xC042   ROM_C000
-.text                            693     R   0xFE8000   0xFE82B4   PAGE_FE
+NON_BANKED                        36     R     0xC031     0xC054   ROM_C000
+.copy                              2     R     0xC055     0xC056   ROM_C000
+.text                           1064     R   0xFE8000   0xFE8427   PAGE_FE
 .stack                           256   R/W     0x2000     0x20FF   RAM
 .abs_section_8                     1   N/I        0x8        0x8   .absSeg0
 .abs_section_9                     1   N/I        0x9        0x9   .absSeg1
@@ -689,13 +689,13 @@ NON_BANKED                        16     R     0xC031     0xC040   ROM_C000
 .abs_section_3aa                   2   N/I      0x3AA      0x3AB   .absSeg644
 .abs_section_3ac                   2   N/I      0x3AC      0x3AD   .absSeg645
 .abs_section_3ae                   2   N/I      0x3AE      0x3AF   .absSeg646
-.bss                               4   R/W     0x2100     0x2103   RAM
-.common                           12   R/W     0x2104     0x210F   RAM
+.bss                              14   R/W     0x2100     0x210D   RAM
+.common                           18   R/W     0x210E     0x211F   RAM
 .vectSeg647_vect                   2     R     0xFFFE     0xFFFF   .vectSeg647
 
 Summary of section sizes per section type:
-READ_ONLY (R):         2FA (dec:      762)
-READ_WRITE (R/W):      110 (dec:      272)
+READ_ONLY (R):         481 (dec:     1153)
+READ_WRITE (R/W):      120 (dec:      288)
 NO_INIT (N/I):         300 (dec:      768)
 
 *********************************************************************************************
@@ -1360,18 +1360,27 @@ MODULE:                 -- mc9s12xdp512.c.o --
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
 MODULE:                 -- main.c.o --
 - PROCEDURES:
-     main                                    FE8000      61      97       2   .text       
-     DrawTop                                 FE8061      3B      59       2   .text       
+     main                                    FE8000     138     312       6   .text       
+     DrawTop                                 FE8138      B4     180       2   .text       
+     valueMath                               FE81EC      23      35       2   .text       
 - VARIABLES:
-     index                                     2104       2       2       7   .common     
-     trueValue                                 2106       2       2       5   .common     
-     thousands                                 2108       2       2       1   .common     
-     hundreds                                  210A       2       2       1   .common     
-     tens                                      210C       2       2       1   .common     
-     ones                                      210E       2       2       1   .common     
+     index                                     2100       2       2      10   .bss        
+     oldLeftState                              2102       2       2       2   .bss        
+     oldRightState                             2104       2       2       2   .bss        
+     oldUpState                                2106       2       2       2   .bss        
+     oldDownState                              2108       2       2       2   .bss        
+     trueValue                                 210E       2       2       2   .common     
+     thousands                                 2110       2       2       9   .common     
+     hundreds                                  2112       2       2      10   .common     
+     tens                                      2114       2       2       9   .common     
+     ones                                      2116       2       2       9   .common     
+     leftCurrent                               2118       2       2       2   .common     
+     rightCurrent                              211A       2       2       2   .common     
+     upCurrent                                 211C       2       2       2   .common     
+     downCurrent                               211E       2       2       2   .common     
 MODULE:                 -- Start12.c.o --
 - PROCEDURES:
-     Init                                    FE809C      29      41       2   .text       
+     Init                                    FE820F      29      41       2   .text       
      _Startup                                  C000       F      15       0   .init       
 - VARIABLES:
      _startupData                              C00F       6       6       3   .startData  
@@ -1381,29 +1390,30 @@ MODULE:                 -- rtshc12.c.o (ansixbi.lib) --
 - PROCEDURES:
      _ISHRU                                    C031       B      11       1   NON_BANKED  
      _LINC                                     C03C       5       5       1   NON_BANKED  
+     _CASE_CHECKED_BYTE                        C041      14      20       2   NON_BANKED  
 - VARIABLES:
 MODULE:                 -- misc.c.o --
 - PROCEDURES:
-     Lab3SegsInit                            FE80C5      2A      42       2   .text       
+     Lab3SegsInit                            FE8238      2A      42       2   .text       
 - VARIABLES:
 MODULE:                 -- rti.c.o --
 - PROCEDURES:
-     RTI_Init                                FE80EF       5       5       4   .text       
-     RTI_Delay_ms                            FE80F4      3E      62       2   .text       
+     RTI_Init                                FE8262       5       5       4   .text       
+     RTI_Delay_ms                            FE8267      3E      62       2   .text       
 - VARIABLES:
-     rtiMasterCount                            2100       4       4       8   .bss        
+     rtiMasterCount                            210A       4       4       8   .bss        
 MODULE:                 -- segs.c.o --
 - PROCEDURES:
-     Segs_Normal                             FE8132      2C      44      22   .text       
-     Segs_Custom                             FE815E      21      33       2   .text       
-     Segs_16H                                FE817F      7C     124       2   .text       
-     Segs_16D                                FE81FB      8C     140       4   .text       
-     Segs_Clear                              FE8287      18      24       2   .text       
+     Segs_Normal                             FE82A5      2C      44      40   .text       
+     Segs_Custom                             FE82D1      21      33       2   .text       
+     Segs_16H                                FE82F2      7C     124       2   .text       
+     Segs_16D                                FE836E      8C     140       4   .text       
+     Segs_Clear                              FE83FA      18      24       2   .text       
 - VARIABLES:
 MODULE:                 -- SWL_LED.c.o --
 - PROCEDURES:
-     SWL_Init                                FE829F       D      13       2   .text       
-     SWL_Pushed                              FE82AC       9       9       4   .text       
+     SWL_Init                                FE8412       D      13       2   .text       
+     SWL_Pushed                              FE841F       9       9       2   .text       
 - VARIABLES:
 
 *********************************************************************************************
@@ -1411,9 +1421,9 @@ MODULE STATISTIC
   Name                                      Data   Code  Const
 ---------------------------------------------------------------------------------------------
   mc9s12xdp512.c.o                           768      0      0
-  main.c.o                                    12    156      0
+  main.c.o                                    28    527      0
   Start12.c.o                                  0     56      0
-  rtshc12.c.o (ansixbi.lib)                    0     16      0
+  rtshc12.c.o (ansixbi.lib)                    0     36      0
   misc.c.o                                     0     42      0
   rti.c.o                                      4     67      0
   segs.c.o                                     0    365      0
@@ -1424,14 +1434,14 @@ MODULE STATISTIC
 SECTION USE IN OBJECT-ALLOCATION SECTION
 ---------------------------------------------------------------------------------------------
 SECTION: ".text"
-  main DrawTop Init Lab3SegsInit RTI_Init RTI_Delay_ms Segs_Normal Segs_Custom 
-  Segs_16H Segs_16D Segs_Clear SWL_Init SWL_Pushed 
+  main DrawTop valueMath Init Lab3SegsInit RTI_Init RTI_Delay_ms Segs_Normal 
+  Segs_Custom Segs_16H Segs_16D Segs_Clear SWL_Init SWL_Pushed 
 SECTION: ".bss"
-  rtiMasterCount 
+  index oldLeftState oldRightState oldUpState oldDownState rtiMasterCount 
 SECTION: ".init"
   _Startup 
 SECTION: "NON_BANKED"
-  _ISHRU _LINC 
+  _ISHRU _LINC _CASE_CHECKED_BYTE 
 SECTION: ".abs_section_8"
   _PORTE 
 SECTION: ".abs_section_9"
@@ -2727,7 +2737,8 @@ SECTION: ".abs_section_3ac"
 SECTION: ".abs_section_3ae"
   _XGR7 
 SECTION: ".common"
-  index trueValue thousands hundreds tens ones 
+  trueValue thousands hundreds tens ones leftCurrent rightCurrent upCurrent 
+  downCurrent 
 
 *********************************************************************************************
 OBJECT LIST SORTED BY ADDRESS
@@ -3380,29 +3391,39 @@ OBJECT LIST SORTED BY ADDRESS
      _XGR5                                      3AA       2       2       0   .abs_section_3aa
      _XGR6                                      3AC       2       2       0   .abs_section_3ac
      _XGR7                                      3AE       2       2       0   .abs_section_3ae
-     rtiMasterCount                            2100       4       4       8   .bss        
-     index                                     2104       2       2       7   .common     
-     trueValue                                 2106       2       2       5   .common     
-     thousands                                 2108       2       2       1   .common     
-     hundreds                                  210A       2       2       1   .common     
-     tens                                      210C       2       2       1   .common     
-     ones                                      210E       2       2       1   .common     
+     index                                     2100       2       2      10   .bss        
+     oldLeftState                              2102       2       2       2   .bss        
+     oldRightState                             2104       2       2       2   .bss        
+     oldUpState                                2106       2       2       2   .bss        
+     oldDownState                              2108       2       2       2   .bss        
+     rtiMasterCount                            210A       4       4       8   .bss        
+     trueValue                                 210E       2       2       2   .common     
+     thousands                                 2110       2       2       9   .common     
+     hundreds                                  2112       2       2      10   .common     
+     tens                                      2114       2       2       9   .common     
+     ones                                      2116       2       2       9   .common     
+     leftCurrent                               2118       2       2       2   .common     
+     rightCurrent                              211A       2       2       2   .common     
+     upCurrent                                 211C       2       2       2   .common     
+     downCurrent                               211E       2       2       2   .common     
      _Startup                                  C000       F      15       0   .init       
      _ISHRU                                    C031       B      11       1   NON_BANKED  
      _LINC                                     C03C       5       5       1   NON_BANKED  
-     main                                    FE8000      61      97       2   .text       
-     DrawTop                                 FE8061      3B      59       2   .text       
-     Init                                    FE809C      29      41       2   .text       
-     Lab3SegsInit                            FE80C5      2A      42       2   .text       
-     RTI_Init                                FE80EF       5       5       4   .text       
-     RTI_Delay_ms                            FE80F4      3E      62       2   .text       
-     Segs_Normal                             FE8132      2C      44      22   .text       
-     Segs_Custom                             FE815E      21      33       2   .text       
-     Segs_16H                                FE817F      7C     124       2   .text       
-     Segs_16D                                FE81FB      8C     140       4   .text       
-     Segs_Clear                              FE8287      18      24       2   .text       
-     SWL_Init                                FE829F       D      13       2   .text       
-     SWL_Pushed                              FE82AC       9       9       4   .text       
+     _CASE_CHECKED_BYTE                        C041      14      20       2   NON_BANKED  
+     main                                    FE8000     138     312       6   .text       
+     DrawTop                                 FE8138      B4     180       2   .text       
+     valueMath                               FE81EC      23      35       2   .text       
+     Init                                    FE820F      29      41       2   .text       
+     Lab3SegsInit                            FE8238      2A      42       2   .text       
+     RTI_Init                                FE8262       5       5       4   .text       
+     RTI_Delay_ms                            FE8267      3E      62       2   .text       
+     Segs_Normal                             FE82A5      2C      44      40   .text       
+     Segs_Custom                             FE82D1      21      33       2   .text       
+     Segs_16H                                FE82F2      7C     124       2   .text       
+     Segs_16D                                FE836E      8C     140       4   .text       
+     Segs_Clear                              FE83FA      18      24       2   .text       
+     SWL_Init                                FE8412       D      13       2   .text       
+     SWL_Pushed                              FE841F       9       9       2   .text       
 
 *********************************************************************************************
 UNUSED-OBJECTS SECTION
@@ -3412,9 +3433,9 @@ rtshc12.c.o (ansixbi.lib):
   _BSHL _BSHRS _BSHRU _BDIVMODU _BDIVMODS _ISHL _ISHRS _LSHL _LSHRU _LSHRS 
   _LADD _LSUB _LAND _LOR _LXOR _LCMP _LCMP_P _LCMP_PP _LNEG _LCOM _LDEC _LMUL 
   _LMULU16x32 _LMULS16x32 _lDivMod _LDIVU _NEG_P _LDIVS _LMODU _LMODS _ILSEXT 
-  _COPY _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_CHECKED_BYTE 
-  _CASE_SEARCH _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL 
-  _FPCMP _PADD _PSUB _PINC _PDEC 
+  _COPY _CASE_DIRECT _CASE_DIRECT_BYTE _CASE_CHECKED _CASE_SEARCH 
+  _CASE_SEARCH_BYTE _CASE_SEARCH_8 _CASE_SEARCH_8_BYTE _FCALL _FPCMP _PADD 
+  _PSUB _PINC _PDEC 
 misc.c.o:
   GetRandom GetRandomMin IsVowel getVowel getLetter Lab1Init IsHexLetter 
   ToDigitVal HexArrayToUInt16 Power 
@@ -3423,13 +3444,15 @@ segs.c.o:
 SWL_LED.c.o:
   SWL_ON SWL_OFF SWL_TOG GetCount countUp 
 NOT USED VARIABLES
+main.c.o:
+  leftPushed RightPushed 
 rtshc12.c.o (ansixbi.lib):
   _PowOfTwo_8 _PowOfTwo_16 _PowOfTwo_32 errno 
 
 *********************************************************************************************
 COPYDOWN SECTION
 ---------------------------------------------------------------------------------------------
-------- ROM-ADDRESS: 0xC041 ---- SIZE       2 ---
+------- ROM-ADDRESS: 0xC055 ---- SIZE       2 ---
 Filling bytes inserted
  0000
 
@@ -3438,8 +3461,12 @@ OBJECT-DEPENDENCIES SECTION
 ---------------------------------------------------------------------------------------------
 _Startup                  USES __SEG_END_SSTACK Init main 
 main                      USES Lab3SegsInit SWL_Init RTI_Init RTI_Delay_ms 
-                                SWL_Pushed index DrawTop trueValue Segs_16H 
-DrawTop                   USES trueValue thousands hundreds tens ones index 
+                                main leftCurrent oldLeftState index rightCurrent 
+                                oldRightState upCurrent oldUpState _CASE_CHECKED_BYTE 
+                                thousands hundreds tens ones downCurrent oldDownState 
+                                valueMath DrawTop trueValue Segs_16H SWL_Pushed 
+DrawTop                   USES index thousands Segs_Normal hundreds tens ones 
+valueMath                 USES thousands hundreds tens ones trueValue 
 Init                      USES _startupData 
 Lab3SegsInit              USES _PORTAB _DDRAB Segs_Clear Segs_16D Segs_Normal 
 RTI_Init                  USES _RTICTL 
@@ -3481,16 +3508,22 @@ DEPENDENCY TREE
  |  |  |  
  |  |  +- _LINC               
  |  |       
- |  +- SWL_Pushed          
+ |  +- _CASE_CHECKED_BYTE  
+ |  |    
+ |  +- valueMath           
  |  |    
  |  +- DrawTop             
- |  |    
+ |  |  | 
+ |  |  +- Segs_Normal          (see above)
+ |  |     
  |  +- Segs_16H            
- |     | 
- |     +- _ISHRU              
- |     |    
- |     +- Segs_Normal          (see above)
- |        
+ |  |  | 
+ |  |  +- _ISHRU              
+ |  |  |    
+ |  |  +- Segs_Normal          (see above)
+ |  |     
+ |  +- SWL_Pushed          
+ |       
  +- _Startup            
     | 
     +- Init                
@@ -3504,5 +3537,5 @@ STATISTIC SECTION
 ExeFile:
 --------
 Number of blocks to be downloaded: 5
-Total size of all blocks to be downloaded: 762
+Total size of all blocks to be downloaded: 1153
 
