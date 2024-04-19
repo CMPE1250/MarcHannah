@@ -5,30 +5,27 @@
 #include <stdio.h>
 #include "rti.h"
 
+#define lcd_RWUp \
+    DDRH = 0;    \
+    PORTK |= 2;
 
+#define lcd_RWDown \
+    PORTK &= (~2); \
+    DDRH = 0xFF;
 
-#define lcd_RWUP DDRH=0; PORTK|=2;
+#define lcd_EUp PORTK |= 1;
 
-#define lcd_RWDown PORTK&=(~2); DDRH=0xFF;
+#define lcd_EDown PORTK &= (~4);
 
-#define lcd_EUp PORTK |=1;
+#define lcd_RSUp PORTK |= 4;
 
-#define lcd_EDown PORTK&=(~4);
+#define lcd_RSDown PORTK &= (~4);
 
-#define lcd_RSUp PORTK |=4;
-
-#define lcd_RSDown PortK &=(~4);
-
-#define lcd_MicroDelay {char __x=1; while (--__x);}
-
-
-char lcd_Busy (void)
+char lcd_Busy(void)
 {
-   
-   
-   
-    unsigned char inVal=0;
-   
+
+    unsigned char inVal = 0;
+
     lcd_RSDown;
     lcd_RSUp;
 
@@ -37,69 +34,69 @@ char lcd_Busy (void)
         lcd_EUp;
         lcd_MicroDelay;
 
-
-        inVal=PTH;
+        inVal = PTH;
 
         lcd_EDown
-    }while ((inVal&0x80));
-
-
+    } while ((inVal & 0x80));
 }
 
-
-
-void lcd_Ins (unsigned char  val)
+void lcd_Ins(unsigned char val)
 {
-    lcd_Busy;
+    lcd_Busy();
     lcd_RSDown;
-
-    PTH=val;
-
+    lcd_RWDown;
+    PTH = val;
+    lcd_MicroDelay;
     lcd_EUp;
-
+    lcd_MicroDelay;
     lcd_EDown;
+}
 
-} 
-
-
-void lcd_Data (unsigned char  val)
+void lcd_Data(unsigned char val)
 {
-    lcd_Busy;
+    lcd_Busy();
     lcd_RSUp;
+    lcd_RWDown;
 
-    PTH=val;
-
+    PTH = val;
+    lcd_MicroDelay;
     lcd_EUp;
-
+    lcd_MicroDelay;
     lcd_EDown;
+}
 
-} 
-
-
-void lcd_Init (void)
+void lcd_Init(void)
 {
-PTH=0;
+    PTH=0b00000000;
+    DDRH=0b11111111;
+    PORTK&=0b11111000;
+    DDRK|= 0b00000111;
+    RTI_Delay_ms(50);
+   
+    PTH=0b00111000;
+    PORTK|=0b00000001;
+    PORTK&=0b11111000;
+   
+    RTI_Delay_ms(10);
+    PORTK|=0b00000001;
+    PORTK&=0b11111000;
+    
+    RTI_Delay_ms(10);
+   
+    PORTK|=0b00000001;
+    PORTK&=0b11111000;
+   
+    RTI_Delay_ms(10);
 
 
-lcd_EDown;
+    
 
-lcd_RSDown;
-
-lcd_RWDown;
-DDRK=|=0b00000111;
-lcd_MicroDelay;
-PTH=0x38;
-lcd_EUp;
-lcd_EDown;
-RTI_Delay_ms(15);
-lcd_EUp;
-lcd_EDown;
-RTI_Delay_ms(1);
-
-lcd_Ins(0x38);
-lcd_Ins(0x0C);
-lcd_Ins(0x01);
-lcd_Ins(0x06);
-
-
+    lcd_Ins(0b00111000);
+    RTI_Delay_ms(50);
+   //lcd_Ins(0b00001110);
+    lcd_Ins(0b00001111);
+    RTI_Delay_ms(50);
+    lcd_Ins(0b00000001);
+    RTI_Delay_ms(50);
+    lcd_Ins(0b00000110);
 }
