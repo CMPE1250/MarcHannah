@@ -45,6 +45,11 @@ int tens;
 int ones;
 int leftPushed;
 int RightPushed;
+
+int oldLeftState=0;
+int oldRightState=0;
+int oldUpState=0;
+int oldDownState=0;
 /********************************************************************/
 // Constants
 /********************************************************************/
@@ -75,7 +80,10 @@ void main(void)
   {
     RTI_Delay_ms(50);
 
-    if (SWL_Pushed(SWL_LEFT))
+  int  leftCurrent=SWL_Pushed(SWL_LEFT);
+
+
+    if (leftCurrent!=oldLeftState)
     {
 
       if (index > 0)
@@ -83,8 +91,16 @@ void main(void)
 
         index--;
       }
+      
     }
-    if (SWL_Pushed(SWL_RIGHT))
+
+    oldLeftState=leftCurrent;
+
+
+   int  rightCurrent=SWL_Pushed(SWL_RIGHT);
+
+
+    if (rightCurrent!=oldRightState)
     {
 
       if (index < 3)
@@ -92,8 +108,13 @@ void main(void)
         index++;
       }
     }
+    oldRightState=rightCurrent;
 
-    if (SWL_Pushed(SWL_UP))
+
+ int  upCurrent=SWL_Pushed(SWL_UP);
+
+
+    if (upCurrent!=oldUpState)
     {
       switch (index)
       {
@@ -115,7 +136,12 @@ void main(void)
       }
     }
 
-    if (SWL_Pushed(SWL_DOWN))
+    oldUpState=upCurrent;
+
+   int  downCurrent=SWL_Pushed(SWL_DOWN);
+
+
+    if (downCurrent!=oldDownState)
     {
       switch (index)
       {
