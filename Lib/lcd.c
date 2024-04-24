@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include "rti.h"
 
-#define lcd_RWUp DDRH = 0; PORTK |= 2;
+#define lcd_RWUp DDRH = 0;    PORTK |= 2;
 
-#define lcd_RWDown  PORTK &= (~2);  DDRH = 0xFF;
+#define lcd_RWDown \PORTK &= (~2); DDRH = 0xFF;
 
 #define lcd_EUp PORTK |= 1;
 
@@ -19,56 +19,54 @@
 
 char lcd_Busy(void)
 {
+    unsigned char cBusy;
 
-    unsigned char inVal = 0;
+    DDRH = 0b00000000;
 
-    lcd_RSDown;
-    lcd_RWUp;
+    PORTK |= 0b00000011;
 
-    do
-    {
-        lcd_EUp;
-        RTI_Delay_ms(10);
+    PORTK &= 0b11111000;
 
-        inVal = PTH;
+    cBusy = PTH & 0b10000000;
 
-        lcd_EDown
-    } while ((inVal & 0x80));
+    return cBusy;
 }
 
 void lcd_Ins(unsigned char val)
 {
-    lcd_Busy();
-   
-    lcd_RWDown;
-    lcd_RSDown;
-   
-    PTH = val;
- 
-    PORTK |= 0b00000001;
+    while (lcd_Busy() != 0)
+        ;
 
+
+    PTH = val;
+
+    PORTK |= 0b00000011;
+    RTI_Delay_ms(10);
     PORTK &= 0b11111000;
 }
 
 void lcd_Data(unsigned char val)
 {
-    lcd_Busy();
-    lcd_RSUp;
-    lcd_RWDown;
- 
- 
+   
+    while (lcd_Busy() != 0)
+        ;
+
+
+    
+    
+
     PTH = val;
-    
-    lcd_EUp;
-    
-    lcd_EDown;
+    PORTK |= 0b00000101;
+    RTI_Delay_ms(10);
+    PORTK &= 0b11111000;
+
 }
 
 void lcd_Init(void)
 {
     PTH = 0b00000000;
     DDRH = 0b11111111;
-   
+
     PORTK &= 0b11111000;
     DDRK |= 0b00000111;
 
@@ -94,19 +92,13 @@ void lcd_Init(void)
     PORTK |= 0b00000001;
     PORTK &= 0b11111000;
 
-     RTI_Delay_ms(10);
+    RTI_Delay_ms(10);
 
     lcd_Ins(0b00111000);
 
-  lcd_Ins(0b00001110);
+    lcd_Ins(0b00001110);
 
-  lcd_Ins(0b00000001);
+    lcd_Ins(0b00000001);
 
-  lcd_Ins(0b00000110);
-
-
-    
-   
-
-
+    lcd_Ins(0b00000110);
 }
