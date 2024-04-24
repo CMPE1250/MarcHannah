@@ -180,7 +180,7 @@ void main(void)
         thousands--;
        if(thousands<0)
         {
-          thousands=0;
+          thousands=9;
         }
 
         break;
@@ -189,7 +189,7 @@ void main(void)
 
           if(hundreds<0)
         {
-          hundreds=0;
+          hundreds=9;
         }
         break;
 
@@ -197,7 +197,7 @@ void main(void)
         tens--;
           if(tens<0)
         {
-          tens=0;
+          tens=9;
         }
         break;
 
@@ -205,7 +205,7 @@ void main(void)
         ones--;
           if(ones<0)
         {
-          ones=0;
+          ones=9;
         }
        break;
 
