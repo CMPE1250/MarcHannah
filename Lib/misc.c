@@ -9,6 +9,7 @@
 #include "stdio.h"
 #include <math.h>
 #include "segs.h"
+#include "lcd.h"
 
 
 
@@ -241,3 +242,15 @@ void Lab3SegsInit(void)
 
 }
 
+void testInit(void)
+{   
+    lcd_AddrXY(2,3);
+    lcd_String("0000000000000000");
+
+     lcd_AddrXY(0,1);
+    lcd_String("DEC: 00000");
+    lcd_AddrXY(0,2);
+    lcd_String("Hex: 0000");
+    lcd_AddrXY(20,3);
+
+}

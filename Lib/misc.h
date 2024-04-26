@@ -34,3 +34,4 @@ char* toBinaryString(int n);
 
 
 void Lab3SegsInit(void);
+void testInit(void);

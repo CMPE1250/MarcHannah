@@ -1,104 +1,180 @@
+#include <hidef.h>
+#include "derivative.h"
 #include "lcd.h"
-#include <hidef.h>      /* common defines and macros */
-#include "derivative.h" /* derivative-specific definitions */
-#include <stdlib.h>
-#include <stdio.h>
 #include "rti.h"
+//for input Read/Write up
+#define lcd_RWUp DDRH = 0; PORTK |= 2;
 
-#define lcd_RWUp DDRH = 0;    PORTK |= 2;
-
-#define lcd_RWDown \PORTK &= (~2); DDRH = 0xFF;
+//for output Read/Write high
+#define lcd_RWDown PORTK &= (~2); DDRH = 0xFF; 
 
 #define lcd_EUp PORTK |= 1;
-
-#define lcd_EDown PORTK &= (~4);
-
+#define lcd_EDown PORTK &= (~1);
 #define lcd_RSUp PORTK |= 4;
-
 #define lcd_RSDown PORTK &= (~4);
 
-char lcd_Busy(void)
-{
-    unsigned char cBusy;
+void lcd_Busy (void){
+ unsigned char inVal = 0;
+ lcd_RSDown;
+ lcd_RWUp;
+ do
+ {
+    lcd_EUp;
+    lcd_MicroDelay;
 
-    DDRH = 0b00000000;
-
-    PORTK |= 0b00000011;
-
-    PORTK &= 0b11111000;
-
-    cBusy = PTH & 0b10000000;
-
-    return cBusy;
+    inVal = PTH;
+    lcd_EDown;
+ }
+ while(inVal & 0x80);
 }
 
-void lcd_Ins(unsigned char val)
-{
-    while (lcd_Busy() != 0)
-        ;
 
 
-    PTH = val;
+void lcd_Ins (unsigned char val){
+   lcd_Busy();
 
-    PORTK |= 0b00000011;
-    RTI_Delay_ms(10);
-    PORTK &= 0b11111000;
+   lcd_RWDown;
+   lcd_RSDown;
+
+   PTH = val;
+
+   lcd_EUp;
+   lcd_EDown;
 }
+
+
+
 
 void lcd_Data(unsigned char val)
 {
-   
-    while (lcd_Busy() != 0)
-        ;
-
-
-    
-    
-
-    PTH = val;
-    PORTK |= 0b00000101;
-    RTI_Delay_ms(10);
-    PORTK &= 0b11111000;
-
+   lcd_Busy();
+   lcd_RWDown;
+   lcd_RSUp;
+   PTH = val;
+   lcd_EUp;
+   lcd_EDown;
 }
 
-void lcd_Init(void)
+
+void lcd_Init(void){
+   //lcd_Busy();
+
+   PTH = 0b00000000;
+   lcd_EDown;
+   lcd_RWDown;
+   lcd_RSDown;
+   DDRK |= 0b00000111;
+    lcd_MicroDelay;
+   PTH = 0x38;
+   lcd_EUp;
+   lcd_EDown;
+    lcd_MicroDelay;
+   lcd_EUp;
+   lcd_EDown;
+    lcd_MicroDelay;
+   lcd_Ins(0x38);
+   lcd_Ins(0x0C);
+   lcd_Ins(0x01);
+   lcd_Ins(0x06);
+}
+
+
+
+void lcd_String(char const * straddr){
+   for (; *straddr; ++straddr)
+        lcd_Data(*straddr);
+}
+
+
+
+void lcd_Home(void){
+   lcd_Ins(0x02);
+}
+
+void lcd_Clear(void){
+   lcd_Ins(0x01);
+}
+
+
+
+void lcd_Addr(unsigned char addr)
 {
-    PTH = 0b00000000;
-    DDRH = 0b11111111;
+    int i;
+lcd_Busy();
 
-    PORTK &= 0b11111000;
-    DDRK |= 0b00000111;
+for(i = 0; i < addr; i++)
+   {
+      lcd_Ins(0b00010111);
+   }
+}
 
-    RTI_Delay_ms(50);
 
-    PTH = 0b00111000;
 
-    PORTK |= 0b00000001;
-    PORTK &= 0b11111000;
 
-    RTI_Delay_ms(10);
+void lcd_AddrXY (unsigned char xPos, unsigned char yPos)
+{
+   int i;
 
-    PORTK |= 0b00000001;
-    PORTK &= 0b11111000;
+   lcd_Busy();
 
-    RTI_Delay_ms(10);
 
-    PORTK |= 0b00000001;
-    PORTK &= 0b11111000;
+   lcd_Home();
+   switch (yPos)
+   {
+   case 0:
+      lcd_Addr(0);
+      break;
+   
+   case 1:
+      lcd_Addr(40);
+      break;
+   
+   case 2:
+      lcd_Addr(20);
+      break;
+      
+   case 3:
+      lcd_Addr(60);
+      break;
+   }
+   
+   for(i = 0; i < xPos; i++)
+   {
+      lcd_Ins(0b00010101);
+   }
+}
 
-    RTI_Delay_ms(10);
+void lcd_StringXY (unsigned int xPos, unsigned int yPos,char const * straddr)
+{
 
-    PORTK |= 0b00000001;
-    PORTK &= 0b11111000;
+    int i;
 
-    RTI_Delay_ms(10);
+   lcd_Busy();
 
-    lcd_Ins(0b00111000);
 
-    lcd_Ins(0b00001110);
-
-    lcd_Ins(0b00000001);
-
-    lcd_Ins(0b00000110);
+   lcd_Home();
+   switch (yPos)
+   {
+   case 0:
+      lcd_Addr(0);
+      break;
+   
+   case 1:
+      lcd_Addr(40);
+      break;
+   
+   case 2:
+      lcd_Addr(20);
+      break;
+      
+   case 3:
+      lcd_Addr(60);
+      break;
+   }
+   
+   for(i = 0; i < xPos; i++)
+   {
+      lcd_Ins(0b00010100);
+   }
+   lcd_String(straddr);
 }

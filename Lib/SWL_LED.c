@@ -66,3 +66,19 @@ void countUp(long countNumber)
     long counter=0;
     while(counter < countNumber){counter++;}
 }
+//int SWL_PushedDeb (SWL_SwitchPos pos);
+
+
+int checkSwitchTransition(int *oldState,SWL_SwitchPos button)
+{
+    int currentState = SWL_Pushed(button);
+   
+    if ((currentState != *oldState) && currentState)
+    {
+        *oldState = currentState; 
+        return 1;
+    }
+
+    *oldState = currentState; 
+    return 0; 
+}

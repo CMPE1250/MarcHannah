@@ -25,10 +25,10 @@
 // 54 55 ... 66 67
 ////////////////////////////////////////////////////
 #define LCD_WIDTH 20
-#define LCD_ROW0 0
-#define LCD_ROW1 64
+#define LCD_ROW0 00
+#define LCD_ROW1 40
 #define LCD_ROW2 20
-#define LCD_ROW3 84
+#define LCD_ROW3 60
 
 #define null 0
 
@@ -44,14 +44,14 @@
 
 void lcd_Init (void);
 void lcd_Ins (unsigned char); //LCD_Inst
-char lcd_Busy (void); //LCD_Inst
+void lcd_Busy (void); //LCD_Inst
 char lcd_GetAddr(void);
 void lcd_Data (unsigned char val);
 void lcd_Addr (unsigned char addr);
 void lcd_AddrXY (unsigned char ix, unsigned char iy);
 void lcd_String (char const * straddr);
 void lcdSmartString(char const * straddr, unsigned int delay);
-void lcd_StringXY (unsigned char ix, unsigned char iy, char const * const straddr);
+void lcd_StringXY (unsigned char ix, unsigned char iy, char const *  straddr);
 
 void lcd_DispControl (unsigned char curon, unsigned char blinkon);
 void lcd_Clear (void);
