@@ -23,6 +23,7 @@
 #include "segs.h"
 #include <stdio.h>
 #include "lcd.h"
+#include "sci.h"
 /********************************************************************/
 // Defines
 /********************************************************************/
@@ -30,17 +31,29 @@
 /********************************************************************/
 // Local Prototypes
 /********************************************************************/
-
+void SwitchTransition(void);
 /********************************************************************/
 // Global Variables
 /********************************************************************/
-
+unsigned char input;
 int loopCount;
-float count=0;
+int count=0;
 char countBuffer[20];
 int index=15;
 char binaryBuffer[18]="0000000000000000\0";
 
+
+int leftCurrent;
+int rightCurrent;
+int upCurrent;
+int downCurrent;
+int centerCurrent;
+
+int oldLeftState=0;
+int oldRightState=0;
+int oldUpState=0;
+int oldDownState=0;
+int oldCenterState=0;
 /********************************************************************/
 // Constants
 /********************************************************************/
@@ -60,10 +73,15 @@ void main(void)
   // one-time initializations
   /********************************************************************/
   Clock_Set20MHZ();
+  
+  sci0_InitEnum(BAUD_38400);
   RTI_Init();
   SWL_Init();
+  Segs_Init();
   lcd_Init();
-  testInit();
+  lcd_Ins(00001111);
+  
+  //testInit();
 
   /********************************************************************/
   // main program loop
@@ -74,30 +92,78 @@ void main(void)
 
 
     
-     RTI_Delay_ms(10);
-     loopCount++;
-      if (loopCount % 10 == 0)
-      {
-         count += 0.1;
-      }
-    
+  sci0_bread(&input);
 
-     sprintf(countBuffer,"Count %d",count);
-     lcd_AddrXY(0,0);
-     lcd_String(countBuffer);
+  Segs_Normal(0,input,Segs_DP_OFF);
 
-    if(SWL_Pushed(SWL_DOWN))
+
+{
+     leftCurrent=SWL_Pushed(SWL_LEFT);
+
+
+    if ((leftCurrent!=oldLeftState)&&leftCurrent)
     {
-      if(binaryBuffer[index]==0)
-      {
-        binaryBuffer[index]=1;
-      }
-      else{binaryBuffer[index]=0;}
+
+
+      
     }
-    lcd_AddrXY(2,3);
-    lcd_String(binaryBuffer);
+
+    oldLeftState=leftCurrent;
+
+}
+
+{
+   rightCurrent=SWL_Pushed(SWL_RIGHT);
 
 
+    if ((rightCurrent!=oldRightState)&&rightCurrent)
+    {
+
+     
+    }
+  
+    oldRightState=rightCurrent;
+
+}
+
+{
+ upCurrent=SWL_Pushed(SWL_UP);
+
+
+    if ((upCurrent!=oldUpState)&&upCurrent)
+    {
+  
+    }
+
+    oldUpState=upCurrent;
+}
+{
+   downCurrent=SWL_Pushed(SWL_DOWN);
+
+
+    if ((downCurrent!=oldDownState)&&downCurrent)
+    {
+
+    }
+    oldDownState=downCurrent;
+}
+{
+     centerCurrent=SWL_Pushed(SWL_LEFT);
+
+
+    if ((centerCurrent!=oldCenterState)&&centerCurrent)
+    {
+
+
+      
+    }
+
+    oldLeftState=leftCurrent;
+
+}
+
+
+   
 
   }
 }
